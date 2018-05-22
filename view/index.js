@@ -10,6 +10,6 @@ import './styles.css'
 
 
 
-ReactDOM.render( <App/>, document.getElementById( 'root' ) )
+ReactDOM.hydrate( <App/>, document.getElementById( 'root' ) )
 
 
