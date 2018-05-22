@@ -2,6 +2,7 @@
 
 
 
+const HtmlWebpackPlugin = require( 'html-webpack-plugin' )
 const NodeExternals = require( 'webpack-node-externals' )
 
 
@@ -19,6 +20,12 @@ module.exports = [
 				{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
 			]
 		},
+		plugins: [
+			new HtmlWebpackPlugin( {
+				inject: false,
+				template: 'public/index.html'
+			} )
+		],
 		stats: {
 			children: false,
 			entrypoints: false,
@@ -26,7 +33,7 @@ module.exports = [
 		},
 		output: {
 			filename: '[name].js',
-			path: __dirname + '/exe/root'
+			path: __dirname + '/out'
 		}
 	},
 	// Server configuration
@@ -52,10 +59,9 @@ module.exports = [
 		target: 'node',
 		output: {
 			filename: '[name].js',
-			path: __dirname + '/exe/node'
+			path: __dirname + '/exe'
 		}
 	}
 ]
-
 
 

@@ -15,7 +15,7 @@ import '../view/styles.css'
 const app = express( )
 
 
-app.use( express.static( 'exe/root' ) ) 
+app.use( express.static( 'out' ) )
 
 app.get( '*', ( request, response ) => {
 	const root = ReactDOMServer.renderToString( <App/> )
@@ -23,9 +23,9 @@ app.get( '*', ( request, response ) => {
 	response.send( Html( root, title ) )
 } )
 
+
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!' )
 } )
-
 
 

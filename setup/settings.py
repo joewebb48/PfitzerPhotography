@@ -56,10 +56,16 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "setup.urls"
 
+
+# Templates
+# https://docs.djangoproject.com/en/2.0/topics/templates/
+
 TEMPLATES = [
 	{
 		"BACKEND": "django.template.backends.django.DjangoTemplates",
-		"DIRS": [ ],
+		"DIRS": [
+			"out"
+		],
 		"APP_DIRS": True,
 		"OPTIONS": {
 			"context_processors": [
