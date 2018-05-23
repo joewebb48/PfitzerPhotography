@@ -32,12 +32,16 @@ app.get( '/', ( request, response ) => {
 app.post( '/render', ( request, response ) => {
 	const source = request.body.source
 	const root = ReactDOMServer.renderToString( <App/> )
-	response.send( root )
+	response.json( {
+		html: root,
+		title: 'Pfitzer Photography'
+	} )
 } )
 
 
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!' )
 } )
+
 
 

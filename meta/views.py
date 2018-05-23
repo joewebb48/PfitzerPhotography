@@ -16,8 +16,8 @@ def index( request ):
 		data = json.dumps( { "source": "node.js" } )
 	)
 	## Serialized React frontend that will be embedded into html
-	context = { "html": feedback.text }
-	return render( request, "index.html", context )
+	metadata = feedback.json( )
+	return render( request, "index.html", metadata )
 
 
 

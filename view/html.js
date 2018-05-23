@@ -12,17 +12,19 @@ const Html = ( root, title ) => `
 		<head>
 			<meta charset="utf-8">
 			<title>${ title }</title>
-			<script src="/main.js" defer></script>
 			
 			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 			<meta name="theme-color" content="#000000">
 			
-			<link rel="shortcut icon" href="favicon.ico">
+			<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 		</head>
 		
 		<body>
-			<noscript> You need to enable JavaScript to run this app. </noscript>
 			<div id="root">${ root }</div>
+			
+			<noscript> You need to enable JavaScript to run this app. </noscript>
+			
+			<script type="text/javascript" src="main.js"></script>
 		</body>
 		
 	</html>
