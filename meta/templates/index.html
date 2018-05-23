@@ -2,23 +2,25 @@
 
 
 
+{% load static %}
 <html lang="en">
 	
 	<head>
 		<meta charset="utf-8">
 		
-		<script src="/main.js" defer></script>
-		
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<meta name="theme-color" content="#000000">
 		
-		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 	</head>
 	
 	<body>
-		<div id="root"></div>
+		<div id="root">{{ html }}</div>
 		<h1> Yay, photography! </h1>
+		
 		<noscript> You need to enable JavaScript to run this app. </noscript>
+		
+		<script type="text/javascript" src="{% static 'main.js' %}"></script>
 	</body>
 	
 </html>
