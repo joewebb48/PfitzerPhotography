@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react'
 
-import logo from './logo.svg'
+import logo from '../../root/logo.svg'
 import './app.css'
 
 

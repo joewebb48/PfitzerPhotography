@@ -5,8 +5,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import App from './app'
-import './styles.css'
+import App from './app/app'
+import '../root/styles.css'
 
 
 

@@ -7,9 +7,9 @@ import ReactDOMServer from 'react-dom/server'
 import express from 'express'
 import parsify from 'body-parser'
 
-import App from './app'
+import App from './app/app'
 import Html from './html'
-import './styles.css'
+import '../root/styles.css'
 
 
 
@@ -18,7 +18,7 @@ const app = express( )
 
 app.use( parsify.json( { limit: '50mb' } ) )
 
-app.use( express.static( 'meta/static' ) )
+app.use( express.static( 'public' ) )
 
 
 // Exclusively ran from Node to render jsx with a stringified template

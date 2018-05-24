@@ -26,7 +26,7 @@ module.exports = [
 		},
 		output: {
 			filename: '[name].js',
-			path: __dirname + '/meta/static'
+			path: __dirname + '/public'
 		}
 	},
 	// Server configuration
@@ -52,7 +52,7 @@ module.exports = [
 		target: 'node',
 		output: {
 			filename: '[name].js',
-			path: __dirname + '/meta/static'
+			path: __dirname + '/node'
 		}
 	}
 ]
