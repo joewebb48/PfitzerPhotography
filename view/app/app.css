@@ -2,7 +2,7 @@
 
 
 
-.app {
+section {
 	text-align: center;
 }
 
@@ -13,9 +13,9 @@
 
 .app-header {
 	background-color: #222;
+	color: white;
 	height: 150px;
 	padding: 20px;
-	color: white;
 }
 
 .app-title {

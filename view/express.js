@@ -9,14 +9,13 @@ import parsify from 'body-parser'
 
 import App from './app/app'
 import Html from './html'
-import '../root/styles.css'
 
 
 
 const app = express( )
 
 
-app.use( parsify.json( { limit: '50mb' } ) )
+app.use( parsify.json( ) )
 
 app.use( express.static( 'public' ) )
 
@@ -31,7 +30,6 @@ app.get( '/', ( request, response ) => {
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
 	const root = ReactDOMServer.renderToString( <App/> )
-	const source = request.body.source
 	response.json( {
 		html: root,
 		title: 'Pfitzer Photography'

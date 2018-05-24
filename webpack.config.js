@@ -4,6 +4,8 @@
 
 const NodeExternals = require( 'webpack-node-externals' )
 
+const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
+
 
 
 module.exports = [
@@ -15,10 +17,16 @@ module.exports = [
 		module: {
 			rules: [
 				{ test: /\.svg$/, use: 'url-loader' },
-				{ test: /\.css$/, use: [ 'style-loader', 'css-loader' ] },
+				{ test: /\.css$/, use: [ MiniCssExtractPlugin.loader, 'css-loader' ] },
 				{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
 			]
 		},
+		plugins: [
+			new MiniCssExtractPlugin( {
+				filename: 'styles.css',
+				chunkFilename: '[id].css'
+			} )
+		],
 		stats: {
 			children: false,
 			entrypoints: false,
