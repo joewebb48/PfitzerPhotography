@@ -30,8 +30,8 @@ app.get( '/', ( request, response ) => {
 
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
-	const source = request.body.source
 	const root = ReactDOMServer.renderToString( <App/> )
+	const source = request.body.source
 	response.json( {
 		html: root,
 		title: 'Pfitzer Photography'

@@ -10,6 +10,8 @@ import './styles.css'
 
 
 
+// Hydrate is used instead of render for isomorphic rendering
 ReactDOM.hydrate( <App/>, document.getElementById( 'root' ) )
+
 
 

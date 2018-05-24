@@ -18,7 +18,7 @@ class App extends Component {
 					<img src={ logo } className="app-logo" alt="logo" />
 					<h1 className="app-title"> Pfitzer Photography </h1>
 				</header>
-				<p className="app-intro"> Woo, photography! </p>
+				<p className="app-intro"> Yay, photography! </p>
 			</div>
 		)
 	}
