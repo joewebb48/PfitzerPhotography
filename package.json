@@ -10,7 +10,8 @@
 		"body-parser": "^1.18.3",
 		"express": "^4.16.3",
 		"react": "^16.4.0",
-		"react-dom": "^16.4.0"
+		"react-dom": "^16.4.0",
+		"react-router-dom": "^4.2.2"
 	},
 	"scripts": {
 		"pre": "webpack --mode development && node node/node.js",
@@ -29,5 +30,6 @@
 		"webpack-node-externals": "^1.7.2"
 	}
 }
+
 
 
