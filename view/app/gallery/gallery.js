@@ -10,7 +10,9 @@ class Gallery extends Component {
 	
 	render( ) {
 		return (
-			<h1> Gallery </h1>
+			<section>
+				<p className="page-intro"> Gallery </p>
+			</section>
 		)
 	}
 	

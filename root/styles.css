@@ -8,6 +8,14 @@ body {
 	margin: 0;
 }
 
+section {
+	text-align: center;
+}
+
+.page-intro {
+	font-size: large;
+}
+
 noscript {
 	display: block;
 	color: #c5a3f7;

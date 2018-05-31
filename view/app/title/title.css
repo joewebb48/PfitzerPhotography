@@ -2,34 +2,26 @@
 
 
 
-section {
-	text-align: center;
-}
-
-.app-logo {
-	animation: app-logo-spin infinite 20s linear;
+.title-logo {
+	animation: title-logo-spin infinite 20s linear;
 	height: 80px;
 }
 
-.app-header {
+.title-header {
 	background-color: #222;
 	color: white;
 	height: 150px;
 	padding: 20px;
 }
 
-.app-title {
+.title-text {
 	font-size: 1.5em;
 }
 
-.app-intro {
-	font-size: large;
-}
 
-@keyframes app-logo-spin {
+@keyframes title-logo-spin {
 	from { transform: rotate( 0deg ); }
 	to { transform: rotate( 360deg ); }
 }
-
 
 
