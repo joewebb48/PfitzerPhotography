@@ -29,7 +29,8 @@ app.get( '/*', ( request, response ) => {
 
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
-	const root = ReactDOMServer.renderToString( <App url={ request.path }/> )
+	// React's router must get the requested url path from Django first
+	const root = ReactDOMServer.renderToString( <App url={ request.body.url }/> )
 	response.json( {
 		html: root,
 		title: 'Pfitzer Photography'
@@ -40,6 +41,5 @@ app.post( '/render', ( request, response ) => {
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!' )
 } )
-
 
 
