@@ -16,7 +16,6 @@ module.exports = [
 		},
 		module: {
 			rules: [
-				{ test: /\.svg$/, use: 'url-loader' },
 				{ test: /\.css$/, use: [ MiniCssExtractPlugin.loader, 'css-loader' ] },
 				{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
 			]
@@ -44,7 +43,6 @@ module.exports = [
 		},
 		module: {
 			rules: [
-				{ test: /\.svg$/, use: 'url-loader' },
 				{ test: /\.css$/, use: 'css-loader' },
 				{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
 			]

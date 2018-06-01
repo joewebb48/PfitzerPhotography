@@ -1,0 +1,21 @@
+
+
+
+
+nav {
+	color: white;
+	width: 100%;
+	top: 125px;
+	padding: 50px 0 0;
+	margin: 125px 0 0;
+}
+
+a {
+	color: white;
+	font-size: 1.25em;
+	text-decoration: unset;
+	margin: 0 10%;
+}
+
+
+
