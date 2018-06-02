@@ -14,8 +14,10 @@ class Navigator extends Component {
 	render( ) {
 		return (
 			<nav>
-				<Link to="/"> Home </Link>
-				<Link to="/gallery"> Gallery </Link>
+				<ul className={ this.props.atHome ? "nav-home" : "nav-other" }>
+					<li><Link to="/"> Home </Link></li>
+					<li><Link to="/gallery"> Gallery </Link></li>
+				</ul>
 			</nav>
 		)
 	}

@@ -2,24 +2,12 @@
 
 
 
-header {
-	position: relative;
-	/* background-color: #222; */
-	color: white;
-	height: 200px;
-	padding: 20px;
-}
-
 .home-title {
-	position: absolute;
+	position: relative;
 	font-size: 3em;
+	text-align: left;
 	left: 50px;
 	margin: 75px auto 0;
 }
-
-.home-nav {
-	margin: 0;
-}
-
 
 

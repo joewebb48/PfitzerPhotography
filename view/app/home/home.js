@@ -16,7 +16,7 @@ class Home extends Component {
 			<section>
 				<header>
 					<h1 className="home-title"> Pfitzer Photography </h1>
-					<Navigator className="home-nav"/>
+					<Navigator atHome={ true }/>
 				</header>
 				<p className="page-intro"> Yay, photography! </p>
 			</section>

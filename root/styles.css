@@ -15,6 +15,18 @@ section {
 	margin: 0 auto;
 }
 
+header {
+	/* background-color: #222; */
+	color: white;
+	height: 200px;
+	padding: 20px;
+}
+
+a {
+	text-decoration: unset;
+	color: unset;
+}
+
 .page-intro {
 	color: white;
 	font-size: large;
