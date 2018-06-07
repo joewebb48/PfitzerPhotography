@@ -3,6 +3,7 @@
 
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import Navigator from '../navigator/navigator'
 import './home.css'
@@ -18,7 +19,9 @@ class Home extends Component {
 					<h1 className="home-title"> Pfitzer Photography </h1>
 					<Navigator atHome={ true }/>
 				</header>
-				<p className="page-intro"> Yay, photography! </p>
+				<Link to="/gallery">
+					<img className="home-img" alt="image"/>
+				</Link>
 			</section>
 		)
 	}
@@ -27,5 +30,6 @@ class Home extends Component {
 
 
 export default Home
+
 
 

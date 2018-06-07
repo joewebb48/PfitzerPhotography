@@ -6,8 +6,22 @@
 	position: relative;
 	font-size: 3em;
 	text-align: left;
-	left: 50px;
+	left: 15px;
 	margin: 75px auto 0;
 }
+
+.home-img {
+	display: block;
+	background: #616161;
+	color: #bfbfbf;
+	border: 10px solid white;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 30px;
+	line-height: 450px;
+	height: 500px;
+	width: 100%;
+}
+
 
 
