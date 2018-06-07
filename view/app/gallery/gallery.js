@@ -17,7 +17,20 @@ class Gallery extends Component {
 				<header>
 					<Navigator/>
 				</header>
-				<p className="page-intro"> Gallery </p>
+				<div className="gallery-frame">
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+					<img className="gallery-thumbnail"/>
+				</div>
 			</section>
 		)
 	}
@@ -26,6 +39,5 @@ class Gallery extends Component {
 
 
 export default Gallery
-
 
 
