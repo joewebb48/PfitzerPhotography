@@ -11,12 +11,15 @@ body {
 
 section {
 	text-align: center;
-	width: 80%;
-	margin: 0 auto;
+	width: 70%;
+	margin: 0 auto 75px;
+}
+
+.page {
+	width: 100%;
 }
 
 header {
-	/* background-color: #222; */
 	color: white;
 	height: 200px;
 	padding: 20px;
@@ -39,5 +42,6 @@ noscript {
 	text-align: center;
 	margin: 125px;
 }
+
 
 

@@ -14,7 +14,7 @@ class Router extends Component {
 	
 	render( ) {
 		return (
-			<section>
+			<section className="page">
 				<Route exact path="/" component={ Home }/>
 				<Route path="/gallery" component={ Gallery }/>
 			</section>
