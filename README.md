@@ -6,7 +6,7 @@
 
 This README file is a work in progress!
 
-As development gets under way, further documentation on the inner workings of the website including website management, code navigation, and design decisions will be added to the README and the repository's wiki.
+As development gets under way, further documentation on the inner workings of the website including website management, code navigation, and design decisions will be added to the README and [the repository's wiki](https://github.com/Xoadra/PfitzerPhotography/wiki).
 
 
 For now though, enjoy!
