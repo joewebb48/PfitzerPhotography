@@ -11,6 +11,14 @@ import './gallery.css'
 
 class Gallery extends Component {
 	
+	populateFrame( ) {
+		var key = 0
+		return Array( 12 ).fill( null ).map( ( ) => {
+			key++
+			return <img key={ key } className="gallery-thumbnail"/>
+		} )
+	}
+	
 	render( ) {
 		return (
 			<section>
@@ -18,18 +26,7 @@ class Gallery extends Component {
 					<Navigator/>
 				</header>
 				<div className="gallery-frame">
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
-					<img className="gallery-thumbnail"/>
+					{ this.populateFrame( ) }
 				</div>
 			</section>
 		)
@@ -39,5 +36,6 @@ class Gallery extends Component {
 
 
 export default Gallery
+
 
 
