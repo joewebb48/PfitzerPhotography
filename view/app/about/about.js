@@ -17,7 +17,17 @@ class About extends Component {
 				<header>
 					<Navigator/>
 				</header>
-				<p className="page-intro"> About </p>
+				<div className="about-frame">
+					<h1> Ursula Pfitzer </h1>
+					<div className="about-image about-portrait"/>
+					<div className="about-bio">
+						<div className="about-text">
+							<p> About Text Here </p>
+						</div>
+						<div className="about-image about-image-top"/>
+						<div className="about-image about-image-bottom"/>
+					</div>
+				</div>
 			</section>
 		)
 	}

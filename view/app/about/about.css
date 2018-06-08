@@ -2,6 +2,70 @@
 
 
 
+.about-frame {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+}
 
+.about-frame h1 {
+	position: absolute;
+	color: #f0f0f0;
+	text-shadow: 0 5px 10px #3e3e3e;
+	font-size: 6em;
+	width: 100%;
+	margin: 40px auto;
+}
+
+.about-portrait {
+	background: #a7a7a7;
+}
+
+.about-bio {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.about-text {
+	position: absolute;
+	overflow: hidden;
+	height: 100%;
+	width: 100%;
+}
+
+.about-bio p {
+	display: inline-block;
+	background: #00000080;
+	/* Maintaining this border styling technique for now */
+	/* background-image:
+		linear-gradient( to right, #bbd2e0, #cbe7be ),
+		linear-gradient( to bottom, #72bf57, #74bf56 ),
+		linear-gradient( to left, #cce9bb, #bbd2e0 ),
+		linear-gradient( to top, #5490b8, #508ab0 );
+	background-origin: border-box;
+	background-size: 100% 50px, 50px 100%, 100% 50px, 50px 100%;
+	background-position: top left, top right, bottom right, bottom left;
+	background-repeat: no-repeat; */
+	box-shadow: 0 0 100px 75px #00000080;
+	text-align: left;
+	text-indent: 50px;
+	min-width: -webkit-fill-available;
+	margin: 100px;
+}
+
+.about-image {
+	height: 750px;
+	width: 100%;
+}
+
+.about-image-top {
+	background: #7e7e7e;
+}
+
+.about-image-bottom {
+	background: #5e5e5e;
+}
 
 

@@ -17,7 +17,7 @@ class Contact extends Component {
 				<header>
 					<Navigator/>
 				</header>
-				<p className="page-intro"> Contact </p>
+				<p> Contact </p>
 			</section>
 		)
 	}
