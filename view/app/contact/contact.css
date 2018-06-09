@@ -2,6 +2,56 @@
 
 
 
+form {
+	background: #313131;
+	min-height: 500px;
+	width: 600px;
+	padding: 25px;
+	margin: 0 auto;
+}
 
+.contact-email {
+	color: #e0e0e0;
+	font-size: 2em;
+	margin: 0 0 30px;
+}
+
+label {
+	color: #a0a0a0;
+	font-size: 1.25em;
+}
+
+.contact-field {
+	background: black;
+	border: 2px solid #101010;
+	color: white;
+	box-sizing: border-box;
+	outline: none;
+	font-size: small;
+	width: 90%;
+	padding: 10px;
+}
+
+input {
+	height: 50px;
+	margin: 10px 0 25px;
+}
+
+textarea {
+	min-height: 200px;
+	resize: vertical;
+	margin: 10px 0 20px;
+}
+
+.contact-submit {
+	background: #212121;
+	border: 0;
+	color: white;
+	cursor: pointer;
+	outline: none;
+	font-size: 1.25em;
+	width: 150px;
+	padding: 15px;
+}
 
 
