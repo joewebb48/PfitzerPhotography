@@ -4,7 +4,11 @@
 
 import json
 import requests
+from django.core import serializers
 from django.shortcuts import render
+from django.http import JsonResponse
+
+from .models import Image
 
 
 
@@ -19,5 +23,11 @@ def index( request, url = None ):
 	## Serialized React frontend that will be embedded into html
 	metadata = feedback.json( )
 	return render( request, "index.html", metadata )
+
+
+def photos( request ):
+	images = serializers.serialize( "json", Image.objects.all( ) )
+	print( images )
+	return JsonResponse( images, safe = False )
 
 

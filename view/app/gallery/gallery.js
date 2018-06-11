@@ -3,6 +3,7 @@
 
 
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import Navigator from '../navigator/navigator'
 import './gallery.css'
@@ -12,6 +13,9 @@ import './gallery.css'
 class Gallery extends Component {
 	
 	populateFrame( ) {
+		axios.get( '/photos' )
+			.then( images => console.log( images ) )
+			.catch( error => console.log( error ) )
 		var key = 0
 		return Array( 12 ).fill( null ).map( ( ) => {
 			key++

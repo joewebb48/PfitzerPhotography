@@ -7,6 +7,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"dependencies": {
+		"axios": "^0.18.0",
 		"body-parser": "^1.18.3",
 		"express": "^4.16.3",
 		"react": "^16.4.0",
@@ -29,5 +30,6 @@
 		"webpack-node-externals": "^1.7.2"
 	}
 }
+
 
 
