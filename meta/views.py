@@ -26,8 +26,10 @@ def index( request, url = None ):
 
 
 def photos( request ):
-	images = serializers.serialize( "json", Image.objects.all( ) )
-	print( images )
+	data = serializers.serialize( "json", Image.objects.all( ) )
+	images = json.loads( data )
+	gallery = { "images": images }
 	return JsonResponse( images, safe = False )
+
 
 
