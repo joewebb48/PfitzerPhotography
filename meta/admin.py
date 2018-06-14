@@ -3,10 +3,9 @@
 
 
 from django.contrib import admin
-from django.db.models import ImageField
 
-from .widgets import ImageWidget
-from .models import Image, ImageForm
+from .forms import ImageForm
+from .models import Image
 
 
 
@@ -21,13 +20,10 @@ admin.site.index_title = pfitzer_admin
 
 class Admin( admin.ModelAdmin ):
 	form = ImageForm
-	"""
-	attrs = { 'class': 'upload-image' }
-	formfield_overrides = { ImageField: { 'widget': ImageWidget( attrs = attrs ) } }
-	"""
 
 
 
 admin.site.register( Image, Admin )
+
 
 

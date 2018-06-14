@@ -4,24 +4,10 @@
 
 {% if widget.is_initial %}
 	{{ widget.initial_text }}: <a href="{{ widget.value.url }}"> {{ widget.value }} </a>
-		{% if not widget.required %}
-			<input type="checkbox" name="{{ widget.checkbox_name }}" id="{{ widget.checkbox_id }}"/>
-			<label for="{{ widget.checkbox_id }}"> {{ widget.clear_checkbox_label }} </label>
-		{% endif %}
 	<br/>
-	{{ widget.input_text }}:
-	<input type="{{ widget.type }}" name="{{ widget.name }}"/>
+	{{ widget.input_text }}: <input type="{{ widget.type }}" name="{{ widget.name }}"/>
 	<br/>
-	<!-- {{ widget.image_text }}: -->
+	<img src="{{ widget.value.url }}" {% include "django/forms/widgets/attrs.html" %}/>
 {% endif %}
-<!-- <br/> -->
-<img src="{{ widget.value.url }}" {% include "django/forms/widgets/attrs.html" %}/>
-
-
-<!-- {% include "django/forms/widgets/clearable_file_input.html" %}
-<br/>
-{{ widget.image_text }}:
-<img src="{{ widget.value.url }}"/> -->
-
 
 

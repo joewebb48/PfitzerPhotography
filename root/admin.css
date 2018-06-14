@@ -5,6 +5,8 @@
 .upload-image {
 	position: relative;
 	left: 160px;
+	max-height: 450px;
+	padding: 5px 10px 0;
 }
 
 

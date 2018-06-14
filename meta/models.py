@@ -2,10 +2,7 @@
 
 
 
-from django.forms import ModelForm
 from django.db.models import Model, CharField, ImageField
-
-from .widgets import ImageWidget
 
 
 
@@ -17,17 +14,10 @@ def pathfinder( instance, filename ):
 
 class Image( Model ):
 	name = CharField( max_length = 100, blank = False )
-	image = ImageField( upload_to = pathfinder )
+	image = ImageField( upload_to = pathfinder, blank = False )
 	
 	def __str__( self ):
 		return self.name
 
-
-class ImageForm( ModelForm ):
-	
-	class Meta:
-		model = Image
-		fields = [ 'name', 'image' ]
-		widgets = { 'image': ImageWidget( attrs = { 'class': 'upload-image' } ) }
 
 
