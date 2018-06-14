@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [ ]
 
 INSTALLED_APPS = [
 	"meta",
+	"django.forms",
 	"django.contrib.admin",
 	"django.contrib.auth",
 	"django.contrib.contenttypes",
@@ -77,6 +78,8 @@ TEMPLATES = [
 		}
 	}
 ]
+
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 WSGI_APPLICATION = "setup.wsgi.application"
 
@@ -129,5 +132,6 @@ MEDIA_ROOT = os.path.join( BASE_DIR, "root" )
 
 STATIC_URL = "/public/"
 
+MEDIA_URL = "/root/"
 
 
