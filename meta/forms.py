@@ -4,8 +4,8 @@
 
 from django.forms import ModelForm
 
-from .widgets import ImageWidget
-from .models import Image
+from meta.widgets import ImageWidget
+from meta.models import Image
 
 
 

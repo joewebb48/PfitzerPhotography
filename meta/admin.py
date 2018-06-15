@@ -4,8 +4,8 @@
 
 from django.contrib import admin
 
-from .forms import ImageForm
-from .models import Image
+from meta.forms import ImageForm
+from meta.models import Image
 
 
 
