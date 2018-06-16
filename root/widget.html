@@ -3,11 +3,17 @@
 
 
 {% if widget.is_initial %}
-	{{ widget.initial_text }}: <a href="{{ widget.value.url }}"> {{ widget.value }} </a>
-	<br/>
-	{{ widget.input_text }}: <input type="{{ widget.type }}" name="{{ widget.name }}"/>
-	<br/>
-	<img src="{{ widget.value.url }}" {% include "django/forms/widgets/attrs.html" %}/>
+	<p class="file-upload">
+		{{ widget.initial_text }}:
+		<a href="{{ widget.value.url }}"> {{ widget.value }} </a>
+		<br/>
+		{{ widget.input_text }}:
 {% endif %}
+		<input type="{{ widget.type }}" name="{{ widget.name }}"/>
+{% if widget.is_initial %}
+		<img src="{{ widget.value.url }}" {% include "django/forms/widgets/attrs.html" %}/>
+	</p>
+{% endif %}
+
 
 

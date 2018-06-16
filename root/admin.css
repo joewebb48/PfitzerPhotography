@@ -2,11 +2,15 @@
 
 
 
+p.file-upload, .field-image input {
+	font-size: 12px;
+}
+
 .upload-image {
 	position: relative;
-	left: 160px;
+	display: block;
 	max-height: 450px;
-	padding: 5px 10px 0;
+	padding: 5px 0 0;
 }
 
 
