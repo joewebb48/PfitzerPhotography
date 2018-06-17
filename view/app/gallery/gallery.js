@@ -12,14 +12,23 @@ import './gallery.css'
 
 class Gallery extends Component {
 	
+	constructor( props ) {
+		super( props )
+		this.state = { images: [ ] }
+	}
+	
+	
+	componentDidMount( ) {
+		axios.get( '/photos' ).then( images => {
+			console.log( images )
+			this.setState( { images: images.data } )
+		} )
+	}
+	
 	populateFrame( ) {
-		axios.get( '/photos' )
-			.then( images => console.log( images ) )
-			.catch( error => console.log( error ) )
-		var key = 0
-		return Array( 12 ).fill( null ).map( ( ) => {
-			key++
-			return <img key={ key } className="gallery-thumbnail"/>
+		return this.state.images.map( image => {
+			console.log( image )
+			return <img key={ image.pk } className="gallery-thumbnail" src={ image.fields.image }/>
 		} )
 	}
 	
@@ -40,6 +49,5 @@ class Gallery extends Component {
 
 
 export default Gallery
-
 
 

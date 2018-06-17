@@ -27,7 +27,7 @@ from django.contrib import admin
 
 urlpatterns = [
 	path( 'admin/', admin.site.urls ),
-	path( '<path>', views.static.serve ),
+	#path( '<path>', views.static.serve ),
 	path( '', include( 'meta.urls' ) )
 ] + static( 'root', document_root = 'root' )
 
