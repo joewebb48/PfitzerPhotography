@@ -37,5 +37,9 @@ class Image( Model ):
 		## Trash the old file for one with a new name and image
 		if path.isfile( preurl[ 1: ] ) and preurl != nexturl:
 			remove( preurl[ 1: ] )
+	
+	def delete( self, *args, **kwargs ):
+		super( Image, self ).delete( *args, **kwargs )
+		remove( self.image.url[ 1: ] )
 
 
