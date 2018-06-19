@@ -18,6 +18,7 @@
 	border-radius: 2px;
 	flex-basis: 175px;
 	height: 175px;
+	max-width: 175px;
 	margin: 0 15px 30px;
 	transition: 250ms;
 }
@@ -25,5 +26,6 @@
 .gallery-thumbnail:hover {
 	transform: scale( 1.05, 1.05 );
 }
+
 
 

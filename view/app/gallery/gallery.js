@@ -28,7 +28,8 @@ class Gallery extends Component {
 	populateFrame( ) {
 		return this.state.images.map( image => {
 			console.log( image )
-			return <img key={ image.pk } className="gallery-thumbnail" src={ image.fields.image }/>
+			const url = 'root/' + image.fields.image
+			return <img key={ image.pk } className="gallery-thumbnail" src={ url }/>
 		} )
 	}
 	
@@ -49,5 +50,6 @@ class Gallery extends Component {
 
 
 export default Gallery
+
 
 

@@ -18,16 +18,16 @@
 
 
 
-from django import views
-from django.urls import path, include
-from django.conf.urls.static import static
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.urls import path, include
+from django import views
 
 
 
 urlpatterns = [
 	path( 'admin/', admin.site.urls ),
-	#path( '<path>', views.static.serve ),
+	path( 'root/', views.static.serve ),
 	path( '', include( 'meta.urls' ) )
 ] + static( 'root', document_root = 'root' )
 
