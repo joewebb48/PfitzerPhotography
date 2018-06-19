@@ -128,6 +128,8 @@ STATICFILES_DIRS = [
 	'/public/'
 ]
 
+""" STATIC_ROOT = os.path.join( BASE_DIR, 'public' ) """
+
 MEDIA_ROOT = os.path.join( BASE_DIR, 'root' )
 
 STATIC_URL = '/public/'

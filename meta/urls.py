@@ -10,8 +10,14 @@ from meta import views
 
 urlpatterns = [
 	path( '', views.index, name = 'index' ),
-	path( 'photos', views.photos, name = 'photos' ),
-	#path( '<path:url>', views.index, name = 'wild' ),
+	## Temporary routes due to wildcard routing conflicts
+	path( 'about', views.index, name = 'about' ),
+	path( 'gallery', views.index, name = 'gallery' ),
+	path( 'contact', views.index, name = 'contact' ),
+	## Other views for fetching data used by the frontend
+	path( 'photos', views.photos, name = 'photos' )
 ]
+
+""" path( '<path:url>', views.index, name = 'wild' ) """
 
 
