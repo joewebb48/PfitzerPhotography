@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 
 import Navigator from '../navigator/navigator'
+import Image from './image/image'
 import './gallery.css'
 
 
@@ -27,9 +28,7 @@ class Gallery extends Component {
 	
 	populateFrame( ) {
 		return this.state.images.map( image => {
-			console.log( image )
-			const url = 'root/' + image.fields.image
-			return <img key={ image.pk } className="gallery-thumbnail" src={ url }/>
+			return <Image key={ image.pk } image={ image.fields }/>
 		} )
 	}
 	
@@ -50,6 +49,5 @@ class Gallery extends Component {
 
 
 export default Gallery
-
 
 

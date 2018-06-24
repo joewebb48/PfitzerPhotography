@@ -125,7 +125,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
 	os.path.join( BASE_DIR, 'public' ),
-	'/public/'
+	'public/'
 ]
 
 """ STATIC_ROOT = os.path.join( BASE_DIR, 'public' ) """
