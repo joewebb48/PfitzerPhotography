@@ -8,60 +8,66 @@ const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 
 
 
-module.exports = [
-	// Browser configuration
-	{
-		entry: {
-			main: './view/index.js'
+module.exports = ( ) => {
+	// Application environment
+	const dev = process.env.mode === 'development' ? true : false
+	return [
+		// Browser configuration
+		{
+			mode: dev ? 'development' : 'production',
+			entry: {
+				main: './view/index.js',
+			},
+			module: {
+				rules: [
+					{ test: /\.css$/, use: [ MiniCssExtractPlugin.loader, 'css-loader' ] },
+					{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
+				]
+			},
+			plugins: [
+				new MiniCssExtractPlugin( {
+					filename: 'styles.css',
+					chunkFilename: '[id].css'
+				} ),
+			],
+			stats: {
+				children: false,
+				entrypoints: false,
+				modules: false
+			},
+			output: {
+				filename: '[name].js',
+				path: __dirname + '/public'
+			}
 		},
-		module: {
-			rules: [
-				{ test: /\.css$/, use: [ MiniCssExtractPlugin.loader, 'css-loader' ] },
-				{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
-			]
-		},
-		plugins: [
-			new MiniCssExtractPlugin( {
-				filename: 'styles.css',
-				chunkFilename: '[id].css'
-			} )
-		],
-		stats: {
-			children: false,
-			entrypoints: false,
-			modules: false
-		},
-		output: {
-			filename: '[name].js',
-			path: __dirname + '/public'
+		// Server configuration
+		{
+			mode: dev ? 'development' : 'production',
+			entry: {
+				node: './view/express.js'
+			},
+			module: {
+				rules: [
+					{ test: /\.css$/, use: 'css-loader' },
+					{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
+				]
+			},
+			externals: [
+				NodeExternals( )
+			],
+			stats: {
+				children: false,
+				entrypoints: false,
+				modules: false
+			},
+			target: 'node',
+			output: {
+				filename: '[name].js',
+				path: __dirname + '/node'
+			}
 		}
-	},
-	// Server configuration
-	{
-		entry: {
-			node: './view/express.js'
-		},
-		module: {
-			rules: [
-				{ test: /\.css$/, use: 'css-loader' },
-				{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
-			]
-		},
-		externals: [
-			NodeExternals( )
-		],
-		stats: {
-			children: false,
-			entrypoints: false,
-			modules: false
-		},
-		target: 'node',
-		output: {
-			filename: '[name].js',
-			path: __dirname + '/node'
-		}
-	}
-]
+	]
+}
 
 
 
