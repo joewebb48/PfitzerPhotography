@@ -21,11 +21,14 @@ class Image extends Component {
 	}
 	
 	openPanel( ) {
+		var animation = this.state.isOpen ? 'image-panel-view' : 'image-panel-exit'
 		if ( this.state.isOpen ) {
 			return (
-				<h3 className="image-text">
-					{ this.props.image.name }
-				</h3>
+				<div className={ 'image-panel ' + animation }>
+					<h3 className="image-text">
+						{ this.props.image.name }
+					</h3>
+				</div>
 			)
 		}
 	}
@@ -34,9 +37,12 @@ class Image extends Component {
 		const url = 'root/' + this.props.image.image
 		console.log( url )
 		console.log( this.props.image )
+		var style = this.state.isOpen ? 'image-box-grow' : 'image-box-base'
 		return (
-			<div className="image-frame" onClick={ ( ) => this.togglePanel( ) }>
-				<img className="image-thumbnail" src={ url }/>
+			<div className={ 'image-box ' + style } onClick={ ( ) => this.togglePanel( ) }>
+				<div className="image-frame">
+					<img className="image-thumbnail" src={ url }/>
+				</div>
 				{ this.openPanel( ) }
 			</div>
 		)
