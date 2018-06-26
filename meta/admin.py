@@ -4,9 +4,10 @@
 
 from os import path, remove
 from django.contrib import admin
+from django.forms import ModelForm
 
 from meta.forms import ImageForm
-from meta.models import Image
+from meta.models import Setting, Image
 
 
 
@@ -16,6 +17,11 @@ pfitzer_admin = 'Pfitzer Photography Administration'
 admin.site.site_title = pfitzer_title
 admin.site.site_header = pfitzer_admin
 admin.site.index_title = pfitzer_admin
+
+
+
+class SettingAdmin( admin.ModelAdmin ):
+	form = ModelForm
 
 
 
@@ -33,7 +39,7 @@ class ImageAdmin( admin.ModelAdmin ):
 
 
 
+admin.site.register( Setting, SettingAdmin )
 admin.site.register( Image, ImageAdmin )
-
 
 

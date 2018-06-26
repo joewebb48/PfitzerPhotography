@@ -7,6 +7,17 @@ from django.db import models
 
 
 
+class Setting( models.Model ):
+	name = models.CharField( max_length = 50, unique = True )
+	active = models.BooleanField( default = False )
+	created_at = models.DateTimeField( auto_now_add = True )
+	modified_at = models.DateTimeField( auto_now = True )
+	
+	def __str__( self ):
+		return self.name
+
+
+
 class Image( models.Model ):
 	name = models.CharField( max_length = 100, unique = True )
 	image = models.ImageField( )
@@ -49,5 +60,6 @@ class Image( models.Model ):
 	def delete( self, *args, **kwargs ):
 		super( Image, self ).delete( *args, **kwargs )
 		os.remove( self.image.url[ 1: ] )
+
 
 
