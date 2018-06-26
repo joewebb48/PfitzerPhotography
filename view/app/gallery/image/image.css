@@ -15,12 +15,11 @@
 }
 
 .image-box-base:hover {
-	z-index: 1;
 	transform: scale( 1.05, 1.05 );
 }
 
 .image-box-grow {
-	z-index: 2;
+	z-index: 1;
 	transform: scale( 1.05, 1.05 );
 }
 
@@ -49,6 +48,7 @@
 	border-left: 4px solid white;
 	border-bottom: 4px solid white;
 	border-radius: 2px;
+	text-align: left;
 	top: 200px;
 	left: -4px;
 	height: 150px;
@@ -63,10 +63,48 @@
 	animation: exit 500ms ease-in;
 }
 
-.image-text {
+.image-title {
 	color: #d0d0d0;
+	font-size: 1.25em;
+	font-weight: normal;
+	text-align: center;
 	margin: 10px 0 0;
 	animation: show 1s;
+}
+
+.image-category {
+	color: #696969;
+	font-size: 0.9em;
+	font-weight: normal;
+	text-align: center;
+	margin: 5px 10px;
+	animation: show 2s;
+}
+
+.image-summary {
+	color: #8e8e8e;
+	font-size: 0.75em;
+	margin: 10px;
+	animation: show 2s;
+}
+
+.image-panel span {
+	position: absolute;
+	display: inline-block;
+	color: #b0b0b0;
+	font-size: 0.8em;
+	bottom: 15px;
+	animation: show 2s;
+}
+
+.image-price {
+	text-align: left;
+	left: 10px;
+}
+
+.image-date {
+	text-align: right;
+	right: 10px;
 }
 
 

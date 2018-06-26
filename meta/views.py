@@ -7,6 +7,7 @@ import requests
 from django.core import serializers
 from django.shortcuts import render
 from django.http import JsonResponse
+from datetime import datetime
 
 from meta.models import Image
 
@@ -17,7 +18,7 @@ def index( request, url = None ):
 	feedback = requests.post(
 		'http://localhost:3000/render',
 		headers = { 'Content-Type': 'application/json' },
-		## React's StaticRoter needs url path from Django instead
+		## React's StaticRouter needs the url from Django instead
 		data = json.dumps( { 'url': request.path } )
 	)
 	## Serialized React frontend that will be embedded into html
@@ -28,8 +29,13 @@ def index( request, url = None ):
 def photos( request ):
 	data = serializers.serialize( 'json', Image.objects.all( ) )
 	images = json.loads( data )
+	for item in images:
+		item[ 'fields' ][ 'date' ] = item[ 'fields' ].pop( 'date_taken', None )
+		if item[ 'fields' ][ 'date' ]:
+			## Format each date string in the American date format
+			date = datetime.strptime( item[ 'fields' ][ 'date' ], '%Y-%m-%d' )
+			item[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
 	gallery = { 'images': images }
 	return JsonResponse( images, safe = False )
-
 
 

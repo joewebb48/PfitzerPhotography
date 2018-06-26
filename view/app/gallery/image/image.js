@@ -21,13 +21,17 @@ class Image extends Component {
 	}
 	
 	openPanel( ) {
+		const price = this.props.image.price ? 'Price: $' + this.props.image.price : null
+		const date = this.props.image.date ? 'Date: ' + this.props.image.date : null
 		var animation = this.state.isOpen ? 'image-panel-view' : 'image-panel-exit'
 		if ( this.state.isOpen ) {
 			return (
 				<div className={ 'image-panel ' + animation }>
-					<h3 className="image-text">
-						{ this.props.image.name }
-					</h3>
+					<h3 className="image-title"> { this.props.image.name } </h3>
+					<h5 className="image-category"> Category </h5>
+					<p className="image-summary"> { this.props.image.description } </p>
+					<span className="image-price"> { price } </span>
+					<span className="image-date"> { date } </span>
 				</div>
 			)
 		}

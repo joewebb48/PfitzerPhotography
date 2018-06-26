@@ -21,7 +21,6 @@ class Gallery extends Component {
 	
 	componentDidMount( ) {
 		axios.get( '/photos' ).then( images => {
-			console.log( images )
 			this.setState( { images: images.data } )
 		} )
 	}
@@ -49,5 +48,6 @@ class Gallery extends Component {
 
 
 export default Gallery
+
 
 

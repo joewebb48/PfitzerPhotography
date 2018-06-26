@@ -2,7 +2,7 @@
 
 
 
-from os import path, remove
+import os
 from django.db import models
 
 
@@ -25,29 +25,29 @@ class Image( models.Model ):
 	def save( self, *args, **kwargs ):
 		previous = Image.objects.get( pk = self.pk ) if self.pk else None
 		## Use the name field input as the new image file name
-		filename, extension = path.splitext( self.image.name )
+		filename, extension = os.path.splitext( self.image.name )
 		imagename = 'img/' + self.name + extension
 		## Get the previous, next, and uploaded urls respectively
 		preurl = '/root/img/' + previous.name + extension if previous else ''
 		nexturl = '/root/' + imagename
 		loadurl = self.image.url
 		## Edit the existing image file to reflect the name change
-		if path.isfile( self.image.url[ 1: ] ) and self.image.name != imagename:
+		if os.path.isfile( self.image.url[ 1: ] ) and self.image.name != imagename:
 			self.image.save( imagename, self.image, save = False )
-			remove( loadurl[ 1: ] )
+			os.remove( loadurl[ 1: ] )
 		## Replace the old image with the updated image version
-		elif not path.isfile( self.image.url[ 1: ] ) and path.isfile( nexturl[ 1: ] ):
-			remove( nexturl[ 1: ] )
+		elif not os.path.isfile( self.image.url[ 1: ] ) and os.path.isfile( nexturl[ 1: ] ):
+			os.remove( nexturl[ 1: ] )
 			self.image.save( imagename, self.image, save = False )
 		## Invoke the superclass save method with a new path
 		self.image.name = imagename
 		super( Image, self ).save( *args, **kwargs )
 		## Trash the old file for one with a new name and image
-		if path.isfile( preurl[ 1: ] ) and preurl != nexturl:
-			remove( preurl[ 1: ] )
+		if os.path.isfile( preurl[ 1: ] ) and preurl != nexturl:
+			os.remove( preurl[ 1: ] )
 	
 	def delete( self, *args, **kwargs ):
 		super( Image, self ).delete( *args, **kwargs )
-		remove( self.image.url[ 1: ] )
+		os.remove( self.image.url[ 1: ] )
 
 
