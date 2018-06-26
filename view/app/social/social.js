@@ -3,6 +3,7 @@
 
 
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import './social.css'
 
@@ -10,9 +11,23 @@ import './social.css'
 
 class Social extends Component {
 	
+	constructor( props ) {
+		super( props )
+		this.state = { status: undefined }
+	}
+	
+	
+	componentDidMount( ) {
+		axios.get( '/social' ).then( status => {
+			this.setState( { status: status.data.fields.active } )
+		} )
+	}
+	
 	render( ) {
+		if ( !this.state.status ) {
+			return null
+		}
 		return (
-			// Will be modifyable through a CMS in the future
 			<footer>
 				Social Media
 			</footer>
@@ -23,5 +38,6 @@ class Social extends Component {
 
 
 export default Social
+
 
 
