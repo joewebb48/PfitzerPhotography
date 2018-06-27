@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 
 from meta.forms import ImageForm
-from meta.models import Setting, Image
+from meta.models import Setting, Image, Media
 
 
 
@@ -39,7 +39,13 @@ class ImageAdmin( admin.ModelAdmin ):
 
 
 
+class MediaAdmin( admin.ModelAdmin ):
+	form = ModelForm
+
+
+
 admin.site.register( Setting, SettingAdmin )
 admin.site.register( Image, ImageAdmin )
+admin.site.register( Media, MediaAdmin )
 
 
