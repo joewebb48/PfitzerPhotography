@@ -72,6 +72,14 @@ class Media( models.Model ):
 	modified_at = models.DateTimeField( auto_now = True )
 	
 	def __str__( self ):
-		return self.name
+		return self.platform
+	
+	def save( self, *args, **kwargs ):
+		iconname = 'img/' + self.icon.url[ 6: ]
+		preurl = '/root/' + iconname
+		if os.path.isfile( preurl[ 1: ] ):
+			os.remove( preurl[ 1: ] )
+		self.icon.save( iconname, self.icon, save = False )
+		super( Media, self ).save( *args, **kwargs )
 
 

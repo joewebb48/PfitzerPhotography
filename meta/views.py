@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from datetime import datetime
 
-from meta.models import Setting, Image
+from meta.models import Setting, Image, Media
 
 
 
@@ -40,10 +40,12 @@ def photos( request ):
 
 
 def social( request ):
-	query = Setting.objects.get( name__iexact = 'social media' )
-	raw = serializers.serialize( 'json', [ query ] )
+	media = serializers.serialize( 'json', Media.objects.filter( active = True ) )
+	active = Setting.objects.get( name__iexact = 'social media' )
+	raw = serializers.serialize( 'json', [ active ] )
+	icons = json.loads( media )
 	status = json.loads( raw )[ 0 ]
-	return JsonResponse( status, safe = False )
-
+	content = { 'icons': icons, 'status': status }
+	return JsonResponse( content )
 
 
