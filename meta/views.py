@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from datetime import datetime
 
-from meta.models import Setting, Image, Media
+from meta.models import Setting, Image, Text, Media
 
 
 
@@ -27,8 +27,8 @@ def index( request, url = None ):
 
 
 def photos( request ):
-	data = serializers.serialize( 'json', Image.objects.all( ) )
-	images = json.loads( data )
+	film = serializers.serialize( 'json', Image.objects.all( ) )
+	images = json.loads( film )
 	for item in images:
 		item[ 'fields' ][ 'date' ] = item[ 'fields' ].pop( 'date_taken', None )
 		if item[ 'fields' ][ 'date' ]:
@@ -37,6 +37,12 @@ def photos( request ):
 			item[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
 	gallery = { 'images': images }
 	return JsonResponse( images, safe = False )
+
+
+def text( request ):
+	query = serializers.serialize( 'json', Text.objects.filter( page__iexact = 'about', published = True ) )
+	literature = json.loads( query )
+	return JsonResponse( literature, safe = False )
 
 
 def social( request ):

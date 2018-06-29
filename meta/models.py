@@ -65,6 +65,7 @@ class Image( models.Model ):
 
 class Text( models.Model ):
 	label = models.CharField( max_length = 100, unique = True )
+	## Set page and subject fields to have clear preset options
 	page = models.CharField( max_length = 50 )
 	subject = models.CharField( max_length = 100 )
 	text = models.TextField( verbose_name = 'content' )
@@ -95,5 +96,6 @@ class Media( models.Model ):
 			os.remove( preurl[ 1: ] )
 		self.icon.save( iconname, self.icon, save = False )
 		super( Media, self ).save( *args, **kwargs )
+
 
 
