@@ -63,6 +63,20 @@ class Image( models.Model ):
 
 
 
+class Text( models.Model ):
+	label = models.CharField( max_length = 100, unique = True )
+	page = models.CharField( max_length = 50 )
+	subject = models.CharField( max_length = 100 )
+	text = models.TextField( verbose_name = 'content' )
+	published = models.BooleanField( default = False )
+	created_at = models.DateTimeField( auto_now_add = True )
+	modified_at = models.DateTimeField( auto_now = True )
+	
+	def __str__( self ):
+		return self.label
+
+
+
 class Media( models.Model ):
 	platform = models.CharField( max_length = 100, unique = True )
 	icon = models.ImageField( unique = True )
