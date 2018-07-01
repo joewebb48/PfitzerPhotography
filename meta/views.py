@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from datetime import datetime
 
-from meta.models import Setting, Image, Text, Media
+from meta.models import Personal, Setting, Image, Text, Media
 
 
 
@@ -45,6 +45,13 @@ def bio( request ):
 	return JsonResponse( literature, safe = False )
 
 
+def email( request ):
+	address = Personal.objects.get( pk = 1 )
+	serial = serializers.serialize( 'json', [ address ] )
+	envelope = json.loads( serial )[ 0 ]
+	return JsonResponse( envelope, safe = False )
+
+
 def social( request ):
 	media = serializers.serialize( 'json', Media.objects.filter( active = True ) )
 	active = Setting.objects.get( name__iexact = 'social media' )
@@ -53,5 +60,6 @@ def social( request ):
 	status = json.loads( raw )[ 0 ]
 	content = { 'icons': icons, 'status': status }
 	return JsonResponse( content )
+
 
 

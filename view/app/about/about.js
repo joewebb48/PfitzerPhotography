@@ -19,7 +19,7 @@ class About extends Component {
 	
 	
 	componentDidMount( ) {
-		axios.get( '/text' ).then( content => {
+		axios.get( '/bio' ).then( content => {
 			console.log( content )
 			content.data.filter( text => {
 				this.setState( {

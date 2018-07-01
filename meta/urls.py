@@ -17,9 +17,11 @@ urlpatterns = [
 	## Other views for fetching data used by the frontend
 	path( 'photos', views.photos, name = 'photos' ),
 	path( 'bio', views.bio, name = 'bio' ),
-	path( 'social', views.social, name = 'social' )
+	path( 'social', views.social, name = 'social' ),
+	path( 'email', views.email, name = 'email' )
 ]
 
 """ path( '<path:url>', views.index, name = 'wild' ) """
+
 
 
