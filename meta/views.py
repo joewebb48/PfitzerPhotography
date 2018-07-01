@@ -39,7 +39,7 @@ def photos( request ):
 	return JsonResponse( images, safe = False )
 
 
-def text( request ):
+def bio( request ):
 	query = serializers.serialize( 'json', Text.objects.filter( page__iexact = 'about', published = True ) )
 	literature = json.loads( query )
 	return JsonResponse( literature, safe = False )

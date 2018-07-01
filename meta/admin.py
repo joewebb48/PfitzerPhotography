@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 
 from meta.forms import ImageForm
-from meta.models import Setting, Image, Text, Media
+from meta.models import Personal, Setting, Image, Text, Media
 
 
 
@@ -17,6 +17,11 @@ pfitzer_admin = 'Pfitzer Photography Administration'
 admin.site.site_title = pfitzer_title
 admin.site.site_header = pfitzer_admin
 admin.site.index_title = pfitzer_admin
+
+
+
+class PersonalAdmin( admin.ModelAdmin ):
+	form = ModelForm
 
 
 
@@ -49,6 +54,7 @@ class MediaAdmin( admin.ModelAdmin ):
 
 
 
+admin.site.register( Personal, PersonalAdmin )
 admin.site.register( Setting, SettingAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Text, TextAdmin )

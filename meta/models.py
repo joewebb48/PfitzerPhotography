@@ -7,6 +7,18 @@ from django.db import models
 
 
 
+class Personal( models.Model ):
+	first_name = models.CharField( max_length = 50, blank = True )
+	last_name = models.CharField( max_length = 50, blank = True )
+	email = models.EmailField( )
+	created_at = models.DateTimeField( auto_now_add = True )
+	modified_at = models.DateTimeField( auto_now = True )
+	
+	def __str__( self ):
+		return self.first_name + ' ' + self.last_name
+
+
+
 class Setting( models.Model ):
 	name = models.CharField( max_length = 50, unique = True )
 	active = models.BooleanField( default = False )
@@ -63,6 +75,7 @@ class Image( models.Model ):
 
 
 
+## Need to refactor this model as part of the personal model
 class Text( models.Model ):
 	label = models.CharField( max_length = 100, unique = True )
 	## Set page and subject fields to have clear preset options
@@ -96,6 +109,5 @@ class Media( models.Model ):
 			os.remove( preurl[ 1: ] )
 		self.icon.save( iconname, self.icon, save = False )
 		super( Media, self ).save( *args, **kwargs )
-
 
 
