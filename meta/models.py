@@ -17,6 +17,18 @@ class Personal( models.Model ):
 	
 	def __str__( self ):
 		return self.first_name.title( ) + ' ' + self.last_name.title( )
+	
+	def save( self, *args, **kwargs ):
+		## Prevent additional Personal objects from being created
+		if self.pk != 1:
+			return
+		super( Personal, self ).save( *args, **kwargs )
+	
+	def delete( self, *args, **kwargs ):
+		## Don't allow deletion of the only Personal model object
+		if self.pk == 1:
+			return
+		super( Personal, self ).delete( *args, **kwargs )
 
 
 
