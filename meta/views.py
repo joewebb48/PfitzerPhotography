@@ -29,15 +29,15 @@ def index( request, url = None ):
 def photos( request ):
 	query = Image.objects.all( )
 	serial = serializers.serialize( 'json', query )
-	images = json.loads( serial )
-	for item in images:
-		item[ 'fields' ][ 'date' ] = item[ 'fields' ].pop( 'date_taken', None )
-		if item[ 'fields' ][ 'date' ]:
+	gallery = json.loads( serial )
+	## Update image date fields for more readable viewed dates
+	for image in gallery:
+		image[ 'fields' ][ 'date' ] = image[ 'fields' ].pop( 'date_taken', None )
+		if image[ 'fields' ][ 'date' ]:
 			## Format each date string in the American date format
-			date = datetime.strptime( item[ 'fields' ][ 'date' ], '%Y-%m-%d' )
-			item[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
-	gallery = { 'images': images }
-	return JsonResponse( images, safe = False )
+			date = datetime.strptime( image[ 'fields' ][ 'date' ], '%Y-%m-%d' )
+			image[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
+	return JsonResponse( gallery, safe = False )
 
 
 def bio( request ):
@@ -59,8 +59,8 @@ def social( request ):
 	query = Setting.objects.get( name__iexact = 'social media' )
 	serial = serializers.serialize( 'json', [ query ] )
 	enabled = json.loads( serial )[ 0 ][ 'fields' ][ 'active' ]
-	if enabled:
-		print( '\n', enabled, '\n' )
+	## Don't display the social media panel if it's not set to active
+	if not enabled:
 		return HttpResponse( )
 	## If enabled, grab all activated social media links to display
 	else:

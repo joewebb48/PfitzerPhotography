@@ -13,16 +13,15 @@ class Social extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { status: undefined, links: [ ] }
+		this.state = { links: [ ] }
 	}
 	
 	
 	componentDidMount( ) {
-		axios.get( '/social' ).then( status => {
-			console.log( status )
+		axios.get( '/social' ).then( media => {
+			console.log( media )
 			this.setState( {
-				status: status.data.status.fields.active,
-				links: status.data.icons
+				links: media.data
 			} )
 		} )
 	}
@@ -39,7 +38,7 @@ class Social extends Component {
 	}
 	
 	render( ) {
-		if ( !this.state.status ) {
+		if ( this.state.links.length < 1 ) {
 			return null
 		}
 		return (
@@ -54,6 +53,5 @@ class Social extends Component {
 
 
 export default Social
-
 
 
