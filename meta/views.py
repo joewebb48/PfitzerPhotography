@@ -44,14 +44,18 @@ def bio( request ):
 	query = Personal.objects.get( pk = 1 )
 	serial = serializers.serialize( 'json', [ query ] )
 	content = json.loads( serial )[ 0 ]
+	## Build a new full name key from the removed name fields
+	first = content[ 'fields' ].pop( 'first_name', None )
+	last = content[ 'fields' ].pop( 'last_name', None )
+	content[ 'fields' ][ 'name' ] = '{0} {1}'.format( first, last )
 	return JsonResponse( content, safe = False )
 
 
 def email( request ):
 	query = Personal.objects.get( pk = 1 )
 	serial = serializers.serialize( 'json', [ query ] )
-	address = json.loads( serial )[ 0 ][ 'fields' ][ 'email' ]
-	return HttpResponse( address )
+	address = json.loads( serial )[ 0 ]
+	return JsonResponse( address, safe = False )
 
 
 def social( request ):

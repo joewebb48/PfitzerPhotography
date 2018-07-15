@@ -4,7 +4,6 @@
 
 form {
 	background: #313131;
-	min-height: 500px;
 	width: 600px;
 	padding: 25px;
 	margin: 0 auto;
@@ -53,5 +52,6 @@ textarea {
 	width: 150px;
 	padding: 15px;
 }
+
 
 

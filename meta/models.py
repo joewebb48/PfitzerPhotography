@@ -16,7 +16,7 @@ class Personal( models.Model ):
 	modified_at = models.DateTimeField( auto_now = True )
 	
 	def __str__( self ):
-		return self.first_name + ' ' + self.last_name
+		return self.first_name.title( ) + ' ' + self.last_name.title( )
 
 
 
@@ -27,7 +27,7 @@ class Setting( models.Model ):
 	modified_at = models.DateTimeField( auto_now = True )
 	
 	def __str__( self ):
-		return self.name
+		return self.name.title( )
 
 
 
@@ -85,7 +85,7 @@ class Media( models.Model ):
 	modified_at = models.DateTimeField( auto_now = True )
 	
 	def __str__( self ):
-		return self.platform
+		return self.platform.title( )
 	
 	def save( self, *args, **kwargs ):
 		iconname = 'img/' + self.icon.url[ 6: ]

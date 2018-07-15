@@ -19,13 +19,11 @@ class About extends Component {
 	
 	
 	componentDidMount( ) {
-		axios.get( '/bio' ).then( content => {
-			console.log( content )
-			content.data.filter( text => {
-				this.setState( {
-					name: text.fields.label === 'name' ? text.fields.text : this.state.name,
-					about: text.fields.label === 'about' ? text.fields.text : this.state.about
-				} )
+		axios.get( '/bio' ).then( bio => {
+			console.log( bio )
+			this.setState( {
+				name: bio.data.fields.name,
+				about: bio.data.fields.about
 			} )
 		} )
 	}
