@@ -93,8 +93,8 @@ class Text( models.Model ):
 
 class Media( models.Model ):
 	platform = models.CharField( max_length = 100, unique = True )
-	icon = models.ImageField( unique = True )
 	url = models.URLField( unique = True )
+	icon = models.ImageField( unique = True )
 	active = models.BooleanField( default = False )
 	created_at = models.DateTimeField( auto_now_add = True )
 	modified_at = models.DateTimeField( auto_now = True )

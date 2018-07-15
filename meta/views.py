@@ -5,8 +5,8 @@
 import json
 import requests
 from django.core import serializers
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.http import JsonResponse
 from datetime import datetime
 
 from meta.models import Personal, Setting, Image, Text, Media
@@ -27,8 +27,9 @@ def index( request, url = None ):
 
 
 def photos( request ):
-	film = serializers.serialize( 'json', Image.objects.all( ) )
-	images = json.loads( film )
+	query = Image.objects.all( )
+	serial = serializers.serialize( 'json', query )
+	images = json.loads( serial )
 	for item in images:
 		item[ 'fields' ][ 'date' ] = item[ 'fields' ].pop( 'date_taken', None )
 		if item[ 'fields' ][ 'date' ]:
@@ -40,26 +41,33 @@ def photos( request ):
 
 
 def bio( request ):
-	query = serializers.serialize( 'json', Text.objects.filter( page__iexact = 'about', published = True ) )
-	literature = json.loads( query )
-	return JsonResponse( literature, safe = False )
+	query = Text.objects.filter( page__iexact = 'about', published = True )
+	serial = serializers.serialize( 'json', query )
+	content = json.loads( serial )
+	return JsonResponse( content, safe = False )
 
 
 def email( request ):
-	address = Personal.objects.get( pk = 1 )
-	serial = serializers.serialize( 'json', [ address ] )
-	envelope = json.loads( serial )[ 0 ]
-	return JsonResponse( envelope, safe = False )
+	query = Personal.objects.get( pk = 1 )
+	serial = serializers.serialize( 'json', [ query ] )
+	address = json.loads( serial )[ 0 ]
+	return JsonResponse( address, safe = False )
 
 
 def social( request ):
-	media = serializers.serialize( 'json', Media.objects.filter( active = True ) )
-	active = Setting.objects.get( name__iexact = 'social media' )
-	raw = serializers.serialize( 'json', [ active ] )
-	icons = json.loads( media )
-	status = json.loads( raw )[ 0 ]
-	content = { 'icons': icons, 'status': status }
-	return JsonResponse( content )
+	## Verify that the social media links panel has been enabled
+	query = Setting.objects.get( name__iexact = 'social media' )
+	serial = serializers.serialize( 'json', [ query ] )
+	enabled = json.loads( serial )[ 0 ][ 'fields' ][ 'active' ]
+	if enabled:
+		print( '\n', enabled, '\n' )
+		return HttpResponse( )
+	## If enabled, grab all activated social media links to display
+	else:
+		query = Media.objects.filter( active = True )
+		serial = serializers.serialize( 'json', query )
+		links = json.loads( serial )
+		return JsonResponse( links, safe = False )
 
 
 
