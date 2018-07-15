@@ -9,7 +9,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from datetime import datetime
 
-from meta.models import Personal, Setting, Image, Text, Media
+from meta.models import Personal, Setting, Image, Media
 
 
 
@@ -41,17 +41,17 @@ def photos( request ):
 
 
 def bio( request ):
-	query = Text.objects.filter( page__iexact = 'about', published = True )
-	serial = serializers.serialize( 'json', query )
-	content = json.loads( serial )
+	query = Personal.objects.get( pk = 1 )
+	serial = serializers.serialize( 'json', [ query ] )
+	content = json.loads( serial )[ 0 ]
 	return JsonResponse( content, safe = False )
 
 
 def email( request ):
 	query = Personal.objects.get( pk = 1 )
 	serial = serializers.serialize( 'json', [ query ] )
-	address = json.loads( serial )[ 0 ]
-	return JsonResponse( address, safe = False )
+	address = json.loads( serial )[ 0 ][ 'fields' ][ 'email' ]
+	return HttpResponse( address )
 
 
 def social( request ):
