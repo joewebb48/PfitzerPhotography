@@ -7,7 +7,7 @@ from django.db import models
 
 
 
-class Profile( models.Model ):
+class Setting( models.Model ):
 	first_name = models.CharField( max_length = 50, blank = True )
 	last_name = models.CharField( max_length = 50, blank = True )
 	email = models.EmailField( )
@@ -20,16 +20,16 @@ class Profile( models.Model ):
 		return self.first_name.title( ) + ' ' + self.last_name.title( )
 	
 	def save( self, *args, **kwargs ):
-		## Prevent additional Profile objects from further creation
+		## Prevent additional Setting objects from further creation
 		if self.pk != 1:
 			return
-		super( Profile, self ).save( *args, **kwargs )
+		super( Setting, self ).save( *args, **kwargs )
 	
 	def delete( self, *args, **kwargs ):
-		## Don't allow deletion of the existing Profile model object
+		## Don't allow deletion of the single Setting model object
 		if self.pk == 1:
 			return
-		super( Profile, self ).delete( *args, **kwargs )
+		super( Setting, self ).delete( *args, **kwargs )
 
 
 

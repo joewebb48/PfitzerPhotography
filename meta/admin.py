@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 
 from meta.forms import ImageForm
-from meta.models import Profile, Image, Media
+from meta.models import Setting, Image, Media
 
 
 
@@ -20,7 +20,7 @@ admin.site.index_title = pfitzer_admin
 
 
 
-class ProfileAdmin( admin.ModelAdmin ):
+class SettingAdmin( admin.ModelAdmin ):
 	form = ModelForm
 	actions = None
 	
@@ -53,7 +53,7 @@ class MediaAdmin( admin.ModelAdmin ):
 
 
 
-admin.site.register( Profile, ProfileAdmin )
+admin.site.register( Setting, SettingAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
 
