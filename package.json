@@ -15,7 +15,8 @@
 		"react-redux": "^5.0.7",
 		"react-router": "^4.3.1",
 		"react-router-dom": "^4.2.2",
-		"redux": "^4.0.0"
+		"redux": "^4.0.0",
+		"redux-thunk": "^2.3.0"
 	},
 	"scripts": {
 		"pre": "mode=development webpack && node node/node.js",
@@ -33,5 +34,6 @@
 		"webpack-node-externals": "^1.7.2"
 	}
 }
+
 
 
