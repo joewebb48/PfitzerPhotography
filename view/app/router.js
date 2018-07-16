@@ -5,10 +5,10 @@
 import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
 
-import Home from './home/home'
-import About from './about/about'
-import Gallery from './gallery/gallery'
-import Contact from './contact/contact'
+import Home from './components/home/home'
+import About from './components/about/about'
+import Gallery from './components/gallery/gallery'
+import Contact from './components/contact/contact'
 
 
 

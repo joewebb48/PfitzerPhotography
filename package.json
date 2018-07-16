@@ -10,9 +10,12 @@
 		"axios": "^0.18.0",
 		"body-parser": "^1.18.3",
 		"express": "^4.16.3",
-		"react": "^16.4.0",
-		"react-dom": "^16.4.0",
-		"react-router-dom": "^4.2.2"
+		"react": "^16.4.1",
+		"react-dom": "^16.4.1",
+		"react-redux": "^5.0.7",
+		"react-router": "^4.3.1",
+		"react-router-dom": "^4.2.2",
+		"redux": "^4.0.0"
 	},
 	"scripts": {
 		"pre": "mode=development webpack && node node/node.js",
@@ -30,6 +33,5 @@
 		"webpack-node-externals": "^1.7.2"
 	}
 }
-
 
 
