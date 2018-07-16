@@ -9,7 +9,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from datetime import datetime
 
-from meta.models import Personal, Setting, Image, Media
+from meta.models import Profile, Image, Media
 
 
 
@@ -41,7 +41,7 @@ def photos( request ):
 
 
 def bio( request ):
-	query = Personal.objects.get( pk = 1 )
+	query = Profile.objects.get( pk = 1 )
 	serial = serializers.serialize( 'json', [ query ] )
 	content = json.loads( serial )[ 0 ]
 	## Build a new full name key from the removed name fields
@@ -52,7 +52,7 @@ def bio( request ):
 
 
 def email( request ):
-	query = Personal.objects.get( pk = 1 )
+	query = Profile.objects.get( pk = 1 )
 	serial = serializers.serialize( 'json', [ query ] )
 	address = json.loads( serial )[ 0 ]
 	return JsonResponse( address, safe = False )
@@ -60,9 +60,9 @@ def email( request ):
 
 def social( request ):
 	## Verify that the social media links panel has been enabled
-	query = Setting.objects.get( name__iexact = 'social media' )
+	query = Profile.objects.get( pk = 1 )
 	serial = serializers.serialize( 'json', [ query ] )
-	enabled = json.loads( serial )[ 0 ][ 'fields' ][ 'active' ]
+	enabled = json.loads( serial )[ 0 ][ 'fields' ][ 'social' ]
 	## Don't display the social media panel if it's not set to active
 	if not enabled:
 		return HttpResponse( )

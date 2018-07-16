@@ -7,10 +7,11 @@ from django.db import models
 
 
 
-class Personal( models.Model ):
+class Profile( models.Model ):
 	first_name = models.CharField( max_length = 50, blank = True )
 	last_name = models.CharField( max_length = 50, blank = True )
 	email = models.EmailField( )
+	social = models.BooleanField( verbose_name = 'social media enabled', default = False )
 	about = models.TextField( blank = True )
 	created_at = models.DateTimeField( auto_now_add = True )
 	modified_at = models.DateTimeField( auto_now = True )
@@ -19,27 +20,16 @@ class Personal( models.Model ):
 		return self.first_name.title( ) + ' ' + self.last_name.title( )
 	
 	def save( self, *args, **kwargs ):
-		## Prevent additional Personal objects from being created
+		## Prevent additional Profile objects from further creation
 		if self.pk != 1:
 			return
-		super( Personal, self ).save( *args, **kwargs )
+		super( Profile, self ).save( *args, **kwargs )
 	
 	def delete( self, *args, **kwargs ):
-		## Don't allow deletion of the only Personal model object
+		## Don't allow deletion of the existing Profile model object
 		if self.pk == 1:
 			return
-		super( Personal, self ).delete( *args, **kwargs )
-
-
-
-class Setting( models.Model ):
-	name = models.CharField( max_length = 50, unique = True )
-	active = models.BooleanField( default = False )
-	created_at = models.DateTimeField( auto_now_add = True )
-	modified_at = models.DateTimeField( auto_now = True )
-	
-	def __str__( self ):
-		return self.name.title( )
+		super( Profile, self ).delete( *args, **kwargs )
 
 
 

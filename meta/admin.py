@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 
 from meta.forms import ImageForm
-from meta.models import Personal, Setting, Image, Media
+from meta.models import Profile, Image, Media
 
 
 
@@ -20,7 +20,7 @@ admin.site.index_title = pfitzer_admin
 
 
 
-class PersonalAdmin( admin.ModelAdmin ):
+class ProfileAdmin( admin.ModelAdmin ):
 	form = ModelForm
 	actions = None
 	
@@ -29,13 +29,8 @@ class PersonalAdmin( admin.ModelAdmin ):
 		return False
 	
 	def has_delete_permission( self, request, obj = None ):
-		## Remove all Personal object deletion
+		## Remove any Profile object deletion
 		return False
-
-
-
-class SettingAdmin( admin.ModelAdmin ):
-	form = ModelForm
 
 
 
@@ -58,8 +53,7 @@ class MediaAdmin( admin.ModelAdmin ):
 
 
 
-admin.site.register( Personal, PersonalAdmin )
-admin.site.register( Setting, SettingAdmin )
+admin.site.register( Profile, ProfileAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
 
