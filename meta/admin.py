@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 
 from meta.forms import ImageForm
-from meta.models import Setting, Image, Media
+from meta.models import Setting, Page, Image, Media
 
 
 
@@ -34,6 +34,11 @@ class SettingAdmin( admin.ModelAdmin ):
 
 
 
+class PageAdmin( admin.ModelAdmin ):
+	pass
+
+
+
 class ImageAdmin( admin.ModelAdmin ):
 	form = ImageForm
 	actions = [ 'delete_selected' ]
@@ -49,11 +54,12 @@ class ImageAdmin( admin.ModelAdmin ):
 
 
 class MediaAdmin( admin.ModelAdmin ):
-	form = ModelForm
+	pass
 
 
 
 admin.site.register( Setting, SettingAdmin )
+admin.site.register( Page, PageAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
 
