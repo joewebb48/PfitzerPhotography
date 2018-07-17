@@ -14,8 +14,9 @@ import nodeBox from './boxes/nodebox'
 class App extends Component {
 	
 	render( ) {
+		const box = nodeBox( )
 		return (
-			<Provider store={ nodeBox }>
+			<Provider store={ box }>
 				<StaticRouter location={ this.props.url } context={ {  } }>
 					<Router/>
 				</StaticRouter>
@@ -27,5 +28,6 @@ class App extends Component {
 
 
 export default App
+
 
 

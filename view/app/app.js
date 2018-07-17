@@ -14,8 +14,9 @@ import viewBox from './boxes/viewbox'
 class App extends Component {
 	
 	render( ) {
+		const box = viewBox( )
 		return (
-			<Provider store={ viewBox }>
+			<Provider store={ box }>
 				<BrowserRouter>
 					<Router/>
 				</BrowserRouter>
@@ -27,5 +28,6 @@ class App extends Component {
 
 
 export default App
+
 
 

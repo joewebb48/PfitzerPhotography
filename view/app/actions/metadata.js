@@ -9,12 +9,12 @@ import axios from 'axios'
 export const metadata = 'metadata'
 
 
-export const getMetadata = ( ) => async relay => {
-	const webpage = await axios.get( '/tag' )
-	relay( {
+export async function getMetadata( ) {
+	const tags = await axios.get( '/tag' )
+	return {
 		type: metadata,
-		data: webpage
-	} )
+		feedback: tags
+	}
 }
 
 
