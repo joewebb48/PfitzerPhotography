@@ -9,12 +9,18 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from datetime import datetime
 
-from meta.models import Setting, Image, Media
+from meta.models import Setting, Page, Image, Media
 
 
 
 def index( request, url = None ):
-	## Get the jsx views from the Node server that processes it
+	## Have this removed for url query once model field is added
+	url = request.path[ 1: ] if request.path != '/' else 'home'
+	## Obtain page metadata for insertion into HTML as head tags
+	query = Page.objects.get( page__iexact = url )
+	serial = serializers.serialize( 'json', [ query ] )
+	page = json.loads( serial )[ 0 ]
+	## Get jsx views from the Node server that processes them
 	feedback = requests.post(
 		'http://localhost:3000/render',
 		headers = { 'Content-Type': 'application/json' },
@@ -23,6 +29,7 @@ def index( request, url = None ):
 	)
 	## Serialized React frontend that will be embedded into html
 	metadata = feedback.json( )
+	metadata[ 'title' ] = page[ 'fields' ][ 'title' ] + ' | ' + metadata[ 'title' ]
 	return render( request, 'index.html', metadata )
 
 
@@ -72,6 +79,5 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		links = json.loads( serial )
 		return JsonResponse( links, safe = False )
-
 
 
