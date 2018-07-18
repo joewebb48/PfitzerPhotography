@@ -1,7 +1,7 @@
 # Pfitzer Photography
 ### Website Portfolio For Ursula Pfitzer's Industrial Photography Engineered By Ian Peterson
 
-#### Built in React and Django with Server-Side Rendering
+#### Built in React and Redux with Django and Server-Side Rendering
 
 
 This README file is a work in progress!
