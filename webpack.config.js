@@ -4,6 +4,7 @@
 
 const NodeExternals = require( 'webpack-node-externals' )
 
+const HtmlWebpackPlugin = require( 'html-webpack-plugin' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 
 
@@ -25,6 +26,13 @@ module.exports = ( ) => {
 				]
 			},
 			plugins: [
+				new HtmlWebpackPlugin( {
+					inject: false,
+					template: 'root/index.html',
+					minify: {
+						removeComments: true
+					}
+				} ),
 				new MiniCssExtractPlugin( {
 					filename: 'styles.css',
 					chunkFilename: '[id].css'
