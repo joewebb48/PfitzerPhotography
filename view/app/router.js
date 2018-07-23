@@ -17,21 +17,24 @@ class Router extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { canUseDOM: false }
+		this.state = { location: undefined }
 	}
 	
 	
 	componentDidMount( ) {
-		this.setState( { canUseDOM: true } )
+		this.setState( { location: this.props.location.pathname } )
+	}
+	
+	componentDidUpdate( ) {
+		if ( this.state.location !== this.props.location.pathname ) {
+			this.setState( { location: this.props.location.pathname } )
+		}
 	}
 	
 	render( ) {
-		if ( !this.state.canUseDOM ) {
-			return null
-		}
 		return (
 			<section className="page">
-				<Base/>
+				<Base location={ this.state.location }/>
 				<Route exact path="/" component={ Home }/>
 				<Route path="/about" component={ About }/>
 				<Route path="/gallery" component={ Gallery }/>
@@ -43,7 +46,6 @@ class Router extends Component {
 }
 
 
-export default Router
-
+export default withRouter( Router )
 
 
