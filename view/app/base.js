@@ -28,12 +28,14 @@ class Base extends Component {
 	}
 	
 	generateTags( ) {
-		const oldTags = Array.from( document.head.children )
+		// Set up a proxy to the DOM's head tag to safely access it
+		const proxy = ReactDOM.createPortal( <></>, document.head )
+		const raws = Array.from( proxy.containerInfo.children )
 		// Undo the native DOM head tags and create them as jsx
-		const newTags = oldTags.map( tag => {
+		const tags = raws.map( tag => {
 			let label = tag.tagName.toLowerCase( )
 			let keys = Object.keys( tag.attributes )
-			let attrs = keys.length > 0 ? [ ] : null
+			let attrs = {  }
 			// Aggregate necessary tag attributes for props usage
 			if ( keys.length > 0 ) {
 				keys.forEach( key => {
@@ -41,57 +43,42 @@ class Base extends Component {
 					let value = tag.attributes[ key ][ 'value' ]
 					// React is really picky about props nomenclature
 					name = name === 'charset' ? 'charSet' : name
-					attrs.push( Object.defineProperty( {  }, name, { value: value } ) )
+					attrs[ name ] = value
 				} )
 			}
-			let inner = tag.textContent
-			inner = inner.length > 0 ? inner : null
+			let inner = tag.textContent.length > 0 ? tag.textContent : null
 			// Title tag changes set up for tag update development
 			label === 'title' && this.props.location === '/' ? inner = 'Home' : null
 			label === 'title' && this.props.location === '/about' ? inner = 'About' : null
 			label === 'title' && this.props.location === '/gallery' ? inner = 'Gallery' : null
 			label === 'title' && this.props.location === '/contact' ? inner = 'Contact' : null
-			let props = {  }
-			// Generated props attributes need much more refining
-			for ( let idx = 0; idx < keys.length; idx++ ) {
-				let attr = attrs ? Object.keys( attrs )[ idx ] : null
-				let field = attrs ? attrs[ attr ] : null
-				let ref = attrs ? Object.getOwnPropertyNames( field )[ 0 ] : null
-				props[ ref ] = attrs ? field : null
-				// Finally create a properly configured props attribute
-				Object.defineProperty( props, ref, { value: field[ ref ] } )
-			}
-			console.log( props )
 			// Instantiate the jsx tag element via the extracted data
-			return React.createElement( label, props, inner )
+			return React.createElement( label, attrs, inner )
 		} )
-		console.log( oldTags )
-		console.log( newTags )
-		console.log( this.props.location )
-		this.setState( { tags: newTags } )
-		console.log( this.state.tags )
+		this.setState( { tags: tags } )
 	}
 	
 	setTags( ) {
 		let enumerator = 0
 		return this.state.tags.map( tag => {
-			// Mirror jsx element creation required for key assignment
+			// Mirror jsx list element generation for key assignment
 			enumerator++
 			const Tag = tag.type
-			// Will need to be changed to keep DOM access abstracted
 			if ( !this.state.injected ) {
-				document.head.firstElementChild.remove( )
+				// Keep DOM access abstracted for safe node removal
+				let node = ReactDOM.createPortal( <></>, document.head.firstElementChild )
+				node.containerInfo.remove( )
 			}
 			return <Tag key={ enumerator } { ...tag.props }/>
 		} )
 	}
 	
 	render( ) {
-		// Deny server-rendering this component since uses the DOM
+		// No server-rendering since this component uses the DOM
 		if ( !this.props.location ) {
 			return null
 		}
-		// Everything in this component will be inside of the head tag
+		// Everything in this component will be inside the head tag
 		return ReactDOM.createPortal( this.setTags( ), document.head )
 	}
 	
@@ -99,5 +86,6 @@ class Base extends Component {
 
 
 export default Base
+
 
 
