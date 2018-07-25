@@ -14,12 +14,8 @@ from meta.models import Setting, Page, Image, Media
 
 
 def index( request, url = None ):
-	## Have this removed for url query once model field is added
-	url = request.path[ 1: ] if request.path != '/' else 'home'
-	## Obtain page metadata for insertion into HTML as head tags
-	query = Page.objects.get( page__iexact = url )
-	serial = serializers.serialize( 'json', [ query ] )
-	page = json.loads( serial )[ 0 ]
+	tags = data( request ).content
+	page = json.loads( tags )
 	## Get jsx views from the Node server that processes them
 	feedback = requests.post(
 		'http://localhost:3000/render',
@@ -29,8 +25,21 @@ def index( request, url = None ):
 	)
 	## Serialized React frontend that will be embedded into html
 	metadata = feedback.json( )
-	metadata[ 'title' ] = page[ 'fields' ][ 'title' ] + ' | ' + metadata[ 'title' ]
+	metadata[ 'title' ] = page[ 'fields' ][ 'title' ]
 	return render( request, 'index.html', metadata )
+
+
+def data( request ):
+	title = 'Pfitzer Photography'
+	## Have this removed for url query once model field is added
+	origin = request.GET.get( 'url', request.path )
+	url = origin[ 1: ] if origin != '/' else 'home'
+	## Obtain page metadata for insertion into HTML as head tags
+	query = Page.objects.get( page__iexact = url )
+	serial = serializers.serialize( 'json', [ query ] )
+	info = json.loads( serial )[ 0 ]
+	info[ 'fields' ][ 'title' ] += ' | ' + title
+	return JsonResponse( info )
 
 
 def photos( request ):
@@ -79,5 +88,6 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		links = json.loads( serial )
 		return JsonResponse( links, safe = False )
+
 
 

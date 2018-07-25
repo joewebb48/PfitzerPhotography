@@ -31,15 +31,13 @@ app.get( '/*', ( request, response ) => {
 app.post( '/render', ( request, response ) => {
 	// React's router must get the requested url path from Django first
 	const root = ReactDOMServer.renderToString( <App url={ request.body.url }/> )
-	response.json( {
-		html: root,
-		title: 'Pfitzer Photography'
-	} )
+	response.json( { html: root } )
 } )
 
 
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!' )
 } )
+
 
 

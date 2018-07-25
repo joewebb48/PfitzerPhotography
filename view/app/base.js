@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import axios from 'axios'
 
 
 
@@ -19,15 +20,17 @@ class Base extends Component {
 		this.generateTags( )
 	}
 	
-	componentDidUpdate( props ) {
+	async componentDidUpdate( props ) {
 		this.state.injected ? null : this.setState( { injected: true } )
 		// Only execute page data changes when the url changes
 		if ( this.props.location !== props.location ) {
-			this.generateTags( )
+			let url = { params: { url: this.props.location } }
+			let data = props.location ? await axios.get( '/data', url ) : false
+			this.generateTags( data )
 		}
 	}
 	
-	generateTags( ) {
+	generateTags( info ) {
 		// Set up a proxy to the DOM's head tag to safely access it
 		const proxy = ReactDOM.createPortal( <></>, document.head )
 		const raws = Array.from( proxy.containerInfo.children )
@@ -47,11 +50,7 @@ class Base extends Component {
 				} )
 			}
 			let inner = tag.textContent.length > 0 ? tag.textContent : null
-			// Title tag changes set up for tag update development
-			label === 'title' && this.props.location === '/' ? inner = 'Home' : null
-			label === 'title' && this.props.location === '/about' ? inner = 'About' : null
-			label === 'title' && this.props.location === '/gallery' ? inner = 'Gallery' : null
-			label === 'title' && this.props.location === '/contact' ? inner = 'Contact' : null
+			inner = label === 'title' && info ? info.data.fields.title : inner
 			// Instantiate the jsx tag element via the extracted data
 			return React.createElement( label, attrs, inner )
 		} )
@@ -86,6 +85,5 @@ class Base extends Component {
 
 
 export default Base
-
 
 
