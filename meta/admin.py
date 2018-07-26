@@ -35,6 +35,7 @@ class SettingAdmin( admin.ModelAdmin ):
 
 
 class PageAdmin( admin.ModelAdmin ):
+	## Update later to disable add and delete
 	pass
 
 
@@ -62,6 +63,5 @@ admin.site.register( Setting, SettingAdmin )
 admin.site.register( Page, PageAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
-
 
 

@@ -44,7 +44,9 @@ class Image extends Component {
 		var style = this.state.isOpen ? 'image-box-grow' : 'image-box-base'
 		return (
 			<div className={ 'image-box ' + style } onClick={ ( ) => this.togglePanel( ) }>
+				<div className="image-shadow"></div>
 				<div className="image-frame">
+					<div className="image-border"></div>
 					<img className="image-thumbnail" src={ url }/>
 				</div>
 				{ this.openPanel( ) }
