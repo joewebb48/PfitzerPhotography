@@ -4,9 +4,11 @@
 
 .image-box {
 	position: relative;
+	z-index: 3;
 	background: #444444;
 	/* border: 4px solid white; */
 	/* border-radius: 2px; */
+	cursor: pointer;
 	flex-basis: 225px;
 	height: 200px;
 	max-width: 225px;
@@ -14,13 +16,13 @@
 	transition: 250ms;
 }
 
-.image-box-base:hover {
+.image-box-bubble {
+	z-index: 4;
 	transform: scale( 1.05, 1.05 );
 }
 
-.image-box-grow {
-	z-index: 4;
-	transform: scale( 1.05, 1.05 );
+.image-box-recede {
+	z-index: 5;
 }
 
 .image-frame {
@@ -66,11 +68,13 @@
 
 .image-panel {
 	position: absolute;
+	/* z-index: 6; */
 	background: black;
 	/* border-right: 4px solid white; */
 	/* border-left: 4px solid white; */
 	/* border-bottom: 4px solid white; */
 	border-radius: 2px;
+	cursor: initial;
 	text-align: left;
 	top: 200px;
 	height: 125px;
@@ -79,12 +83,13 @@
 }
 
 .image-panel-view {
-	z-index: 3;
+	z-index: 6 !important;
 	animation: view 500ms ease-out;
 }
 
-.image-panel-exit {
-	animation: exit 500ms ease-in;
+.image-panel-fade {
+	z-index: 7 !important;
+	animation: fade 500ms ease-in both;
 }
 
 .image-title {
@@ -93,7 +98,7 @@
 	font-weight: normal;
 	text-align: center;
 	margin: 0;
-	animation: show 1s;
+	animation: show 1s 500ms both;
 }
 
 .image-category {
@@ -102,14 +107,14 @@
 	font-weight: normal;
 	text-align: center;
 	margin: 5px 10px;
-	animation: show 2s;
+	animation: show 2s 500ms both;
 }
 
 .image-summary {
 	color: #8e8e8e;
 	font-size: 0.75em;
 	margin: 10px;
-	animation: show 2s;
+	animation: show 2s 500ms both;
 }
 
 .image-panel span {
@@ -118,7 +123,7 @@
 	color: #b0b0b0;
 	font-size: 0.8em;
 	bottom: 0;
-	animation: show 2s;
+	animation: show 2s 500ms both;
 }
 
 .image-price {
@@ -137,15 +142,14 @@
 	to { height: 125px }
 }
 
-@keyframes exit {
+@keyframes fade {
 	from { height: 125px }
 	to { height: 0; }
 }
 
 @keyframes show {
 	from { opacity: 0 }
-	to { opacity: 100 }
+	to { opacity: 1 }
 }
-
 
 
