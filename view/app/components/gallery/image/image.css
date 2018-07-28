@@ -16,18 +16,20 @@
 	transition: 250ms;
 }
 
-.image-box-bubble {
-	z-index: 4;
+.image-box:hover {
 	transform: scale( 1.05, 1.05 );
 }
 
-.image-box-recede {
+.image-box-upper {
 	z-index: 5;
+}
+
+.image-box-lower {
+	z-index: 4;
 }
 
 .image-frame {
 	position: relative;
-	z-index: 1;
 	background: black;
 	overflow: hidden;
 	height: 200px;
@@ -68,7 +70,7 @@
 
 .image-panel {
 	position: absolute;
-	/* z-index: 6; */
+	z-index: 6;
 	background: black;
 	/* border-right: 4px solid white; */
 	/* border-left: 4px solid white; */
@@ -76,19 +78,19 @@
 	border-radius: 2px;
 	cursor: initial;
 	text-align: left;
-	top: 200px;
+	/* top: 200px; */
 	height: 125px;
 	width: 100%;
 	box-shadow: 0 10px 20px 12px black;
 }
 
 .image-panel-view {
-	z-index: 6 !important;
+	z-index: 8;
 	animation: view 500ms ease-out;
 }
 
 .image-panel-fade {
-	z-index: 7 !important;
+	z-index: 7;
 	animation: fade 500ms ease-in both;
 }
 

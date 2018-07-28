@@ -26,8 +26,9 @@ class Gallery extends Component {
 	}
 	
 	populateFrame( ) {
+		let rank = 1
 		return this.state.images.map( image => {
-			return <Image key={ image.pk } image={ image.fields }/>
+			return <Image key={ image.pk } rk={ rank++ } image={ image.fields }/>
 		} )
 	}
 	
@@ -48,6 +49,5 @@ class Gallery extends Component {
 
 
 export default Gallery
-
 
 
