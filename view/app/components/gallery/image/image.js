@@ -13,14 +13,28 @@ class Image extends Component {
 	constructor( props ) {
 		super( props )
 		this.state = { superiorView: false, viewMode: 'hide' }
-		this.view = this.togglePanel.bind( this )
-		this.hide = this.hidePanel.bind( this )
+		this.elevateUp = this.elevateUp.bind( this )
+		this.fallBack = this.fallBack.bind( this )
 	}
 	
 	
-	componentDidUpdate( ) {
+	componentDidUpdate( props, state ) {
 		if ( this.state.superiorView && this.state.viewMode === 'hide' ) {
 			this.setState( { superiorView: false } )
+		}
+		if ( this.state.viewMode === 'view' ) {
+			if ( !props.last ) {
+				this.props.viewHover( this )
+			}
+			else if ( this.state.superiorView === props.last.state.superiorView ) {
+				let superior = this.props.rk < props.last.props.rk
+				// Still fails when moved downwards more than once
+				props.last.setState( { superiorView: superior ? false : true } )
+				this.setState( { superiorView: superior ? true : false } )
+			}
+		}
+		else if ( this.state.viewMode === 'fade' ) {
+			this.props.viewHover( this, next => { return next } )
 		}
 	}
 	
@@ -33,19 +47,19 @@ class Image extends Component {
 		return element
 	}
 	
-	togglePanel( ) {
+	elevateUp( ) {
 		// Prevent adding z-indexes until all other panels are hidden
 		this.setState( { superiorView: true, viewMode: 'view' } )
 	}
 	
-	hidePanel( ) {
+	fallBack( ) {
 		setTimeout( ( ) => {
 			this.setState( { superiorView: false, viewMode: 'hide' } )
 		}, 500 )
 		this.setState( { viewMode: 'fade' } )
 	}
 	
-	openPanel( ) {
+	setPanel( ) {
 		const price = this.props.image.price ? 'Price: $' + this.props.image.price : null
 		const date = this.props.image.date ? 'Date: ' + this.props.image.date : null
 		const animation = this.state.viewMode === 'view' ? 'image-panel-view' : 'image-panel-fade'
@@ -64,7 +78,7 @@ class Image extends Component {
 	
 	render( ) {
 		const url = 'root/' + this.props.image.image
-		const events = { onMouseEnter: this.view, onMouseLeave: this.hide }
+		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		//console.log( url )
 		//console.log( this.props.image )
 		const style = this.animateMode( 'image-box', 'upper', 'lower' )
@@ -75,7 +89,7 @@ class Image extends Component {
 					<div className="image-border"></div>
 					<img className="image-thumbnail" src={ url }/>
 				</div>
-				{ this.openPanel( ) }
+				{ this.setPanel( ) }
 			</div>
 		)
 	}
