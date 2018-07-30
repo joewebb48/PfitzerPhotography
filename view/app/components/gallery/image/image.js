@@ -18,23 +18,12 @@ class Image extends Component {
 	}
 	
 	
-	componentDidUpdate( props, state ) {
-		if ( this.state.superiorView && this.state.viewMode === 'hide' ) {
-			this.setState( { superiorView: false } )
-		}
+	componentDidUpdate( ) {
 		if ( this.state.viewMode === 'view' ) {
-			if ( !props.last ) {
-				this.props.viewHover( this )
-			}
-			else if ( this.state.superiorView === props.last.state.superiorView ) {
-				let superior = this.props.rk < props.last.props.rk
-				// Still fails when moved downwards more than once
-				props.last.setState( { superiorView: superior ? false : true } )
-				this.setState( { superiorView: superior ? true : false } )
-			}
+			this.props.viewHover( this )
 		}
-		else if ( this.state.viewMode === 'fade' ) {
-			this.props.viewHover( this, next => { return next } )
+		else if ( this.state.superiorView && this.state.viewMode === 'hide' ) {
+			this.setState( { superiorView: false } )
 		}
 	}
 	
@@ -48,8 +37,8 @@ class Image extends Component {
 	}
 	
 	elevateUp( ) {
-		// Prevent adding z-indexes until all other panels are hidden
-		this.setState( { superiorView: true, viewMode: 'view' } )
+		this.setState( { viewMode: 'view' } )
+		this.props.viewHover( this )
 	}
 	
 	fallBack( ) {
@@ -57,13 +46,14 @@ class Image extends Component {
 			this.setState( { superiorView: false, viewMode: 'hide' } )
 		}, 500 )
 		this.setState( { viewMode: 'fade' } )
+		this.props.moveOff( this )
 	}
 	
 	setPanel( ) {
 		const price = this.props.image.price ? 'Price: $' + this.props.image.price : null
 		const date = this.props.image.date ? 'Date: ' + this.props.image.date : null
 		const animation = this.state.viewMode === 'view' ? 'image-panel-view' : 'image-panel-fade'
-		if ( this.state.viewMode !== 'hide' ) {
+		if ( this.state.viewMode !== 'hide' && this.state.superiorView ) {
 			return (
 				<div className={ 'image-panel ' + animation }>
 					<h3 className="image-title"> { this.props.image.name } </h3>
@@ -79,8 +69,6 @@ class Image extends Component {
 	render( ) {
 		const url = 'root/' + this.props.image.image
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
-		//console.log( url )
-		//console.log( this.props.image )
 		const style = this.animateMode( 'image-box', 'upper', 'lower' )
 		return (
 			<div id={ this.props.rk } className={ style } { ...events }>
