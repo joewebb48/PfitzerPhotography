@@ -19,13 +19,13 @@
 	transform: scale( 1.05, 1.05 );
 }
 
-.image-box-upper {
+/* .image-box-upper {
 	z-index: 4;
 }
 
 .image-box-lower {
 	z-index: 3;
-}
+} */
 
 .image-frame {
 	position: relative;
@@ -69,6 +69,7 @@
 
 .image-panel {
 	position: absolute;
+	z-index: 3;
 	background: black;
 	/* border-right: 4px solid white; */
 	/* border-left: 4px solid white; */
@@ -148,6 +149,5 @@
 	from { opacity: 0; }
 	to { opacity: 1; }
 }
-
 
 

@@ -3,6 +3,7 @@
 
 
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
 import axios from 'axios'
 
 import Navigator from '../navigator/navigator'
@@ -24,13 +25,15 @@ class Gallery extends Component {
 	componentDidMount( ) {
 		axios.get( '/photos' ).then( images => {
 			this.setState( { images: images.data } )
+			// Generate a unique css id selector for each image component
+			this.applyLevels( )
 		} )
 	}
 	
 	populateFrame( ) {
 		let rank = 1
 		return this.state.images.map( image => {
-			let props = { rk: rank++, image: image.fields }
+			let props = { rk: 'z' + rank++, image: image.fields }
 			let events = { viewHover: this.viewHover, moveOff: this.moveOff }
 			return <Image key={ image.pk } { ...props } { ...events }/>
 		} )
@@ -76,6 +79,22 @@ class Gallery extends Component {
 		}
 	}
 	
+	applyLevels ( ) {
+		const node = ReactDOM.createPortal( <></>, document.styleSheets[ 0 ].ownerNode )
+		const css = node.containerInfo.sheet
+		console.log( css )
+		this.state.images.forEach( ( img, idx ) => {
+			let rank = idx + 1
+			let level = this.state.images.length + 3 - idx
+			let zidstyle = '#z' + rank + ' { ' + 'z-index: ' + level + '; }'
+			css.insertRule( zidstyle, css.cssRules.length )
+			// Alternative method for embedding new css stylesheet rules
+			/* let select = zidstyle.slice( 0, rank.toString( ).length + 2 )
+			let primacy = zidstyle.slice( rank.toString( ).length + 5, zidstyle.length - 2 )
+			css.addRule( select, primacy, css.cssRules.length ) */
+		} )
+	}
+	
 	render( ) {
 		return (
 			<section>
@@ -93,5 +112,6 @@ class Gallery extends Component {
 
 
 export default Gallery
+
 
 

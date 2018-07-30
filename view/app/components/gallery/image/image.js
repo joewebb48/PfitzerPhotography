@@ -71,7 +71,7 @@ class Image extends Component {
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		const style = this.animateMode( 'image-box', 'upper', 'lower' )
 		return (
-			<div id={ this.props.rk } className={ style } { ...events }>
+			<div id={ this.props.rk } className="image-box" { ...events }>
 				<div className="image-shadow"></div>
 				<div className="image-frame">
 					<div className="image-border"></div>
