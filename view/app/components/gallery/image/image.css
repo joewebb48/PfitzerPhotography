@@ -19,14 +19,6 @@
 	transform: scale( 1.05, 1.05 );
 }
 
-/* .image-box-upper {
-	z-index: 4;
-}
-
-.image-box-lower {
-	z-index: 3;
-} */
-
 .image-frame {
 	position: relative;
 	background: black;
@@ -87,6 +79,7 @@
 }
 
 .image-panel-fade {
+	pointer-events: none;
 	animation: fade 500ms ease-in both;
 }
 
@@ -149,5 +142,6 @@
 	from { opacity: 0; }
 	to { opacity: 1; }
 }
+
 
 
