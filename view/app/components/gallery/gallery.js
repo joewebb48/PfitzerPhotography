@@ -33,7 +33,7 @@ class Gallery extends Component {
 	populateFrame( ) {
 		let rank = 1
 		return this.state.images.map( image => {
-			let props = { rk: 'z' + rank++, image: image.fields }
+			let props = { rk: rank++, image: image.fields }
 			let events = { viewHover: this.viewHover, moveOff: this.moveOff }
 			return <Image key={ image.pk } { ...props } { ...events }/>
 		} )
@@ -84,9 +84,8 @@ class Gallery extends Component {
 		const css = node.containerInfo.sheet
 		console.log( css )
 		this.state.images.forEach( ( img, idx ) => {
-			let rank = idx + 1
-			let level = this.state.images.length + 3 - idx
-			let zidstyle = '#z' + rank + ' { ' + 'z-index: ' + level + '; }'
+			let iterator = '.image-box:nth-last-child( ' + ( idx + 1 ) + ' )'
+			let zidstyle = iterator + ' { z-index: ' + ( idx + 4 ) + '; }'
 			css.insertRule( zidstyle, css.cssRules.length )
 			// Alternative method for embedding new css stylesheet rules
 			/* let select = zidstyle.slice( 0, rank.toString( ).length + 2 )
@@ -112,6 +111,5 @@ class Gallery extends Component {
 
 
 export default Gallery
-
 
 
