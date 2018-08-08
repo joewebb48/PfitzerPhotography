@@ -3,6 +3,7 @@
 
 
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 import './image.css'
 
@@ -60,15 +61,18 @@ class Image extends Component {
 	}
 	
 	render( ) {
-		const url = 'root/' + this.props.image.image
+		/* const url = 'root/' + this.props.image.image */
+		const url = 'public/' + this.props.image.image
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (
 			<div className="image-area" { ...events }>
-				<div className="image-shadow"></div>
-				<div className="image-frame">
-					<div className="image-border"></div>
-					<img className="image-thumbnail" src={ url }/>
-				</div>
+				<Link to={ '/gallery/' + this.props.image.image.slice( 4 ) }>
+					<div className="image-shadow"></div>
+					<div className="image-frame">
+						<div className="image-border"></div>
+						<img className="image-thumbnail" src={ url }/>
+					</div>
+				</Link>
 				{ this.setPanel( ) }
 			</div>
 		)

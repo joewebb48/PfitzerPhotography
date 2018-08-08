@@ -31,14 +31,27 @@ class Router extends Component {
 		}
 	}
 	
+	// Needs to be moved to a more appropriate component
+	viewImage( ) {
+		const base = this.props.location.pathname.slice( 0, 9 )
+		if ( base !== '/gallery/' || this.props.location.pathname.length < 10 ) {
+			return null
+		}
+		const url = '/public/img/' + this.props.location.pathname.slice( 9 )
+		// Has server-side rendering error that will need fixing
+		return <img className="image-main" src={ url }/>
+	}
+	
 	render( ) {
+		const image = '/gallery/' + this.props.location.pathname.slice( 9 )
 		return (
 			<section className="page">
 				<Base location={ this.state.location }/>
 				<Route exact path="/" component={ Home }/>
 				<Route path="/about" component={ About }/>
-				<Route path="/gallery" component={ Gallery }/>
+				<Route exact path="/gallery" component={ Gallery }/>
 				<Route path="/contact" component={ Contact }/>
+				<Route path={ image } render={ ( ) => this.viewImage( ) }/>
 			</section>
 		)
 	}
@@ -47,5 +60,6 @@ class Router extends Component {
 
 
 export default withRouter( Router )
+
 
 

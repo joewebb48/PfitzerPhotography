@@ -13,6 +13,7 @@ urlpatterns = [
 	## Temporary routes due to wildcard routing conflicts
 	path( 'about', views.index, name = 'about' ),
 	path( 'gallery', views.index, name = 'gallery' ),
+	path( 'gallery/<path:url>', views.index, name = 'image' ),
 	path( 'contact', views.index, name = 'contact' ),
 	## Other views for fetching data used by the frontend
 	path( 'data', views.data, name = 'data' ),
@@ -23,5 +24,6 @@ urlpatterns = [
 ]
 
 """ path( '<path:url>', views.index, name = 'wild' ) """
+
 
 
