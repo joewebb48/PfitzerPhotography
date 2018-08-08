@@ -4,6 +4,7 @@
 
 const NodeExternals = require( 'webpack-node-externals' )
 
+const CopyWebpackPlugin = require( 'copy-webpack-plugin' )
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 
@@ -26,6 +27,10 @@ module.exports = ( ) => {
 				]
 			},
 			plugins: [
+				new CopyWebpackPlugin( [
+					'root/favicon.ico',
+					{ from: 'root/img', to: 'img' }
+				] ),
 				new HtmlWebpackPlugin( {
 					inject: false,
 					template: 'root/index.html',
@@ -76,6 +81,5 @@ module.exports = ( ) => {
 		}
 	]
 }
-
 
 
