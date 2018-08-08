@@ -44,9 +44,14 @@ module.exports = ( ) => {
 				} ),
 			],
 			stats: {
-				children: false,
+				cachedAssets: false,
+				colors: true,
 				entrypoints: false,
+				excludeAssets: /img/,
 				modules: false
+			},
+			watchOptions: {
+				ignored: /node_modules/
 			},
 			output: {
 				filename: '[name].js',
@@ -69,9 +74,14 @@ module.exports = ( ) => {
 				NodeExternals( )
 			],
 			stats: {
-				children: false,
+				cachedAssets: false,
+				colors: true,
 				entrypoints: false,
+				excludeAssets: /img/,
 				modules: false
+			},
+			watchOptions: {
+				ignored: /node_modules/
 			},
 			target: 'node',
 			output: {

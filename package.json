@@ -20,7 +20,7 @@
 	},
 	"scripts": {
 		"node": "node node/node.js",
-		"pre": "mode=development webpack -w",
+		"pre": "mode=development webpack --reporter basic --watch",
 		"start": "concurrently \"npm:pre\" \"npm:node\"",
 		"hot": "mode=development webpack-dev-server --hot",
 		"build": "mode=production webpack"
