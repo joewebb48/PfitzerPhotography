@@ -2,7 +2,7 @@
 
 
 
-.image-box {
+.image-area {
 	position: relative;
 	background: #444444;
 	/* border: 4px solid white; */
@@ -15,7 +15,7 @@
 	transition: 250ms;
 }
 
-.image-box:hover {
+.image-area:hover {
 	transform: scale( 1.05, 1.05 );
 }
 
@@ -28,7 +28,7 @@
 
 .image-border {
 	position: absolute;
-	z-index: 1;
+	z-index: 2;
 	background: transparent;
 	height: 100%;
 	width: 100%;
@@ -38,19 +38,20 @@
 
 .image-shadow {
 	position: absolute;
-	z-index: 2;
+	z-index: 3;
 	background: transparent;
-	height: 100%;
 	left: 1px;
 	right: 1px;
+	height: 99%;
 	width: 99%;
 	box-shadow: 0 0 20px 12px black;
 }
 
 .image-thumbnail {
 	position: absolute;
+	z-index: 1;
 	background: black;
-	filter: grayscale( 100% );
+	filter: grayscale( 100% ); /* Temporary */
 	top: 0;
 	right: -50%;
 	left: -50%;
@@ -61,7 +62,6 @@
 
 .image-panel {
 	position: absolute;
-	z-index: 3;
 	background: black;
 	/* border-right: 4px solid white; */
 	/* border-left: 4px solid white; */
@@ -69,43 +69,57 @@
 	border-radius: 2px;
 	cursor: initial;
 	text-align: left;
-	/* top: 200px; */
+	height: 125px;
 	width: 100%;
 	box-shadow: 0 10px 20px 12px black;
 }
 
 .image-panel-view {
-	animation: view 500ms ease-out forwards;
+	animation: view 750ms ease-out forwards;
 }
 
 .image-panel-fade {
 	pointer-events: none;
-	animation: fade 500ms ease-in both;
+	animation: fade 500ms ease-in forwards;
 }
 
-.image-title {
+.image-panel-view * {
+	z-index: 4;
+	animation: show 1s 750ms backwards;
+}
+
+.image-panel-fade * {
+	z-index: 0;
+	animation: omit 250ms forwards;
+}
+
+.image-panel h3 {
+	position: relative;
 	color: #d0d0d0;
 	font-size: 1.25em;
 	font-weight: normal;
 	text-align: center;
+	top: 5px;
 	margin: 0;
-	animation: show 1s 500ms both;
 }
 
-.image-category {
+/* .image-panel h5 {
 	color: #696969;
 	font-size: 0.9em;
 	font-weight: normal;
 	text-align: center;
 	margin: 5px 10px;
 	animation: show 2s 500ms both;
-}
+} */
 
-.image-summary {
+.image-panel p {
+	position: relative;
 	color: #8e8e8e;
 	font-size: 0.75em;
-	margin: 10px;
-	animation: show 2s 500ms both;
+	line-height: 1.25;
+	overflow: scroll;
+	max-height: 60px;
+	margin: 15px 10px;
 }
 
 .image-panel span {
@@ -114,7 +128,6 @@
 	color: #b0b0b0;
 	font-size: 0.8em;
 	bottom: 0;
-	animation: show 2s 500ms both;
 }
 
 .image-price {
@@ -128,19 +141,26 @@
 }
 
 
+/* Image panel animations */
 @keyframes view {
-	from { height: 0; }
-	to { height: 125px; }
+	from { top: 0; }
+	to { top: 200px; }
 }
 
 @keyframes fade {
-	from { height: 125px; }
-	to { height: 0; }
+	from { top: 200px; }
+	to { top: 0; }
 }
 
+/* Panel text animations */
 @keyframes show {
-	from { opacity: 0; }
-	to { opacity: 1; }
+	from { cursor: pointer; opacity: 0; }
+	to { cursor: initial; opacity: 1; }
+}
+
+@keyframes omit {
+	from { cursor: initial; opacity: 1; }
+	to { cursor: pointer; opacity: 0; }
 }
 
 

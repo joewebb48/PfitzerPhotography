@@ -34,12 +34,12 @@ class Gallery extends Component {
 		} )
 	}
 	
-	generateLevels ( ) {
+	generateLevels( ) {
 		const css = ReactDOM.createPortal( <></>, document.styleSheets[ 0 ].ownerNode )
-		const styles = node.containerInfo.sheet
+		const styles = css.containerInfo.sheet
 		this.state.images.forEach( ( img, idx ) => {
-			let iterator = '.image-box:nth-last-child( ' + ( idx + 1 ) + ' )'
-			let zidstyle = iterator + ' { z-index: ' + ( idx + 4 ) + '; }'
+			let iterator = '.image-area:nth-last-child( ' + ( idx + 1 ) + ' )'
+			let zidstyle = iterator + ' { z-index: ' + ( idx + 5 ) + '; }'
 			styles.insertRule( zidstyle, styles.cssRules.length )
 			// Alternative method for embedding new css stylesheet rules
 			/* let select = zidstyle.slice( 0, rank.toString( ).length + 2 )

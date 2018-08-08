@@ -26,7 +26,7 @@ class Image extends Component {
 			// Prevent panel snapping from quickly moving back
 			setTimeout( ( ) => {
 				this.setState( { viewMode: 'view' } )
-			}, 400 )
+			}, 250 )
 		}
 	}
 	
@@ -37,7 +37,7 @@ class Image extends Component {
 				if ( this.state.viewMode !== 'view' ) {
 					this.setState( { viewMode: 'hide' } )
 				}
-			}, 500 )
+			}, 750 )
 			this.setState( { viewMode: 'fade' } )
 		}
 	}
@@ -49,9 +49,9 @@ class Image extends Component {
 		if ( this.state.viewMode !== 'hide' ) {
 			return (
 				<div className={ 'image-panel ' + animation }>
-					<h3 className="image-title"> { this.props.image.name } </h3>
-					<h5 className="image-category"> Category </h5>
-					<p className="image-summary"> { this.props.image.description } </p>
+					<h3> { this.props.image.name } </h3>
+					{ /* <h5> Category </h5> */ }
+					<p> { this.props.image.description } </p>
 					<span className="image-price"> { price } </span>
 					<span className="image-date"> { date } </span>
 				</div>
@@ -63,7 +63,7 @@ class Image extends Component {
 		const url = 'root/' + this.props.image.image
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (
-			<div className="image-box" { ...events }>
+			<div className="image-area" { ...events }>
 				<div className="image-shadow"></div>
 				<div className="image-frame">
 					<div className="image-border"></div>
