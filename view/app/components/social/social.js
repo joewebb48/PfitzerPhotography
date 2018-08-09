@@ -28,7 +28,7 @@ class Social extends Component {
 	
 	insertLinks( ) {
 		return this.state.links.map( link => {
-			const url = 'root/' + link.fields.icon
+			const url = 'public/' + link.fields.icon
 			return (
 				<a key={ link.pk } href={ link.fields.url }>
 					<img className="social-icon" src={ url }/>
