@@ -2,15 +2,6 @@
 
 
 
-.image-main {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	margin: auto;
-}
-
 .image-area {
 	position: relative;
 	background: #444444;
@@ -152,7 +143,7 @@
 
 /* Image panel animations */
 @keyframes view {
-	from { top: 0; }
+	from { pointer-events: none; top: 0; }
 	to { top: 200px; }
 }
 
@@ -171,5 +162,6 @@
 	from { cursor: initial; opacity: 1; }
 	to { cursor: pointer; opacity: 0; }
 }
+
 
 

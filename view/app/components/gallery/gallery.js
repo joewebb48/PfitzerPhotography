@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import { Route } from 'react-router-dom'
 import axios from 'axios'
 
 import Navigator from '../navigator/navigator'
@@ -28,9 +29,10 @@ class Gallery extends Component {
 		} )
 	}
 	
-	viewGallery( ) {
+	formGallery( ) {
 		return this.state.images.map( image => {
-			return <Image key={ image.pk } image={ image.fields }/>
+			let props = { url: this.props.match.url, image: image.fields }
+			return <Image key={ image.pk } { ...props }/>
 		} )
 	}
 	
@@ -48,6 +50,11 @@ class Gallery extends Component {
 		} )
 	}
 	
+	viewImage( { location } ) {
+		// Has occasional server-side rendering error that will need fixing
+		return <img className="gallery-image" src={ location.state.image }/>
+	}
+	
 	render( ) {
 		return (
 			<section>
@@ -55,8 +62,9 @@ class Gallery extends Component {
 					<Navigator/>
 				</header>
 				<div className="gallery-frame">
-					{ this.viewGallery( ) }
+					{ this.formGallery( ) }
 				</div>
+				<Route path={ this.props.match.url + '/:image' } render={ this.viewImage }/>
 			</section>
 		)
 	}

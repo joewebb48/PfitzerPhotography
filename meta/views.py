@@ -35,18 +35,19 @@ def data( request ):
 	## Have this removed for url query once model field is added
 	origin = request.GET.get( 'url', request.path )
 	url = origin[ 1: ] if origin != '/' else 'home'
+	## Obtain page metadata for insertion into HTML as head tags
+	try:
+		## May fail and run except block instead if url is a subroute
+		query = Page.objects.get( page__iexact = url )
+		serial = serializers.serialize( 'json', [ query ] )
+		info = json.loads( serial )[ 0 ]
+		info[ 'fields' ][ 'title' ] += ' | ' + title
+		return JsonResponse( info )
 	## Avoid database querying if requested path is an image file
-	base = os.path.basename( origin )
-	extra, final = os.path.splitext( base )
-	if len( final ) > 0 and len( final ) < 6:
+	except Page.DoesNotExist:
+		base = os.path.basename( origin )
 		photo = { 'fields': { 'title': base + ' | ' + title } }
 		return JsonResponse( photo )
-	## Obtain page metadata for insertion into HTML as head tags
-	query = Page.objects.get( page__iexact = url )
-	serial = serializers.serialize( 'json', [ query ] )
-	info = json.loads( serial )[ 0 ]
-	info[ 'fields' ][ 'title' ] += ' | ' + title
-	return JsonResponse( info )
 
 
 def photos( request ):
@@ -95,5 +96,6 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		links = json.loads( serial )
 		return JsonResponse( links, safe = False )
+
 
 

@@ -29,7 +29,7 @@ urlpatterns = [
 	path( 'admin/', admin.site.urls ),
 	##path( 'root/', views.static.serve ),
 	path( '', include( 'meta.urls' ) )
-]## + static( 'root', document_root = 'root' )
+] + static( 'root', document_root = 'root' )
 
 
 

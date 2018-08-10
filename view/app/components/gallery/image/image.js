@@ -61,16 +61,16 @@ class Image extends Component {
 	}
 	
 	render( ) {
-		/* const url = 'root/' + this.props.image.image */
-		const url = 'public/' + this.props.image.image
+		const url = this.props.url + '/' + this.props.image.name
+		const image = 'public/' + this.props.image.image
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (
 			<div className="image-area" { ...events }>
-				<Link to={ '/gallery/' + this.props.image.image.slice( 4 ) }>
+				<Link to={ { pathname: url, state: { image: '/' + image } } }>
 					<div className="image-shadow"></div>
 					<div className="image-frame">
 						<div className="image-border"></div>
-						<img className="image-thumbnail" src={ url }/>
+						<img className="image-thumbnail" src={ image }/>
 					</div>
 				</Link>
 				{ this.setPanel( ) }
