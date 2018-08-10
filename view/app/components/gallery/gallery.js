@@ -56,15 +56,18 @@ class Gallery extends Component {
 	}
 	
 	render( ) {
+		const url = this.props.match.path + '/:image'
 		return (
 			<section>
-				<header>
-					<Navigator/>
-				</header>
-				<div className="gallery-frame">
-					{ this.formGallery( ) }
-				</div>
-				<Route path={ this.props.match.url + '/:image' } render={ this.viewImage }/>
+				<Route exact path={ this.props.match.url } render={ ( ) => <>
+					<header>
+						<Navigator/>
+					</header>
+					<div className="gallery-frame">
+						{ this.formGallery( ) }
+					</div>
+				</> }/>
+				<Route path={ url } render={ this.viewImage }/>
 			</section>
 		)
 	}
@@ -73,5 +76,6 @@ class Gallery extends Component {
 
 
 export default Gallery
+
 
 
