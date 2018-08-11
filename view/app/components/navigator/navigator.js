@@ -13,9 +13,8 @@ class Navigator extends Component {
 	
 	render( ) {
 		const title = 'Pfitzer Photography'
-		const home = this.props.location === '/' ? true : false
-		console.log( this.props.location, home )
-		return (
+		const home = this.props.url === '/' ? true : false
+		return this.props.void ? null : (
 			<header>
 				{ ( ( ) => ( home ? <h1> { title } </h1> : null ) )( ) }
 				<nav>
@@ -34,6 +33,5 @@ class Navigator extends Component {
 
 
 export default Navigator
-
 
 

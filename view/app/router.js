@@ -18,7 +18,7 @@ class Router extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { location: undefined }
+		this.state = { location: props.location.pathname }
 	}
 	
 	
@@ -33,10 +33,14 @@ class Router extends Component {
 	}
 	
 	render( ) {
+		// Parameters for determining if Navigator should be rendered
+		const object = Object.assign( {  }, this.props.location.state )
+		const gallery = this.props.location.pathname.startsWith( '/gallery' )
+		const exhibit = object.hasOwnProperty( 'image' ) && gallery
 		return (
 			<section className="app-page">
 				<Base location={ this.state.location }/>
-				<Navigator location={ this.state.location }/>
+				<Navigator url={ this.state.location } void={ exhibit }/>
 				<Route exact path="/" component={ Home }/>
 				<Route path="/about" component={ About }/>
 				<Route path="/gallery" component={ Gallery }/>
