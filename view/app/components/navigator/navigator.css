@@ -2,6 +2,22 @@
 
 
 
+header {
+	color: white;
+	height: 200px;
+	width: 70%;
+	padding: 20px 0;
+	margin: auto;
+}
+
+header h1 {
+	position: relative;
+	font-size: 3em;
+	text-align: left;
+	left: 40px;
+	margin: 75px auto 0;
+}
+
 nav {
 	color: white;
 	width: 100%;

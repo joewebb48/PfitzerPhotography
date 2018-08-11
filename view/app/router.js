@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 
 import Base from './base'
+import Navigator from './components/navigator/navigator'
 import Home from './components/home/home'
 import About from './components/about/about'
 import Gallery from './components/gallery/gallery'
@@ -33,8 +34,9 @@ class Router extends Component {
 	
 	render( ) {
 		return (
-			<section className="page">
+			<section className="app-page">
 				<Base location={ this.state.location }/>
+				<Navigator location={ this.state.location }/>
 				<Route exact path="/" component={ Home }/>
 				<Route path="/about" component={ About }/>
 				<Route path="/gallery" component={ Gallery }/>

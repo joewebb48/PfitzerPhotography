@@ -5,7 +5,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Navigator from '../navigator/navigator'
 import './about.css'
 
 
@@ -31,9 +30,6 @@ class About extends Component {
 	render( ) {
 		return (
 			<section>
-				<header>
-					<Navigator/>
-				</header>
 				<div className="about-frame">
 					<h1> { this.state.name } </h1>
 					<div className="about-image about-portrait"/>

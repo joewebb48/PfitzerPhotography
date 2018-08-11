@@ -5,7 +5,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
-import Navigator from '../navigator/navigator'
 import './contact.css'
 
 
@@ -33,9 +32,6 @@ class Contact extends Component {
 	render( ) {
 		return (
 			<section>
-				<header>
-					<Navigator/>
-				</header>
 				<form onSubmit={ event => this.onSend( event ) }>
 					<h3 className="contact-email"> { this.state.email } </h3>
 					<label>

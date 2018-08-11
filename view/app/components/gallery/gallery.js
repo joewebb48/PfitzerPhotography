@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom'
 import { Route } from 'react-router-dom'
 import axios from 'axios'
 
-import Navigator from '../navigator/navigator'
 import Image from './image/image'
 import './gallery.css'
 
@@ -60,9 +59,6 @@ class Gallery extends Component {
 		return (
 			<section>
 				<Route exact path={ this.props.match.url } render={ ( ) => <>
-					<header>
-						<Navigator/>
-					</header>
 					<div className="gallery-frame">
 						{ this.formGallery( ) }
 					</div>
