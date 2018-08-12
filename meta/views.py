@@ -54,6 +54,9 @@ def photos( request ):
 	query = Image.objects.all( )
 	serial = serializers.serialize( 'json', query )
 	gallery = json.loads( serial )
+	## Keep track of url segments for identifying a specific photo
+	url = request.GET.get( 'url' )[ 1: ]
+	base = os.path.basename( url )
 	## Update image date fields for more readable viewed dates
 	for image in gallery:
 		image[ 'fields' ][ 'date' ] = image[ 'fields' ].pop( 'date_taken', None )
@@ -61,7 +64,11 @@ def photos( request ):
 			## Format each date string in the American date format
 			date = datetime.strptime( image[ 'fields' ][ 'date' ], '%Y-%m-%d' )
 			image[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
-	return JsonResponse( gallery, safe = False )
+		## Locate and save image data that matches the url suffix
+		if not request.session[ 'isolate' ] and image[ 'fields' ][ 'name' ] == base:
+			request.session[ 'isolate' ] = image
+	gallery = { 'gallery': gallery, 'isolate': request.session[ 'isolate' ] }
+	return JsonResponse( gallery )
 
 
 def bio( request ):
@@ -96,6 +103,5 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		links = json.loads( serial )
 		return JsonResponse( links, safe = False )
-
 
 

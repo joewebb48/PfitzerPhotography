@@ -64,7 +64,7 @@ class Image extends Component {
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (
 			<div className="image-area" { ...events }>
-				<Link to={ { pathname: url, state: { image: '/' + image } } }>
+				<Link to={ { pathname: url, state: { image: this.props.image } } }>
 					<div className="image-shadow"></div>
 					<div className="image-frame">
 						<div className="image-border"></div>

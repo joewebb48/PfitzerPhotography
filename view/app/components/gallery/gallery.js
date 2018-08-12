@@ -16,16 +16,33 @@ class Gallery extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { images: [ ] }
+		this.state = { images: [ ], isolate: null }
 	}
 	
 	
 	componentDidMount( ) {
-		axios.get( '/photos' ).then( images => {
-			this.setState( { images: images.data } )
+		const url = { params: { url: this.props.location.pathname } }
+		axios.get( '/photos', url ).then( images => {
+			// Image data is necessary if an image is visited directly via url
+			let { isolate } = images.data
+			this.setState( {
+				images: images.data.gallery,
+				isolate: isolate ? isolate.fields : null
+			} )
 			// Generate a unique scaling css selector per image component
 			this.generateLevels( )
 		} )
+	}
+	
+	componentDidUpdate( ) {
+		if ( this.props.location.state ) {
+			const isolate = this.state.isolate
+			const photo = this.props.location.state.image
+			// Update with the image data of the new image being viewed
+			if ( !isolate || isolate.name !== photo.name ) {
+				this.setState( { isolate: photo } )
+			}
+		}
 	}
 	
 	formGallery( ) {
@@ -49,9 +66,10 @@ class Gallery extends Component {
 		} )
 	}
 	
-	viewImage( { location } ) {
+	viewImage( ) {
+		const image = this.state.isolate ? '/public/' + this.state.isolate.image : ''
 		// Has occasional server-side rendering error that will need fixing
-		return <img className="gallery-image" src={ location.state.image }/>
+		return <img className="gallery-image" src={ image }/>
 	}
 	
 	render( ) {
@@ -63,7 +81,7 @@ class Gallery extends Component {
 						{ this.formGallery( ) }
 					</div>
 				</> }/>
-				<Route path={ url } render={ this.viewImage }/>
+				<Route path={ url } render={ ( ) => this.viewImage( ) }/>
 			</section>
 		)
 	}
