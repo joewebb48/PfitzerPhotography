@@ -20,9 +20,7 @@ class Social extends Component {
 	componentDidMount( ) {
 		axios.get( '/social' ).then( media => {
 			console.log( media )
-			this.setState( {
-				links: media.data
-			} )
+			this.setState( { links: media.data } )
 		} )
 	}
 	
@@ -38,10 +36,7 @@ class Social extends Component {
 	}
 	
 	render( ) {
-		if ( this.state.links.length < 1 ) {
-			return null
-		}
-		return (
+		return this.state.links.length < 1 ? null : (
 			<footer>
 				<h3 className="social-title"> Social Media </h3>
 				{ this.injectLinks( ) }
@@ -53,5 +48,6 @@ class Social extends Component {
 
 
 export default Social
+
 
 

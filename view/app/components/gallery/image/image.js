@@ -47,17 +47,15 @@ class Image extends Component {
 		const price = this.props.image.price ? 'Price: $' + this.props.image.price : null
 		const date = this.props.image.date ? 'Date: ' + this.props.image.date : null
 		const animation = this.state.viewMode === 'view' ? 'image-panel-view' : 'image-panel-fade'
-		if ( this.state.viewMode !== 'hide' ) {
-			return (
-				<div className={ 'image-panel ' + animation }>
-					<h3> { this.props.image.name } </h3>
-					{ /* <h5> Category </h5> */ }
-					<p> { this.props.image.description } </p>
-					<span className="image-price"> { price } </span>
-					<span className="image-date"> { date } </span>
-				</div>
-			)
-		}
+		return this.state.viewMode === 'hide' ? null : (
+			<div className={ 'image-panel ' + animation }>
+				<h3> { this.props.image.name } </h3>
+				{ /* <h5> Category </h5> */ }
+				<p> { this.props.image.description } </p>
+				<span className="image-price"> { price } </span>
+				<span className="image-date"> { date } </span>
+			</div>
+		)
 	}
 	
 	render( ) {

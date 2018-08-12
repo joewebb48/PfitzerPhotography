@@ -73,17 +73,17 @@ class Base extends Component {
 	}
 	
 	render( ) {
-		// No server-rendering since this component uses the DOM
-		if ( !this.props.location ) {
-			return null
-		}
-		// Everything in this component will be inside the head tag
-		return ReactDOM.createPortal( this.setTags( ), document.head )
+		// No server-rendering since DOM usage will be necessary
+		return typeof document === 'undefined' ? null : (
+			// Entirety of this component exists inside the head tag
+			ReactDOM.createPortal( this.setTags( ), document.head )
+		)
 	}
 	
 }
 
 
 export default Base
+
 
 
