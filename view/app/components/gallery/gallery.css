@@ -24,4 +24,32 @@
 	margin: auto;
 }
 
+.gallery-redirect {
+	position: fixed;
+	z-index: 1000;
+	background: #0e0e0e;
+	border-radius: 2px;
+	color: white;
+	box-sizing: border-box;
+	top: 15%;
+	right: 0;
+	left: 0;
+	max-height: 200px;
+	max-width: 400px;
+	padding: 25px;
+	margin: auto;
+	animation: appear 1s 500ms backwards, subdue 1s 5s forwards;
+}
+
+
+@keyframes appear {
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+
+@keyframes subdue {
+	from { opacity: 1; }
+	to { opacity: 0; }
+}
+
 

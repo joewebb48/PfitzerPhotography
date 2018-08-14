@@ -25,6 +25,7 @@ class Gallery extends Component {
 		axios.get( '/photos', url ).then( images => {
 			// Image data is necessary if an image is visited directly via url
 			let { isolate } = images.data
+			// Nonexistent images will be identified by setting as undefined
 			let extant = url.params.url === '/gallery' ? null : undefined
 			this.setState( {
 				images: images.data.gallery,
@@ -36,16 +37,20 @@ class Gallery extends Component {
 	}
 	
 	componentDidUpdate( ) {
-		if ( this.props.location.state ) {
-			const isolate = this.state.isolate
-			const photo = this.props.location.state.image
-			// Update with the image data of the new image being viewed
-			if ( !isolate || isolate.name !== photo.name ) {
-				this.setState( { isolate: photo } )
-			}
-		}
+		// Reset isolate to null after redirecting to avoid infinite redirection
 		if ( this.state.isolate === undefined ) {
 			this.setState( { isolate: null } )
+		}
+		if ( this.props.location.state ) {
+			const { state } = this.props.location
+			if ( state.hasOwnProperty( 'image' ) ) {
+				const photo = state.image
+				const isolate = this.state.isolate
+				// Update image data to that of the presently viewed image
+				if ( !isolate || isolate.name !== photo.name ) {
+					this.setState( { isolate: photo } )
+				}
+			}
 		}
 	}
 	
@@ -72,11 +77,20 @@ class Gallery extends Component {
 	
 	viewImage( ) {
 		if ( this.state.isolate === undefined ) {
-			return <Redirect to={ { pathname: '/gallery' } }/>
+			return <Redirect to={ { pathname: '/gallery', state: { redirect: true } } }/>
 		}
 		const image = this.state.isolate ? '/public/' + this.state.isolate.image : ''
 		// Has occasional server-side rendering error that will need fixing
 		return <img className="gallery-image" src={ image }/>
+	}
+	
+	notFound( ) {
+		const data = Object.assign( {  }, this.props.location.state )
+		// May still appear after returning to a page originally redirected to
+		return !this.state.isolate && !data.hasOwnProperty( 'redirect' ) ? null : (
+			// Class renders incorrectly after redirection with a page reload 
+			<div className="gallery-redirect"> That image doesn't exist! </div>
+		)
 	}
 	
 	render( ) {
@@ -84,6 +98,7 @@ class Gallery extends Component {
 		return (
 			<section>
 				<Route exact path={ this.props.match.url } render={ ( ) => <>
+					{ this.notFound( ) }
 					<div className="gallery-frame">
 						{ this.formGallery( ) }
 					</div>
@@ -97,5 +112,6 @@ class Gallery extends Component {
 
 
 export default Gallery
+
 
 
