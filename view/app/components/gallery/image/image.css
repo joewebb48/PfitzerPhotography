@@ -19,6 +19,10 @@
 	transform: scale( 1.05, 1.05 );
 }
 
+.image-area a {
+	z-index: 5;
+}
+
 .image-frame {
 	position: relative;
 	background: black;

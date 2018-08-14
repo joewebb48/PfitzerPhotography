@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
 import Image from './image/image'
@@ -25,9 +25,10 @@ class Gallery extends Component {
 		axios.get( '/photos', url ).then( images => {
 			// Image data is necessary if an image is visited directly via url
 			let { isolate } = images.data
+			let extant = url.params.url === '/gallery' ? null : undefined
 			this.setState( {
 				images: images.data.gallery,
-				isolate: isolate ? isolate.fields : null
+				isolate: isolate ? isolate.fields : extant
 			} )
 			// Generate a unique scaling css selector per image component
 			this.generateLevels( )
@@ -42,6 +43,9 @@ class Gallery extends Component {
 			if ( !isolate || isolate.name !== photo.name ) {
 				this.setState( { isolate: photo } )
 			}
+		}
+		if ( this.state.isolate === undefined ) {
+			this.setState( { isolate: null } )
 		}
 	}
 	
@@ -67,6 +71,9 @@ class Gallery extends Component {
 	}
 	
 	viewImage( ) {
+		if ( this.state.isolate === undefined ) {
+			return <Redirect to={ { pathname: '/gallery' } }/>
+		}
 		const image = this.state.isolate ? '/public/' + this.state.isolate.image : ''
 		// Has occasional server-side rendering error that will need fixing
 		return <img className="gallery-image" src={ image }/>
@@ -90,6 +97,5 @@ class Gallery extends Component {
 
 
 export default Gallery
-
 
 

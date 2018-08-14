@@ -57,6 +57,7 @@ def photos( request ):
 	## Keep track of url segments for identifying a specific photo
 	url = request.GET.get( 'url' )[ 1: ]
 	base = os.path.basename( url )
+	isolate = None
 	## Update image date fields for more readable viewed dates
 	for image in gallery:
 		image[ 'fields' ][ 'date' ] = image[ 'fields' ].pop( 'date_taken', None )
@@ -65,9 +66,9 @@ def photos( request ):
 			date = datetime.strptime( image[ 'fields' ][ 'date' ], '%Y-%m-%d' )
 			image[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
 		## Locate and save image data that matches the url suffix
-		if not request.session[ 'isolate' ] and image[ 'fields' ][ 'name' ] == base:
-			request.session[ 'isolate' ] = image
-	gallery = { 'gallery': gallery, 'isolate': request.session[ 'isolate' ] }
+		if image[ 'fields' ][ 'name' ] == base:
+			isolate = image
+	gallery = { 'gallery': gallery, 'isolate': isolate }
 	return JsonResponse( gallery )
 
 
@@ -103,5 +104,6 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		links = json.loads( serial )
 		return JsonResponse( links, safe = False )
+
 
 
