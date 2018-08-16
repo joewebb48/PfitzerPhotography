@@ -77,7 +77,7 @@ class Gallery extends Component {
 	
 	viewImage( ) {
 		if ( this.state.isolate === undefined ) {
-			return <Redirect to={ { pathname: '/gallery', state: { redirect: true } } }/>
+			return <Redirect to={ this.props.match.url }/>
 		}
 		const image = this.state.isolate ? '/public/' + this.state.isolate.image : ''
 		// Has occasional server-side rendering error that will need fixing
@@ -85,10 +85,10 @@ class Gallery extends Component {
 	}
 	
 	notFound( ) {
-		const data = Object.assign( {  }, this.props.location.state )
-		// May still appear after returning to a page originally redirected to
-		return !this.state.isolate && !data.hasOwnProperty( 'redirect' ) ? null : (
-			// Class renders incorrectly after redirection with a page reload 
+		// May be unsafe for conditional rendering to rely on props history
+		const action = this.props.history.action.toLowerCase( )
+		// Only appears after redirects as they default to a replace action
+		return action !== 'replace' ? null : (
 			<div className="gallery-redirect"> That image doesn't exist! </div>
 		)
 	}

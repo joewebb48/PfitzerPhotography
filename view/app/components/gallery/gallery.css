@@ -27,16 +27,17 @@
 .gallery-redirect {
 	position: fixed;
 	z-index: 1000;
-	background: #0e0e0e;
+	/* background: #0e0e0e; */
 	border-radius: 2px;
-	color: white;
+	color: #8e8e8e;
+	font-size: 1.25em;
 	box-sizing: border-box;
-	top: 15%;
+	top: 16%;
 	right: 0;
 	left: 0;
-	max-height: 200px;
-	max-width: 400px;
-	padding: 25px;
+	/* max-height: 200px; */
+	/* max-width: 400px; */
+	padding: 15px;
 	margin: auto;
 	animation: appear 1s 500ms backwards, subdue 1s 5s forwards;
 }
@@ -51,5 +52,6 @@
 	from { opacity: 1; }
 	to { opacity: 0; }
 }
+
 
 
