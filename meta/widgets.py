@@ -17,7 +17,7 @@ class ImageWidget( ClearableFileInput ):
 	
 	
 	class Media:
-		css = { 'all': [ '../root/admin.css' ] }
+		css = { 'all': [ 'admin.css' ] }
 
 
 
