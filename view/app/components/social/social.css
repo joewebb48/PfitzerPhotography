@@ -4,27 +4,39 @@
 
 footer {
 	background: #0a0a0a;
-	color: #6d6d6d;
 	border-radius: 4px;
 	box-sizing: border-box;
 	font-size: large;
 	text-align: center;
-	height: 150px;
+	/* height: 200px; */
 	width: 70%;
-	padding: 15px;
-	margin: 50px auto 0;
-}
-
-.social-title {
-	font-size: 1em;
-	font-weight: normal;
-	margin: 0;
+	padding: 15px 15px 25px;
+	margin: 75px auto 0;
 }
 
 .social-icon {
 	height: 50px;
 	width: 50px;
-	margin: 25px 10px;
+	margin: 20px 10px 0;
+}
+
+address {
+	font-style: normal;
+	margin: 40px 0 0;
+}
+
+footer span {
+	color: #5a5a5a;
+	font-size: 0.7em;
+	margin: 0;
+}
+
+address a {
+	display: block;
+	color: #808080;
+	font-size: 0.6em;
+	width: fit-content;
+	margin: 10px auto 0;
 }
 
 

@@ -36,10 +36,19 @@ class Social extends Component {
 	}
 	
 	render( ) {
-		return this.state.links.length < 1 ? null : (
+		// Will need updating so values are generated dynamically
+		const year = 2018
+		const artist = 'Ursula Pfitzer'
+		const github = 'https://github.com/Xoadra'
+		return this.state.links.length < 1 || this.props.url !== '/' ? null : (
 			<footer>
-				<h3 className="social-title"> Social Media </h3>
 				{ this.injectLinks( ) }
+				<address>
+					<span>
+						&#169; <time dateTime={ year }> { year } </time> { artist } Photography
+					</span>
+					<a href={ github }> Website by Ian Peterson </a>
+				</address>
 			</footer>
 		)
 	}
@@ -48,6 +57,5 @@ class Social extends Component {
 
 
 export default Social
-
 
 

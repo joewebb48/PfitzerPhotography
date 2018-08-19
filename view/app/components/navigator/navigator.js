@@ -13,7 +13,7 @@ class Navigator extends Component {
 	
 	render( ) {
 		const title = 'Pfitzer Photography'
-		const home = this.props.url === '/' ? true : false
+		const home = this.props.url === '/'
 		return this.props.void ? null : (
 			<header>
 				{ ( ( ) => ( home ? <h1> { title } </h1> : null ) )( ) }

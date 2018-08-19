@@ -11,6 +11,7 @@ import Home from './components/home/home'
 import About from './components/about/about'
 import Gallery from './components/gallery/gallery'
 import Contact from './components/contact/contact'
+import Social from './components/social/social'
 
 
 
@@ -45,6 +46,7 @@ class Router extends Component {
 				<Route path="/about" component={ About }/>
 				<Route path="/gallery" component={ Gallery }/>
 				<Route path="/contact" component={ Contact }/>
+				<Social url={ this.state.location }/>
 			</section>
 		)
 	}
