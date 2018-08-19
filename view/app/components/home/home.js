@@ -13,11 +13,9 @@ class Home extends Component {
 	
 	render( ) {
 		return (
-			<section>
-				<Link to="/gallery">
-					<img className="home-img" alt="image"/>
-				</Link>
-			</section>
+			<Link to="/gallery">
+				<img className="home-img" alt="image"/>
+			</Link>
 		)
 	}
 	

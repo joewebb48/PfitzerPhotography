@@ -29,19 +29,17 @@ class About extends Component {
 	
 	render( ) {
 		return (
-			<section>
-				<div className="about-frame">
-					<h1> { this.state.name } </h1>
-					<div className="about-image about-portrait"/>
-					<div className="about-bio">
-						<div className="about-text">
-							<p> { this.state.about } </p>
-						</div>
-						<div className="about-image about-image-top"/>
-						<div className="about-image about-image-bottom"/>
+			<div className="about-frame">
+				<h1> { this.state.name } </h1>
+				<div className="about-image about-portrait"/>
+				<div className="about-bio">
+					<div className="about-text">
+						<p> { this.state.about } </p>
 					</div>
+					<div className="about-image about-image-top"/>
+					<div className="about-image about-image-bottom"/>
 				</div>
-			</section>
+			</div>
 		)
 	}
 	

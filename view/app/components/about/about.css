@@ -6,6 +6,7 @@
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
+	margin: 0 0 100px;
 }
 
 .about-frame h1 {
@@ -67,5 +68,6 @@
 .about-image-bottom {
 	background: #5e5e5e;
 }
+
 
 

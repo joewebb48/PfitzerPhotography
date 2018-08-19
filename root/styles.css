@@ -9,14 +9,10 @@ body {
 	margin: 0;
 }
 
-section {
+.app-page {
 	text-align: center;
 	width: 70%;
 	margin: 0 auto;
-}
-
-.app-page {
-	width: 100%;
 }
 
 a {
