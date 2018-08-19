@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 import { Route, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
-import Image from './image/image'
+import Frame from './frame/frame'
 import './gallery.css'
 
 
@@ -57,7 +57,7 @@ class Gallery extends Component {
 	formGallery( ) {
 		return this.state.images.map( image => {
 			let props = { url: this.props.match.url, image: image.fields }
-			return <Image key={ image.pk } { ...props }/>
+			return <Frame key={ image.pk } { ...props }/>
 		} )
 	}
 	
@@ -65,7 +65,7 @@ class Gallery extends Component {
 		const css = ReactDOM.createPortal( <></>, document.styleSheets[ 0 ].ownerNode )
 		const styles = css.containerInfo.sheet
 		this.state.images.forEach( ( img, idx ) => {
-			let iterator = '.image-area:nth-last-child( ' + ( idx + 1 ) + ' )'
+			let iterator = '.frame-area:nth-last-child( ' + ( idx + 1 ) + ' )'
 			let zidstyle = iterator + ' { z-index: ' + ( idx + 5 ) + '; }'
 			styles.insertRule( zidstyle, styles.cssRules.length )
 			// Alternative method for embedding new css stylesheet rules

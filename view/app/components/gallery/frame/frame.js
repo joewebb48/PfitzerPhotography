@@ -5,11 +5,11 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import './image.css'
+import './frame.css'
 
 
 
-class Image extends Component {
+class Frame extends Component {
 	
 	constructor( props ) {
 		super( props )
@@ -46,14 +46,14 @@ class Image extends Component {
 	setPanel( ) {
 		const price = this.props.image.price ? 'Price: $' + this.props.image.price : null
 		const date = this.props.image.date ? 'Date: ' + this.props.image.date : null
-		const animation = this.state.viewMode === 'view' ? 'image-panel-view' : 'image-panel-fade'
+		const animation = this.state.viewMode === 'view' ? 'frame-panel-view' : 'frame-panel-fade'
 		return this.state.viewMode === 'hide' ? null : (
-			<div className={ 'image-panel ' + animation }>
+			<div className={ 'frame-panel ' + animation }>
 				<h3> { this.props.image.name } </h3>
 				{ /* <h5> Category </h5> */ }
 				<p> { this.props.image.description } </p>
-				<span className="image-price"> { price } </span>
-				<span className="image-date"> { date } </span>
+				<span className="frame-price"> { price } </span>
+				<span className="frame-date"> { date } </span>
 			</div>
 		)
 	}
@@ -63,12 +63,12 @@ class Image extends Component {
 		const image = 'public/' + this.props.image.image
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (
-			<div className="image-area" { ...events }>
+			<div className="frame-area" { ...events }>
 				<Link to={ { pathname: url, state: { image: this.props.image } } }>
-					<div className="image-shadow"></div>
-					<div className="image-frame">
-						<div className="image-border"></div>
-						<img className="image-thumbnail" src={ image }/>
+					<div className="frame-shadow"></div>
+					<div className="frame-image">
+						<div className="frame-border"></div>
+						<img className="frame-thumbnail" src={ image }/>
 					</div>
 				</Link>
 				{ this.setPanel( ) }
@@ -79,7 +79,7 @@ class Image extends Component {
 }
 
 
-export default Image
+export default Frame
 
 
 
