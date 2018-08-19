@@ -13,14 +13,17 @@ class Social extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { links: [ ] }
+		this.state = { owner: null, links: [ ] }
 	}
 	
 	
 	componentDidMount( ) {
 		axios.get( '/social' ).then( media => {
 			console.log( media )
-			this.setState( { links: media.data } )
+			this.setState( {
+				owner: media.data.owner,
+				links: media.data.links || [ ]
+			} )
 		} )
 	}
 	
@@ -36,11 +39,10 @@ class Social extends Component {
 	}
 	
 	render( ) {
-		// Will need updating so values are generated dynamically
-		const year = 2018
-		const artist = 'Ursula Pfitzer'
-		const github = 'https://github.com/Xoadra'
-		return this.state.links.length < 1 || this.props.url !== '/' ? null : (
+		const year = new Date( ).getFullYear( )
+		const artist = this.state.owner ? this.state.owner.fields.name : null
+		const github = this.state.owner ? this.state.owner.fields.developer : null
+		return this.props.url !== '/' ? null : (
 			<footer>
 				{ this.injectLinks( ) }
 				<address>

@@ -3,12 +3,13 @@
 
 
 footer {
+	position: relative;
 	background: #0a0a0a;
 	border-radius: 4px;
 	box-sizing: border-box;
 	font-size: large;
 	text-align: center;
-	/* height: 200px; */
+	min-height: 150px;
 	width: 70%;
 	padding: 15px 15px 25px;
 	margin: 75px auto 0;
@@ -17,12 +18,16 @@ footer {
 .social-icon {
 	height: 50px;
 	width: 50px;
-	margin: 20px 10px 0;
+	margin: 20px 10px 80px;
 }
 
 address {
+	position: absolute;
 	font-style: normal;
 	margin: 40px 0 0;
+	left: 0;
+	right: 0;
+	bottom: 25px;
 }
 
 footer span {
@@ -38,6 +43,5 @@ address a {
 	width: fit-content;
 	margin: 10px auto 0;
 }
-
 
 

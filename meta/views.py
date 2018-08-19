@@ -6,11 +6,12 @@ import os
 import json
 import requests
 from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from datetime import datetime
 
-from meta.models import Setting, Page, Image, Media
+from meta.models import Page, Image, Media
+from meta.ops import owner
 
 
 
@@ -73,37 +74,28 @@ def photos( request ):
 
 
 def bio( request ):
-	query = Setting.objects.get( pk = 1 )
-	serial = serializers.serialize( 'json', [ query ] )
-	content = json.loads( serial )[ 0 ]
+	user = owner( )
 	## Build a new full name key from the removed name fields
-	first = content[ 'fields' ].pop( 'first_name', None )
-	last = content[ 'fields' ].pop( 'last_name', None )
-	content[ 'fields' ][ 'name' ] = '{0} {1}'.format( first, last )
-	return JsonResponse( content, safe = False )
+	first = user[ 'fields' ].pop( 'first_name', None )
+	last = user[ 'fields' ].pop( 'last_name', None )
+	user[ 'fields' ][ 'name' ] = '{0} {1}'.format( first, last )
+	return JsonResponse( user )
 
 
 def email( request ):
-	query = Setting.objects.get( pk = 1 )
-	serial = serializers.serialize( 'json', [ query ] )
-	address = json.loads( serial )[ 0 ]
-	return JsonResponse( address, safe = False )
+	address = owner( )
+	return JsonResponse( address )
 
 
 def social( request ):
-	## Verify that the social media links panel has been enabled
-	query = Setting.objects.get( pk = 1 )
-	serial = serializers.serialize( 'json', [ query ] )
-	enabled = json.loads( serial )[ 0 ][ 'fields' ][ 'social' ]
-	## Don't display the social media panel if it's not set to active
-	if not enabled:
-		return HttpResponse( )
-	## If enabled, grab all activated social media links to display
-	else:
+	entity = bio( request ).content
+	footer = { 'owner': json.loads( entity ) }
+	## Verify whether or not any social media links are enabled
+	enabled = footer[ 'owner' ][ 'fields' ][ 'social' ]
+	if enabled:
 		query = Media.objects.filter( active = True )
 		serial = serializers.serialize( 'json', query )
-		links = json.loads( serial )
-		return JsonResponse( links, safe = False )
-
+		footer[ 'links' ] = json.loads( serial )
+	return JsonResponse( footer )
 
 
