@@ -1,0 +1,109 @@
+
+
+
+
+.panel-slide {
+	position: absolute;
+	background: black;
+	/* border-right: 4px solid white; */
+	/* border-left: 4px solid white; */
+	/* border-bottom: 4px solid white; */
+	border-radius: 2px;
+	cursor: initial;
+	text-align: left;
+	height: 125px;
+	width: 100%;
+	box-shadow: 0 10px 20px 12px black;
+}
+
+.panel-slide-view {
+	animation: view 750ms ease-out forwards;
+}
+
+.panel-slide-fade {
+	pointer-events: none;
+	animation: fade 500ms ease-in forwards;
+}
+
+.panel-slide-view * {
+	z-index: 4;
+	animation: show 1s 750ms backwards;
+}
+
+.panel-slide-fade * {
+	z-index: 0;
+	animation: omit 250ms forwards;
+}
+
+.panel-slide h3 {
+	position: relative;
+	color: #d0d0d0;
+	font-size: 1.25em;
+	font-weight: normal;
+	text-align: center;
+	top: 5px;
+	margin: 0;
+}
+
+/* .panel-slide h5 {
+	color: #696969;
+	font-size: 0.9em;
+	font-weight: normal;
+	text-align: center;
+	margin: 5px 10px;
+	animation: show 2s 500ms both;
+} */
+
+.panel-slide p {
+	position: relative;
+	color: #8e8e8e;
+	font-size: 0.75em;
+	line-height: 1.25;
+	overflow: scroll;
+	max-height: 60px;
+	margin: 15px 10px;
+}
+
+.panel-slide span {
+	position: absolute;
+	display: inline-block;
+	color: #b0b0b0;
+	font-size: 0.8em;
+	bottom: 0;
+}
+
+.panel-price {
+	text-align: left;
+	left: 10px;
+}
+
+.panel-date {
+	text-align: right;
+	right: 10px;
+}
+
+
+/* Panel slide animations */
+@keyframes view {
+	from { pointer-events: none; top: 0; }
+	to { top: 200px; }
+}
+
+@keyframes fade {
+	from { top: 200px; }
+	to { top: 0; }
+}
+
+/* Panel text animations */
+@keyframes show {
+	from { cursor: pointer; opacity: 0; }
+	to { cursor: initial; opacity: 1; }
+}
+
+@keyframes omit {
+	from { cursor: initial; opacity: 1; }
+	to { cursor: pointer; opacity: 0; }
+}
+
+
+

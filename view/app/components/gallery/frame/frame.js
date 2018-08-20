@@ -5,6 +5,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+import Panel from './panel/panel'
 import './frame.css'
 
 
@@ -43,21 +44,6 @@ class Frame extends Component {
 		}
 	}
 	
-	setPanel( ) {
-		const price = this.props.image.price ? 'Price: $' + this.props.image.price : null
-		const date = this.props.image.date ? 'Date: ' + this.props.image.date : null
-		const animation = this.state.viewMode === 'view' ? 'frame-panel-view' : 'frame-panel-fade'
-		return this.state.viewMode === 'hide' ? null : (
-			<div className={ 'frame-panel ' + animation }>
-				<h3> { this.props.image.name } </h3>
-				{ /* <h5> Category </h5> */ }
-				<p> { this.props.image.description } </p>
-				<span className="frame-price"> { price } </span>
-				<span className="frame-date"> { date } </span>
-			</div>
-		)
-	}
-	
 	render( ) {
 		const url = this.props.url + '/' + this.props.image.name
 		const image = 'public/' + this.props.image.image
@@ -71,7 +57,7 @@ class Frame extends Component {
 						<img className="frame-thumbnail" src={ image }/>
 					</div>
 				</Link>
-				{ this.setPanel( ) }
+				<Panel mode={ this.state.viewMode } image={ this.props.image }/>
 			</div>
 		)
 	}

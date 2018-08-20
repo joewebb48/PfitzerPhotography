@@ -64,7 +64,7 @@ class Gallery extends Component {
 		const gallery = this.props.match.url === this.props.location.pathname
 		if ( gallery ) {
 			return (
-				<div className="gallery-frame">
+				<div className="gallery-display">
 					{ this.isUnknown( ) }
 					{ this.formGallery( ) }
 				</div>
