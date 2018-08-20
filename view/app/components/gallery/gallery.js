@@ -4,9 +4,10 @@
 
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { Route, Redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import axios from 'axios'
 
+import Image from './image/image'
 import Frame from './frame/frame'
 import './gallery.css'
 
@@ -16,42 +17,17 @@ class Gallery extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { images: [ ], isolate: null }
+		this.state = { images: [ ] }
 	}
 	
 	
 	componentDidMount( ) {
 		const url = { params: { url: this.props.location.pathname } }
 		axios.get( '/photos', url ).then( images => {
-			// Image data is necessary if an image is visited directly via url
-			let { isolate } = images.data
-			// Nonexistent images will be identified by setting as undefined
-			let extant = url.params.url === '/gallery' ? null : undefined
-			this.setState( {
-				images: images.data.gallery,
-				isolate: isolate ? isolate.fields : extant
-			} )
+			this.setState( { images: images.data } )
 			// Generate a unique scaling css selector per image component
 			this.generateLevels( )
 		} )
-	}
-	
-	componentDidUpdate( ) {
-		// Reset isolate to null after redirecting to avoid infinite redirection
-		if ( this.state.isolate === undefined ) {
-			this.setState( { isolate: null } )
-		}
-		if ( this.props.location.state ) {
-			const { state } = this.props.location
-			if ( state.hasOwnProperty( 'image' ) ) {
-				const photo = state.image
-				const isolate = this.state.isolate
-				// Update image data to that of the presently viewed image
-				if ( !isolate || isolate.name !== photo.name ) {
-					this.setState( { isolate: photo } )
-				}
-			}
-		}
 	}
 	
 	formGallery( ) {
@@ -75,17 +51,7 @@ class Gallery extends Component {
 		} )
 	}
 	
-	viewImage( ) {
-		if ( this.state.isolate === undefined ) {
-			return <Redirect to={ this.props.match.url }/>
-		}
-		const image = this.state.isolate ? '/public/' + this.state.isolate.image : ''
-		// Has occasional server-side rendering error that will need fixing
-		return <img className="gallery-image" src={ image }/>
-	}
-	
-	notFound( ) {
-		// May be unsafe for conditional rendering to rely on props history
+	isUnknown( ) {
 		const action = this.props.history.action.toLowerCase( )
 		// Only appears after redirects as they default to a replace action
 		return action !== 'replace' ? null : (
@@ -99,12 +65,12 @@ class Gallery extends Component {
 		if ( gallery ) {
 			return (
 				<div className="gallery-frame">
-					{ this.notFound( ) }
+					{ this.isUnknown( ) }
 					{ this.formGallery( ) }
 				</div>
 			)
 		}
-		return <Route path={ url } render={ ( ) => this.viewImage( ) }/>
+		return <Route path={ url } component={ Image }/>
 	}
 	
 }

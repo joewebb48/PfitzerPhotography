@@ -19,6 +19,7 @@ class Router extends Component {
 	
 	constructor( props ) {
 		super( props )
+		// Might not be necessary to have any state in this component
 		this.state = { location: props.location.pathname }
 	}
 	
@@ -35,9 +36,7 @@ class Router extends Component {
 	
 	render( ) {
 		// Parameters for determining if Navigator should be rendered
-		const object = Object.assign( {  }, this.props.location.state )
-		const gallery = this.props.location.pathname.startsWith( '/gallery' )
-		const exhibit = object.hasOwnProperty( 'image' ) && gallery
+		const exhibit = this.props.location.pathname.startsWith( '/gallery/' )
 		return (
 			<section className="app-page">
 				<Base location={ this.state.location }/>
@@ -55,5 +54,6 @@ class Router extends Component {
 
 
 export default withRouter( Router )
+
 
 

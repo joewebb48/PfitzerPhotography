@@ -8,10 +8,9 @@ import requests
 from django.core import serializers
 from django.http import JsonResponse
 from django.shortcuts import render
-from datetime import datetime
 
 from meta.models import Page, Image, Media
-from meta.ops import owner
+from meta.ops import owner, dateify
 
 
 
@@ -55,22 +54,27 @@ def photos( request ):
 	query = Image.objects.all( )
 	serial = serializers.serialize( 'json', query )
 	gallery = json.loads( serial )
+	## Update image date fields for more readable viewed dates
+	for image in gallery:
+		image = dateify( image )
+	return JsonResponse( gallery, safe = False )
+
+
+def image( request ):
 	## Keep track of url segments for identifying a specific photo
 	url = request.GET.get( 'url' )[ 1: ]
 	base = os.path.basename( url )
-	isolate = None
-	## Update image date fields for more readable viewed dates
-	for image in gallery:
-		image[ 'fields' ][ 'date' ] = image[ 'fields' ].pop( 'date_taken', None )
-		if image[ 'fields' ][ 'date' ]:
-			## Format each date string in the American date format
-			date = datetime.strptime( image[ 'fields' ][ 'date' ], '%Y-%m-%d' )
-			image[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
-		## Locate and save image data that matches the url suffix
-		if image[ 'fields' ][ 'name' ] == base:
-			isolate = image
-	gallery = { 'gallery': gallery, 'isolate': isolate }
-	return JsonResponse( gallery )
+	## Locate and modify image data that matches the url suffix
+	try:
+		query = Image.objects.get( name__iexact = base )
+		serial = serializers.serialize( 'json', [ query ] )
+		film = json.loads( serial )[ 0 ]
+		## Format the image's date field into a more familiar form
+		visual = dateify( film )
+		return JsonResponse( visual )
+	## Nonexistant image query returns None to trigger a redirect
+	except Image.DoesNotExist:
+		return JsonResponse( None, safe = False )
 
 
 def bio( request ):
