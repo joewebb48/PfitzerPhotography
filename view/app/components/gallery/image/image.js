@@ -14,7 +14,9 @@ class Image extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { profile: null, none: undefined }
+		this.image = React.createRef( )
+		this.state = { profile: null, none: undefined, scale: 'base' }
+		this.zoomImage = this.zoomImage.bind( this )
 	}
 	
 	
@@ -33,21 +35,37 @@ class Image extends Component {
 		}
 	}
 	
+	evalScale( ) {
+		const height = this.image.current.naturalHeight > this.image.current.height
+		const width = this.image.current.naturalWidth > this.image.current.width
+		return this.state.scale !== 'base' || height || width
+	}
+	
+	zoomImage( ) {
+		const mode = this.state.scale === 'zoom' ? 'screen' : 'zoom'
+		this.setState( { scale: this.evalScale( ) ? mode : 'base' } )
+	}
+	
 	render( ) {
 		if ( !this.state.profile && !this.props.location.state ) {
 			return !this.state.none ? null : <Redirect to="/gallery"/>
 		}
-		const data = this.state.profile || this.props.location.state
-		const summary = data.fields ? data.fields : data.image
+		// May refactor image path code to be at the start of the method
+		const data = this.state.profile || this.props.location.state || null
+		const summary = data ? data.fields ? data.fields : data.image : ''
 		const image = '/public/' + summary.image
+		const props = { ref: this.image, src: image }
+		const events = { onLoad: this.zoomImage, onClick: this.zoomImage }
+		// Cursors and resizing still may render improperly on page arrival
+		const scale = this.state.scale === 'zoom' ? 'image-box-zoom' : 'image-box-screen'
+		const form = !this.image.current || !this.evalScale( ) ? '' : ' ' + scale
 		// Has occasional server-side rendering error that will need fixing
-		return <img className="image-fill" src={ image }/>
+		return <img className={ 'image-box' + form } { ...props } { ...events }/>
 	}
 	
 }
 
 
 export default Image
-
 
 

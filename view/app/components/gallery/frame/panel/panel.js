@@ -15,7 +15,7 @@ class Panel extends Component {
 		const date = this.props.image.date ? 'Date: ' + this.props.image.date : null
 		const mode = this.props.mode === 'view' ? 'panel-slide-view' : 'panel-slide-fade'
 		return this.props.mode === 'hide' ? null : (
-			<div className={ 'panel-slide ' + mode }>
+			<div className={ 'panel-slide' + ' ' + mode }>
 				<h3> { this.props.image.name } </h3>
 				{ /* <h5> Category </h5> */ }
 				<p> { this.props.image.description } </p>
