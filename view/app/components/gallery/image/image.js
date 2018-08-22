@@ -15,7 +15,7 @@ class Image extends Component {
 	constructor( props ) {
 		super( props )
 		this.image = React.createRef( )
-		this.state = { profile: null, none: undefined, scale: 'base' }
+		this.state = { profile: props.staticContext, none: undefined, scale: 'base' }
 		this.zoomImage = this.zoomImage.bind( this )
 	}
 	
@@ -26,6 +26,7 @@ class Image extends Component {
 		}
 		else {
 			const url = { params: { url: this.props.location.pathname } }
+			// Server-side data loading of static context may replace axios
 			axios.get( '/image', url ).then( image => {
 				this.setState( {
 					profile: image.data ? image.data : null,
@@ -69,5 +70,6 @@ class Image extends Component {
 
 
 export default Image
+
 
 

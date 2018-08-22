@@ -17,7 +17,7 @@ class App extends Component {
 		const box = nodeBox( )
 		return (
 			<Provider store={ box }>
-				<StaticRouter location={ this.props.url } context={ {  } }>
+				<StaticRouter location={ this.props.url } context={ this.props.data }>
 					<Router/>
 				</StaticRouter>
 			</Provider>

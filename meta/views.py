@@ -22,11 +22,13 @@ def index( request, url = None ):
 		'http://localhost:3000/render',
 		headers = { 'Content-Type': 'application/json' },
 		## React's StaticRouter needs the url from Django instead
-		data = json.dumps( { 'url': request.path } )
+		data = json.dumps( { 'url': request.path, 'data': page } )
 	)
 	## Serialized React frontend that will be embedded into html
 	metadata = feedback.json( )
-	metadata[ 'title' ] = page[ 'fields' ][ 'title' ]
+	## Will have no page data if the visited page is an admin one
+	if page:
+		metadata[ 'title' ] = page[ 'fields' ][ 'title' ]
 	return render( request, 'index.html', metadata )
 
 
@@ -46,8 +48,13 @@ def data( request ):
 	## Avoid database querying if requested path is an image file
 	except Page.DoesNotExist:
 		base = os.path.basename( origin )
-		photo = { 'fields': { 'title': base + ' | ' + title } }
-		return JsonResponse( photo )
+		graphic = image( request ).content
+		photo = json.loads( graphic )
+		## Photo will be None if the route accessed is an admin url
+		if photo:
+			photo[ 'fields' ][ 'title' ] = base + ' | ' + title
+			return JsonResponse( photo )
+		return JsonResponse( photo, safe = False )
 
 
 def photos( request ):
@@ -62,7 +69,7 @@ def photos( request ):
 
 def image( request ):
 	## Keep track of url segments for identifying a specific photo
-	url = request.GET.get( 'url' )[ 1: ]
+	url = request.GET.get( 'url', request.path )[ 1: ]
 	base = os.path.basename( url )
 	## Locate and modify image data that matches the url suffix
 	try:
@@ -101,5 +108,6 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		footer[ 'links' ] = json.loads( serial )
 	return JsonResponse( footer )
+
 
 
