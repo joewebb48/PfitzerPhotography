@@ -38,12 +38,14 @@ class Image extends Component {
 	evalScale( ) {
 		const height = this.image.current.naturalHeight > this.image.current.height
 		const width = this.image.current.naturalWidth > this.image.current.width
-		return this.state.scale !== 'base' || height || width
+		const resize = this.state.scale !== 'base' || this.image.current.className !== 'image-box'
+		const fixed = this.state.scale === 'base' && !height && !width
+		return resize ? resize : !fixed
 	}
 	
 	zoomImage( ) {
-		const mode = this.state.scale === 'zoom' ? 'screen' : 'zoom'
-		this.setState( { scale: this.evalScale( ) ? mode : 'base' } )
+		const scale = this.state.scale === 'zoom' ? 'screen' : 'zoom'
+		this.setState( { scale: this.evalScale( ) ? scale : 'base' } )
 	}
 	
 	render( ) {
@@ -56,11 +58,11 @@ class Image extends Component {
 		const image = '/public/' + summary.image
 		const props = { ref: this.image, src: image }
 		const events = { onLoad: this.zoomImage, onClick: this.zoomImage }
-		// Cursors and resizing still may render improperly on page arrival
-		const scale = this.state.scale === 'zoom' ? 'image-box-zoom' : 'image-box-screen'
-		const form = !this.image.current || !this.evalScale( ) ? '' : ' ' + scale
+		// Initial reloads sometimes display the wrong cursor zoom icon
+		const breadth = this.state.scale === 'zoom' ? 'image-box-zoom' : 'image-box-screen'
+		const zoom = this.image.current && this.evalScale( ) ? ' ' + breadth : ''
 		// Has occasional server-side rendering error that will need fixing
-		return <img className={ 'image-box' + form } { ...props } { ...events }/>
+		return <img className={ 'image-box' + zoom } { ...props } { ...events }/>
 	}
 	
 }
