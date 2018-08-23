@@ -38,7 +38,7 @@ class About extends Component {
 						<div className="about-upper"/>
 					</div>
 				</div>
-				<div className="about-distort"/>
+				{ /* <div className="about-distort"/> */ }
 				<div id="about-biography" className="about-frame">
 					<div className="about-text">
 						<p> { this.state.about } </p>

@@ -7,6 +7,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	overflow: hidden;
+	height: 1600px;
 	margin: 0 0 100px;
 }
 
@@ -21,18 +22,21 @@
 }
 
 .about-frame {
-	position: relative;
+	position: absolute;
 	display: flex;
 	flex-wrap: wrap;
+	height: 52.5%;
 	width: 100%;
 }
 
 #about-portrait {
 	z-index: 3;
+	top: 0;
 }
 
 #about-biography {
 	z-index: 2;
+	bottom: 0;
 }
 
 .about-frame h1 {
@@ -47,7 +51,6 @@
 
 .about-image {
 	position: relative;
-	height: 750px;
 	width: 100%;
 }
 
@@ -73,16 +76,16 @@
 }
 
 .about-upper {
-	background: #a7a7a7;
+	background: linear-gradient( to bottom, #a7a7a7 90%, transparent );
 }
 
 .about-distort {
 	position: absolute;
-	z-index: 1;
-	background: red;
-	/* background-image: linear-gradient( to bottom, #a7a7a7, transparent ); */
-	top: 700px;
-	height: 100px;
+	/* z-index: 5; */
+	background: #ff000080;
+	top: 0;
+	bottom: 0;
+	height: 100%;
 	width: 100%;
 }
 
@@ -92,8 +95,9 @@
 
 .about-text {
 	position: absolute;
-	z-index: 3;
+	z-index: 5;
 	overflow: hidden;
+	top: 5%;
 	height: 100%;
 	width: 100%;
 }
@@ -115,11 +119,11 @@
 	text-align: left;
 	text-indent: 50px;
 	min-width: -webkit-fill-available;
-	margin: 100px;
+	margin: 150px 100px 100px;
 }
 
 .about-lower {
-	background: #5e5e5e;
+	background: linear-gradient( to top, #5e5e5e 100%, transparent );
 }
 
 

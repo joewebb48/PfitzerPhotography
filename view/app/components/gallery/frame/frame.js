@@ -47,6 +47,7 @@ class Frame extends Component {
 	render( ) {
 		const url = this.props.url + '/' + this.props.image.name
 		const image = 'public/' + this.props.image.image
+		const props = { src: image, alt: this.props.image.description }
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (
 			<div className="frame-area" { ...events }>
@@ -54,7 +55,7 @@ class Frame extends Component {
 					<div className="frame-shadow"></div>
 					<div className="frame-image">
 						<div className="frame-border"></div>
-						<img className="frame-thumbnail" src={ image }/>
+						<img className="frame-thumbnail" { ...props }/>
 					</div>
 				</Link>
 				<Panel mode={ this.state.viewMode } image={ this.props.image }/>
@@ -66,6 +67,5 @@ class Frame extends Component {
 
 
 export default Frame
-
 
 
