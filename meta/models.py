@@ -25,6 +25,7 @@ class Setting( models.Model ):
 		## Prevent additional Setting objects from further creation
 		if self.pk != 1:
 			return
+		## Will eventually need to add customized image saving
 		super( Setting, self ).save( *args, **kwargs )
 	
 	def delete( self, *args, **kwargs ):
@@ -110,6 +111,5 @@ class Media( models.Model ):
 			os.remove( preurl[ 1: ] )
 		self.icon.save( iconname, self.icon, save = False )
 		super( Media, self ).save( *args, **kwargs )
-
 
 

@@ -14,8 +14,9 @@ class Image extends Component {
 	
 	constructor( props ) {
 		super( props )
+		const id = props.staticContext ? props.staticContext : null
 		this.image = React.createRef( )
-		this.state = { profile: props.staticContext, none: undefined, scale: 'base' }
+		this.state = { profile: id, none: undefined, scale: 'base' }
 		this.zoomImage = this.zoomImage.bind( this )
 	}
 	
@@ -70,6 +71,5 @@ class Image extends Component {
 
 
 export default Image
-
 
 

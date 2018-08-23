@@ -6,7 +6,7 @@ import os
 from django.contrib import admin
 from django.forms import ModelForm
 
-from meta.forms import ImageForm
+from meta.forms import SettingForm, ImageForm
 from meta.models import Setting, Page, Image, Media
 
 
@@ -21,7 +21,7 @@ admin.site.index_title = pfitzer_admin
 
 
 class SettingAdmin( admin.ModelAdmin ):
-	form = ModelForm
+	form = SettingForm
 	actions = None
 	
 	def has_add_permission( self, request ):

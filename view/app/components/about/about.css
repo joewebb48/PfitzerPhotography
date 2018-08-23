@@ -57,12 +57,13 @@
 .about-image img {
 	position: absolute;
 	z-index: 1;
-	/* filter: grayscale( 100% ); */
+	filter: grayscale( 100% ); /* Temporary */
 	top: 0;
 	right: -50%;
 	left: -50%;
 	bottom: 0;
 	max-height: 120%;
+	/* min-width: min-content; */
 	margin: auto;
 }
 
@@ -125,5 +126,6 @@
 .about-lower {
 	background: linear-gradient( to top, #5e5e5e 100%, transparent );
 }
+
 
 
