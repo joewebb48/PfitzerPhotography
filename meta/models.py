@@ -13,6 +13,7 @@ class Setting( models.Model ):
 	email = models.EmailField( )
 	social = models.BooleanField( verbose_name = 'social media enabled', default = False )
 	about = models.TextField( blank = True )
+	portrait = models.ImageField( verbose_name = 'self portrait', null = True )
 	developer = models.URLField( verbose_name = 'developer website' )
 	created_at = models.DateTimeField( auto_now_add = True )
 	modified_at = models.DateTimeField( auto_now = True )
@@ -109,5 +110,6 @@ class Media( models.Model ):
 			os.remove( preurl[ 1: ] )
 		self.icon.save( iconname, self.icon, save = False )
 		super( Media, self ).save( *args, **kwargs )
+
 
 

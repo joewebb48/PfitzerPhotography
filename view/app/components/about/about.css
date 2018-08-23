@@ -2,15 +2,42 @@
 
 
 
+.about-section {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	overflow: hidden;
+	margin: 0 0 100px;
+}
+
+.about-border {
+	position: absolute;
+	z-index: 4;
+	background: transparent;
+	height: 100%;
+	width: 100%;
+	margin: 0 auto;
+	box-shadow: inset 0 0 20px 12px black;
+}
+
 .about-frame {
 	position: relative;
 	display: flex;
 	flex-wrap: wrap;
-	margin: 0 0 100px;
+	width: 100%;
+}
+
+#about-portrait {
+	z-index: 3;
+}
+
+#about-biography {
+	z-index: 2;
 }
 
 .about-frame h1 {
 	position: absolute;
+	z-index: 5;
 	color: #f0f0f0;
 	text-shadow: 0 5px 10px #3e3e3e;
 	font-size: 6em;
@@ -18,25 +45,60 @@
 	margin: 40px auto;
 }
 
-.about-portrait {
-	background: #a7a7a7;
-}
-
-.about-bio {
+.about-image {
 	position: relative;
-	display: flex;
-	flex-wrap: wrap;
+	height: 750px;
 	width: 100%;
 }
 
+.about-image img {
+	position: absolute;
+	z-index: 1;
+	/* filter: grayscale( 100% ); */
+	top: 0;
+	right: -50%;
+	left: -50%;
+	bottom: 0;
+	max-height: 120%;
+	margin: auto;
+}
+
+.about-image div {
+	position: absolute;
+	right: -50%;
+	left: -50%;
+	height: 100%;
+	width: 100vw;
+	margin: auto;
+}
+
+.about-upper {
+	background: #a7a7a7;
+}
+
+.about-distort {
+	position: absolute;
+	z-index: 1;
+	background: red;
+	/* background-image: linear-gradient( to bottom, #a7a7a7, transparent ); */
+	top: 700px;
+	height: 100px;
+	width: 100%;
+}
+
+/* .about-center {
+	background: #7e7e7e;
+} */
+
 .about-text {
 	position: absolute;
+	z-index: 3;
 	overflow: hidden;
 	height: 100%;
 	width: 100%;
 }
 
-.about-bio p {
+.about-text p {
 	display: inline-block;
 	background: #00000080;
 	/* Maintaining this border styling technique for now */
@@ -56,18 +118,8 @@
 	margin: 100px;
 }
 
-.about-image {
-	height: 750px;
-	width: 100%;
-}
-
-.about-image-top {
-	background: #7e7e7e;
-}
-
-.about-image-bottom {
+.about-lower {
 	background: #5e5e5e;
 }
-
 
 
