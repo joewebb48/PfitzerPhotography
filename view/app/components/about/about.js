@@ -24,29 +24,34 @@ class About extends Component {
 		} )
 	}
 	
+	affixImage( id, url ) {
+		const level = 'about-' + id
+		// Temporary values until images are fully customizable
+		const misc = url ? url : 'test1.jpg'
+		const image = this.state.artist ? '/public/img/' + misc : null
+		return image ? <img src={ image }/> : <div className={ level }/>
+	}
+	
 	render( ) {
 		const name = this.state.artist ? this.state.artist.fields.name : null
 		const about = this.state.artist ? this.state.artist.fields.about : null
-		// Needs additional style tinkering before image displays properly
-		const portrait = this.state.artist ? this.state.artist.fields.portrait : ''
+		const photo = this.state.artist ? this.state.artist.fields.portrait : ''
 		return (
 			<section className="about-section">
 				<div className="about-border"/>
 				<div id="about-portrait" className="about-frame">
 					<h1> { name } </h1>
 					<div className="about-image">
-						<img src={ '/public/img/' + portrait }/>
-						<div className="about-upper"/>
+						{ this.affixImage( 'upper', photo ) }
 					</div>
 				</div>
-				<div className="about-distort"/>
-				<div className="about-text">
-					<p> { about } </p>
-				</div>
+				{ /* <div className="about-distort"/> */ }
 				<div id="about-background" className="about-frame">
+					<div className="about-text">
+						<p> { about } </p>
+					</div>
 					<div className="about-image">
-						<img src="/public/img/test1.jpg"/>
-						<div className="about-lower"/>
+						{ this.affixImage( 'lower' ) }
 					</div>
 				</div>
 			</section>
@@ -57,5 +62,6 @@ class About extends Component {
 
 
 export default About
+
 
 

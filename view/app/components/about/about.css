@@ -5,6 +5,13 @@
 .about-section {
 	position: relative;
 	display: flex;
+	/* Image background blend testing for development */
+	/* background:
+		url( /public/img/test1.jpg ) no-repeat,
+		url( /public/img/test5.jpg ) no-repeat;
+	background-blend-mode: luminosity;
+	background-position: 0 0, 0 125%;
+	mix-blend-mode: multiply; */
 	flex-wrap: wrap;
 	overflow: hidden;
 	height: 1600px;
@@ -15,6 +22,7 @@
 	position: absolute;
 	z-index: 6;
 	background: transparent;
+	pointer-events: none;
 	height: 100%;
 	width: 100%;
 	margin: 0 auto;
@@ -25,27 +33,29 @@
 	position: absolute;
 	display: flex;
 	flex-wrap: wrap;
-	overflow: hidden;
 	/* height: 52.5%; */
-	height: 50%;
+	height: 55%;
 	width: 100%;
 }
 
 #about-portrait {
-	z-index: 3;
+	z-index: 2;
 	top: 0;
 }
 
 #about-background {
-	z-index: 2;
+	z-index: 3;
 	bottom: 0;
+	/* Blends background images where they converge */
+	mask-image: linear-gradient( transparent, #000000 15% );
+	-webkit-mask-image: linear-gradient( transparent, #000000 15% );
 }
 
 .about-frame h1 {
 	position: absolute;
 	z-index: 5;
-	color: #f0f0f0;
-	text-shadow: 0 5px 10px #3e3e3e;
+	color: #ffffff;
+	text-shadow: 0 5px 5px #1f1f1f;
 	font-size: 6em;
 	width: 100%;
 	margin: 40px auto;
@@ -58,7 +68,6 @@
 
 .about-image img {
 	position: absolute;
-	z-index: 1;
 	filter: grayscale( 100% ); /* Temporary */
 	top: 0;
 	right: -50%;
@@ -66,7 +75,8 @@
 	bottom: 0;
 	/* max-height: 120%; */
 	min-height: 100%;
-	max-width: 100%;
+	/* max-width: 100%; */
+	min-width: 100%;
 	margin: auto;
 }
 
@@ -81,12 +91,14 @@
 
 .about-upper {
 	background: linear-gradient( to bottom, #a7a7a7 90%, transparent );
+	/* background: url( /public/img/test1.jpg ) no-repeat;
+	background-blend-mode: luminosity;
+	background-position: center 50%; */
 }
 
 .about-distort {
 	position: absolute;
 	z-index: 4;
-	/* background: #ff000080; */
 	background: linear-gradient( to bottom, transparent, #808080, transparent );
 	top: 40%;
 	bottom: 0;
@@ -101,9 +113,7 @@
 .about-text {
 	position: absolute;
 	z-index: 5;
-	overflow: hidden;
-	top: 40%;
-	height: 100%;
+	top: 5%;
 	width: 100%;
 }
 
@@ -121,15 +131,19 @@
 	background-position: top left, top right, bottom right, bottom left;
 	background-repeat: no-repeat; */
 	box-shadow: 0 0 100px 75px #00000099;
+	text-shadow: 2px 2px 2px #1f1f1f;
 	text-align: left;
 	text-indent: 50px;
-	max-height: 45%;
-	min-width: -webkit-fill-available;
-	margin: 150px 100px 100px;
+	max-height: 75%;
+	width: 80%;
+	margin: 10% 0;
 }
 
 .about-lower {
 	background: linear-gradient( to top, #5e5e5e 100%, transparent );
+	/* background: url( /public/img/test5.jpg ) no-repeat;
+	background-blend-mode: luminosity;
+	background-position: center 50%; */
 }
 
 
