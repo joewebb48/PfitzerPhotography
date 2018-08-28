@@ -50,7 +50,9 @@ class Page( models.Model ):
 
 class Image( models.Model ):
 	name = models.CharField( max_length = 100, unique = True )
-	image = models.ImageField( )
+	image = models.ImageField( height_field = 'height', width_field = 'width' )
+	height = models.IntegerField( editable = False )
+	width = models.IntegerField( editable = False )
 	description = models.TextField( blank = True )
 	viewable = models.BooleanField( default = False )
 	for_sale = models.BooleanField( default = False )
