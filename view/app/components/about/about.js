@@ -24,18 +24,18 @@ class About extends Component {
 		} )
 	}
 	
-	affixImage( id, url ) {
+	affixImage( id, view ) {
 		const level = 'about-' + id
 		// Temporary values until images are fully customizable
-		const misc = url ? url : 'test1.jpg'
-		const image = this.state.artist ? '/public/img/' + misc : null
+		const url = view ? view.fields.image : 'img/test1.jpg'
+		const image = this.state.artist ? '/public/' + url : null
 		return image ? <img src={ image }/> : <div className={ level }/>
 	}
 	
 	render( ) {
 		const name = this.state.artist ? this.state.artist.fields.name : null
 		const about = this.state.artist ? this.state.artist.fields.about : null
-		const photo = this.state.artist ? this.state.artist.fields.portrait : ''
+		const photo = this.state.artist ? this.state.artist.fields.image : ''
 		return (
 			<section className="about-section">
 				<div className="about-border"/>

@@ -58,7 +58,7 @@ def data( request ):
 
 
 def photos( request ):
-	query = Image.objects.all( )
+	query = Image.objects.filter( viewable = True )
 	serial = serializers.serialize( 'json', query )
 	gallery = json.loads( serial )
 	## Update image date fields for more readable viewed dates

@@ -14,6 +14,10 @@ def owner( ):
 	query = Setting.objects.get( pk = 1 )
 	serial = serializers.serialize( 'json', [ query ] )
 	person = json.loads( serial )[ 0 ]
+	## Foreign image object needs to be serialized separately
+	if query.image:
+		foreign = serializers.serialize( 'json', [ query.image ] )
+		person[ 'fields' ][ 'image' ] = json.loads( foreign )[ 0 ]
 	return person
 
 

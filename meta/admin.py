@@ -26,15 +26,16 @@ class SettingAdmin( admin.ModelAdmin ):
 	
 	def save_model( self, request, obj, form, change ):
 		image = request.FILES.get( 'portrait', None )
-		## Image uploading updates the portrait
 		if image:
+			## Create portrait image if none exists
 			if not obj.image:
 				text = 'A portrait photo of ' + obj.__str__( ) + '.'
-				portrait = Image( name = 'portrait', description = text )
-				## File uploads don't save properly
+				portrait = Image( name = 'portrait', description = text, image = image )
 				portrait.save( )
 				obj.image = portrait
+			## Set portrait to the new file upload
 			else:
+				obj.image.image = image
 				obj.image.save( )
 		super( ).save_model( request, obj, form, change )
 	
@@ -77,5 +78,6 @@ admin.site.register( Setting, SettingAdmin )
 admin.site.register( Page, PageAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
+
 
 

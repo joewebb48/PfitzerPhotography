@@ -10,6 +10,7 @@ from meta.models import Setting, Image
 
 
 class SettingForm( ModelForm ):
+	## Needs a way to render the widget's image tag
 	portrait = ImageField( label = 'Self portrait', required = False )
 	
 	class Meta:
@@ -25,5 +26,6 @@ class ImageForm( ModelForm ):
 		model = Image
 		fields = [ 'name', 'image', 'description', 'viewable', 'for_sale', 'price', 'date_taken' ]
 		widgets = { 'image': ImageWidget( attrs = { 'class': 'upload-image' } ) }
+
 
 
