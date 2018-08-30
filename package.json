@@ -25,10 +25,10 @@
 		"build": "mode=production webpack"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.0.0-beta.54",
-		"@babel/polyfill": "^7.0.0-beta.54",
-		"@babel/preset-react": "^7.0.0-beta.54",
-		"babel-loader": "^8.0.0-beta.4",
+		"@babel/core": "^7.0.0",
+		"@babel/polyfill": "^7.0.0",
+		"@babel/preset-react": "^7.0.0",
+		"babel-loader": "^8.0.0",
 		"concurrently": "^3.6.1",
 		"copy-webpack-plugin": "^4.5.2",
 		"css-loader": "^1.0.0",

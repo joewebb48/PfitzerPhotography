@@ -10,22 +10,28 @@ from meta.models import Setting, Image
 
 
 class SettingForm( ModelForm ):
-	## Needs a way to render the widget's image tag
-	portrait = ImageField( label = 'Self portrait', required = False )
+	portrait = ImageField( label = 'Self portrait', widget = ImageWidget( ), required = False )
+	
+	def __init__( self, *args, **kwargs ):
+		## Form needs the current portrait set to view it
+		portrait = kwargs[ 'instance' ].image.image
+		kwargs[ 'initial' ] = { 'portrait': portrait }
+		super( ).__init__( *args, **kwargs )
+	
 	
 	class Meta:
 		model = Setting
-		fields = [ 'first_name', 'last_name', 'email', 'social', 'about', 'portrait' ]
-		widgets = { 'portrait': ImageWidget( attrs = { 'class': 'upload-image' } ) }
+		fields = [ 'first_name', 'last_name', 'email', 'portrait', 'social', 'about' ]
 
 
 
 class ImageForm( ModelForm ):
 	
+	
 	class Meta:
 		model = Image
 		fields = [ 'name', 'image', 'description', 'viewable', 'for_sale', 'price', 'date_taken' ]
-		widgets = { 'image': ImageWidget( attrs = { 'class': 'upload-image' } ) }
+		widgets = { 'image': ImageWidget( ) }
 
 
 
