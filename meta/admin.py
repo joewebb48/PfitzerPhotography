@@ -24,18 +24,32 @@ class SettingAdmin( admin.ModelAdmin ):
 	form = SettingForm
 	actions = None
 	
+	def save_model( self, request, obj, form, change ):
+		image = request.FILES.get( 'portrait', None )
+		## Image uploading updates the portrait
+		if image:
+			if not obj.image:
+				text = 'A portrait photo of ' + obj.__str__( ) + '.'
+				portrait = Image( name = 'portrait', description = text )
+				## File uploads don't save properly
+				portrait.save( )
+				obj.image = portrait
+			else:
+				obj.image.save( )
+		super( ).save_model( request, obj, form, change )
+	
 	def has_add_permission( self, request ):
-		## Keep object creation from occurring
+		## Keep object creation from happening
 		return False
 	
 	def has_delete_permission( self, request, obj = None ):
-		## Remove any Profile object deletion
+		## Remove admin Profile object deletion
 		return False
 
 
 
 class PageAdmin( admin.ModelAdmin ):
-	## Update later to disable add and delete
+	## Update later to disable add and remove
 	pass
 
 

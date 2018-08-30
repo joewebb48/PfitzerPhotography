@@ -15,9 +15,10 @@ class App extends Component {
 	
 	render( ) {
 		const box = nodeBox( )
+		const context = this.props.data ? this.props.data : {  }
 		return (
 			<Provider store={ box }>
-				<StaticRouter location={ this.props.url } context={ this.props.data }>
+				<StaticRouter location={ this.props.url } context={ context }>
 					<Router/>
 				</StaticRouter>
 			</Provider>
@@ -28,6 +29,5 @@ class App extends Component {
 
 
 export default App
-
 
 
