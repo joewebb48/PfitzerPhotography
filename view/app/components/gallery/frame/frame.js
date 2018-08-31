@@ -52,9 +52,9 @@ class Frame extends Component {
 		return (
 			<div className="frame-area" { ...events }>
 				<Link to={ { pathname: url, state: { image: this.props.image } } }>
-					<div className="frame-shadow"></div>
+					<div className="frame-shadow"/>
 					<div className="frame-image">
-						<div className="frame-border"></div>
+						<div className="frame-border"/>
 						<img className="frame-thumbnail" { ...props }/>
 					</div>
 				</Link>

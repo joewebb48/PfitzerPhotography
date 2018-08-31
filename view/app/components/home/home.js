@@ -13,9 +13,12 @@ class Home extends Component {
 	
 	render( ) {
 		return (
-			<Link to="/gallery">
-				<img className="home-img" alt="image"/>
-			</Link>
+			<div className="home-portal">
+				<Link to="/gallery">
+					<div className="home-border"/>
+					<img className="home-img" alt="image"/>
+				</Link>
+			</div>
 		)
 	}
 	
@@ -23,5 +26,6 @@ class Home extends Component {
 
 
 export default Home
+
 
 

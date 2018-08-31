@@ -2,17 +2,35 @@
 
 
 
-.home-img {
-	display: block;
-	background: #616161;
-	color: #bfbfbf;
-	border: 10px solid white;
-	border-radius: 4px;
-	box-sizing: border-box;
-	font-size: 30px;
-	line-height: 450px;
+.home-portal {
+	position: relative;
+	overflow: hidden;
 	height: 500px;
 	width: 100%;
+}
+
+.home-border {
+	position: absolute;
+	z-index: 2;
+	background: transparent;
+	height: 100%;
+	width: 100%;
+	box-shadow: inset 0 0 20px 12px black;
+}
+
+.home-img {
+	position: absolute;
+	z-index: 1;
+	background: #616161;
+	color: #bfbfbf;
+	/* border: 10px solid white;
+	border-radius: 4px; */
+	font-size: 30px;
+	line-height: 475px;
+	right: -50%;
+	left: -50%;
+	min-height: 100%;
+	min-width: 100%;
 }
 
 
