@@ -3,12 +3,12 @@
 
 
 import { combineReducers } from 'redux'
-import tagsReducer from './tags'
+import photosReducer from './photo'
 
 
 
 export default combineReducers( {
-	tags: tagsReducer
+	photos: photosReducer
 } )
 
 

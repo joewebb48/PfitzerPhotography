@@ -9,6 +9,7 @@ import parsify from 'body-parser'
 
 import App from './app/pre'
 import Html from './html'
+import nodeBox from './app/boxes/nodebox'
 
 
 
@@ -30,7 +31,7 @@ app.get( '/*', ( request, response ) => {
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
 	// React's router must get the requested url path from Django first
-	const data = { url: request.body.url, data: request.body.data }
+	const data = { url: request.body.url, data: request.body.data, box: nodeBox( ) }
 	const root = ReactDOMServer.renderToString( <App { ...data }/> )
 	response.json( { html: root } )
 } )
@@ -39,5 +40,6 @@ app.post( '/render', ( request, response ) => {
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!', '\n\n' )
 } )
+
 
 
