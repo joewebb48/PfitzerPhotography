@@ -3,8 +3,10 @@
 
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import axios from 'axios'
 
+import { getPhotos } from '../../actions/photos'
 import './about.css'
 
 
@@ -17,11 +19,14 @@ class About extends Component {
 	}
 	
 	
-	componentDidMount( ) {
+	async componentDidMount( ) {
 		axios.get( '/bio' ).then( bio => {
 			console.log( bio )
 			this.setState( { artist: bio.data } )
 		} )
+		// Async setup for gallery photo data fetching via Redux
+		await this.props.getPhotos( )
+		console.log( this.props.photos )
 	}
 	
 	affixImage( id, view ) {
@@ -61,7 +66,6 @@ class About extends Component {
 }
 
 
-export default About
-
+export default connect( data => ( { photos: data.photos } ), { getPhotos } )( About )
 
 
