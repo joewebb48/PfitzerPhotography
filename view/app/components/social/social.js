@@ -18,6 +18,7 @@ class Social extends Component {
 	
 	
 	componentDidMount( ) {
+		// Move this to a route page component
 		axios.get( '/social' ).then( media => {
 			console.log( media )
 			this.setState( {
@@ -59,5 +60,6 @@ class Social extends Component {
 
 
 export default Social
+
 
 

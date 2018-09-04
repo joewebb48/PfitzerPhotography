@@ -31,6 +31,7 @@ class Image extends Component {
 		else {
 			const url = { params: { url: this.props.location.pathname } }
 			// Server-side data loading of static context may replace axios
+			// Will be modified once route generation functions recursively
 			axios.get( '/image', url ).then( image => {
 				this.setState( {
 					profile: image.data ? image.data : null,
@@ -54,7 +55,8 @@ class Image extends Component {
 	}
 	
 	render( ) {
-		if ( !this.state.profile && !this.props.location.state ) {
+		const fallback = typeof document === 'undefined'
+		if ( fallback || !this.state.profile && !this.props.location.state ) {
 			return !this.state.none ? null : <Redirect to="/gallery"/>
 		}
 		// May refactor image path code to be at the start of the method

@@ -33,7 +33,6 @@ class Router extends Component {
 	
 	generateRoutes( ) {
 		const routes = nexus( this.props.location.pathname )
-		console.log( routes )
 		// Generate routes this way to allow server-side data loading
 		return routes.map( route => {
 			return <Route key={ route.route.path } { ...route.route }/>
@@ -57,5 +56,6 @@ class Router extends Component {
 
 
 export default withRouter( Router )
+
 
 

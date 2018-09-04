@@ -3,7 +3,6 @@
 
 
 import React, { Component } from 'react'
-import axios from 'axios'
 
 import './contact.css'
 
@@ -21,7 +20,8 @@ class Contact extends Component {
 	
 	
 	componentDidMount( ) {
-		axios.get( '/email' ).then( email => {
+		const { api } = this.constructor.key
+		this.constructor.key.load( api ).then( email => {
 			console.log( email )
 			this.setState( { email: email.data.fields.email } )
 		} )
