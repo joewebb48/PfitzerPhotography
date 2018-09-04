@@ -18,7 +18,7 @@ module.exports = ( ) => {
 		{
 			mode: dev ? 'development' : 'production',
 			entry: {
-				main: './view/index.js',
+				main: [ '@babel/polyfill', './view/index.js' ]
 			},
 			module: {
 				rules: [
@@ -63,7 +63,7 @@ module.exports = ( ) => {
 		{
 			mode: dev ? 'development' : 'production',
 			entry: {
-				node: './view/express.js'
+				node: [ '@babel/polyfill', './view/express.js' ]
 			},
 			module: {
 				rules: [

@@ -12,6 +12,9 @@ import './image.css'
 
 class Image extends Component {
 	
+	static key = { api: '/image', params: { path: '/gallery/:image' } }
+	
+	
 	constructor( props ) {
 		super( props )
 		const id = props.staticContext ? props.staticContext : null
@@ -71,5 +74,6 @@ class Image extends Component {
 
 
 export default Image
+
 
 

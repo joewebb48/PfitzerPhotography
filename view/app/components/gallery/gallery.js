@@ -15,6 +15,9 @@ import './gallery.css'
 
 class Gallery extends Component {
 	
+	static key = { api: '/photos', params: { path: '/gallery' }, routes: [ Image ] }
+	
+	
 	constructor( props ) {
 		super( props )
 		this.state = { images: [ ] }
@@ -77,5 +80,6 @@ class Gallery extends Component {
 
 
 export default Gallery
+
 
 

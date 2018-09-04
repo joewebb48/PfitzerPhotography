@@ -7,11 +7,8 @@ import { Route, withRouter } from 'react-router-dom'
 
 import Base from './base'
 import Navigator from './components/navigator/navigator'
-import Home from './components/home/home'
-import About from './components/about/about'
-import Gallery from './components/gallery/gallery'
-import Contact from './components/contact/contact'
 import Social from './components/social/social'
+import nexus from './nexus'
 
 
 
@@ -34,6 +31,15 @@ class Router extends Component {
 		}
 	}
 	
+	generateRoutes( ) {
+		const routes = nexus( this.props.location.pathname )
+		console.log( routes )
+		// Generate routes this way to allow server-side data loading
+		return routes.map( route => {
+			return <Route key={ route.route.path } { ...route.route }/>
+		} )
+	}
+	
 	render( ) {
 		// Parameters for determining if Navigator should be rendered
 		const exhibit = this.props.location.pathname.startsWith( '/gallery/' )
@@ -41,10 +47,7 @@ class Router extends Component {
 			<section className="app-page">
 				<Base location={ this.state.location }/>
 				<Navigator url={ this.state.location } void={ exhibit }/>
-				<Route exact path="/" component={ Home }/>
-				<Route path="/about" component={ About }/>
-				<Route path="/gallery" component={ Gallery }/>
-				<Route path="/contact" component={ Contact }/>
+				{ this.generateRoutes( ) }
 				<Social url={ this.state.location }/>
 			</section>
 		)
@@ -54,6 +57,5 @@ class Router extends Component {
 
 
 export default withRouter( Router )
-
 
 

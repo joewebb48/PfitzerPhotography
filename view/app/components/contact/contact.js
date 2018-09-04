@@ -11,6 +11,9 @@ import './contact.css'
 
 class Contact extends Component {
 	
+	static key = { api: '/email', params: { path: '/contact' } }
+	
+	
 	constructor( props ) {
 		super( props )
 		this.state = { email: '' }
@@ -50,6 +53,5 @@ class Contact extends Component {
 
 
 export default Contact
-
 
 

@@ -11,6 +11,9 @@ import './home.css'
 
 class Home extends Component {
 	
+	static key = { api: '/social', params: { path: '/', exact: true } }
+	
+	
 	render( ) {
 		return (
 			<div className="home-portal">
@@ -26,6 +29,5 @@ class Home extends Component {
 
 
 export default Home
-
 
 
