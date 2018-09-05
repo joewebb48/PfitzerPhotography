@@ -7,7 +7,6 @@ import { Route, withRouter } from 'react-router-dom'
 
 import Base from './base'
 import Navigator from './components/navigator/navigator'
-import Social from './components/social/social'
 import nexus from './nexus'
 
 
@@ -16,6 +15,7 @@ class Router extends Component {
 	
 	constructor( props ) {
 		super( props )
+		this.routes = {  }
 		// Might not be necessary to have any state in this component
 		this.state = { location: props.location.pathname }
 	}
@@ -28,6 +28,7 @@ class Router extends Component {
 	componentDidUpdate( ) {
 		if ( this.state.location !== this.props.location.pathname ) {
 			this.setState( { location: this.props.location.pathname } )
+			console.log( 'router', this.routes )
 		}
 	}
 	
@@ -35,19 +36,24 @@ class Router extends Component {
 		const routes = nexus( this.props.location.pathname )
 		// Generate routes this way to allow server-side data loading
 		return routes.map( route => {
-			return <Route key={ route.route.path } { ...route.route }/>
+			let props = { ...route.route, ref: React.createRef( ) }
+			let base = props.path.slice( 1 ).split( '/' ).pop( )
+			let key = base[ 0 ] === ':' ? base.slice( 1 ) : base
+			this.routes[ props.path !== '/' ? key : 'home' ] = props.ref
+			return <Route key={ route.route.path } { ...props }/>
 		} )
 	}
 	
 	render( ) {
+		const { pathname: url } = this.props.location
 		// Parameters for determining if Navigator should be rendered
-		const exhibit = this.props.location.pathname.startsWith( '/gallery/' )
+		const orientation = { url: this.state.location, void: url.includes( '/gallery/' ) }
+		const style = url !== '/' ? url.slice( 1 ).split( '/' )[ 0 ] : 'home'
 		return (
-			<section className="app-page">
+			<section className={ style + '-page' }>
 				<Base location={ this.state.location }/>
-				<Navigator url={ this.state.location } void={ exhibit }/>
+				<Navigator { ...orientation }/>
 				{ this.generateRoutes( ) }
-				<Social url={ this.state.location }/>
 			</section>
 		)
 	}

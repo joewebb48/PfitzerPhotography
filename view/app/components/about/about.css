@@ -2,7 +2,7 @@
 
 
 
-.about-section {
+.about-page > section {
 	position: relative;
 	display: flex;
 	/* Image background blend testing for development */

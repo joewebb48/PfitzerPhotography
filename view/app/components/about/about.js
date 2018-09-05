@@ -46,7 +46,7 @@ class About extends Component {
 		const about = this.state.artist ? this.state.artist.fields.about : null
 		const photo = this.state.artist ? this.state.artist.fields.image : ''
 		return (
-			<section className="about-section">
+			<section>
 				<div className="about-border"/>
 				<div id="about-portrait" className="about-frame">
 					<h1> { name } </h1>
