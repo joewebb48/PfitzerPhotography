@@ -11,25 +11,8 @@ import './social.css'
 
 class Social extends Component {
 	
-	constructor( props ) {
-		super( props )
-		this.state = { owner: null, links: [ ] }
-	}
-	
-	
-	componentDidMount( ) {
-		// Move this to a route page component
-		axios.get( '/social' ).then( media => {
-			console.log( media )
-			this.setState( {
-				owner: media.data.owner,
-				links: media.data.links || [ ]
-			} )
-		} )
-	}
-	
 	injectLinks( ) {
-		return this.state.links.map( link => {
+		return this.props.links.map( link => {
 			const url = '/public/' + link.fields.icon
 			return (
 				<a key={ link.pk } href={ link.fields.url }>
@@ -41,9 +24,9 @@ class Social extends Component {
 	
 	render( ) {
 		const year = new Date( ).getFullYear( )
-		const artist = this.state.owner ? this.state.owner.fields.name : null
-		const github = this.state.owner ? this.state.owner.fields.developer : null
-		return this.props.url !== '/' ? null : (
+		const artist = this.props.owner ? this.props.owner.fields.name : null
+		const github = this.props.owner ? this.props.owner.fields.developer : null
+		return (
 			<footer>
 				{ this.injectLinks( ) }
 				<address>
@@ -60,6 +43,5 @@ class Social extends Component {
 
 
 export default Social
-
 
 

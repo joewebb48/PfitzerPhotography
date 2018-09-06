@@ -15,7 +15,24 @@ class Home extends Component {
 	static key = { api: '/social', params: { path: '/', exact: true } }
 	
 	
+	constructor( props ) {
+		super( props )
+		this.state = { owner: null, links: [ ] }
+	}
+	
+	
+	componentDidMount( ) {
+		this.constructor.key.load( '/social' ).then( media => {
+			console.log( media )
+			this.setState( {
+				owner: media.data.owner,
+				links: media.data.links || [ ]
+			} )
+		} )
+	}
+	
 	render( ) {
+		const props = { owner: this.state.owner, links: this.state.links }
 		return (
 			<section>
 				<div className="home-portal">
@@ -24,7 +41,7 @@ class Home extends Component {
 						<img className="home-img" alt="image"/>
 					</Link>
 				</div>
-				<Social url={ this.props.location.pathname }/>
+				<Social { ...props }/>
 			</section>
 		)
 	}
@@ -33,5 +50,6 @@ class Home extends Component {
 
 
 export default Home
+
 
 
