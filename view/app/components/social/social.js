@@ -3,7 +3,6 @@
 
 
 import React, { Component } from 'react'
-import axios from 'axios'
 
 import './social.css'
 
@@ -43,5 +42,6 @@ class Social extends Component {
 
 
 export default Social
+
 
 

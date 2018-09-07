@@ -11,19 +11,25 @@ import Contact from './components/contact/contact'
 
 
 
-export default function( location ) {
-	const url = { params: { url: location } }
-	// Root level routes needed for route key params
-	const routes = [ Home, About, Gallery, Contact ]
-	return routes.map( route => {
+export default function( url, net ) {
+	const id = { params: { url: url } }
+	// Root level routes are needed for route key params
+	const web = !net ? [ Home, About, Gallery, Contact ] : net
+	return web.map( route => {
 		let { api, params } = route.key
-		// Data loading will use this predefined function
+		// Data loading will use this predefined api function
 		let load = async ( url, data ) => await axios.get( url, data )
-		// Each route needs this function in the browser
+		let meta = { api, load, route: { component: route, ...params } }
+		// Might only desire subroute assembly server-side
+		let server = typeof document === 'undefined'
+		if ( route.key.routes ) {
+			// Aggregate any subroute metadata recursively
+			meta[ 'interior' ] = this.bind( this )( url, route.key.routes )
+		}
+		// Each route will need data loading in the browser
 		route.key.load = load
-		return { api, load, route: { component: route, ...params } }
+		return meta
 	} )
 }
-
 
 

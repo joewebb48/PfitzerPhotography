@@ -33,7 +33,9 @@ class Router extends Component {
 	}
 	
 	generateRoutes( ) {
-		const routes = nexus( this.props.location.pathname )
+		const location = this.props.location.pathname
+		const routes = nexus.bind( nexus )( location )
+		console.log( 'website', routes )
 		// Generate routes this way to allow server-side data loading
 		return routes.map( route => {
 			let props = { ...route.route, ref: React.createRef( ) }
