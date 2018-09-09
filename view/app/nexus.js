@@ -27,10 +27,12 @@ export default function( url, net ) {
 			// Aggregate any subroute metadata recursively
 			meta[ 'interior' ] = this.bind( this )( url, route.key.routes )
 		}
-		// Setup server-side data loading by passing the url
+		// Setup server-side data fetching via passing a url
 		if ( url ) {
 			let set = matchPath( url, params )
-			let chain = [ { api, load } ].concat( meta[ 'interior' ] || [ ] )
+			// Temporary method for running a Redux action
+			let query = route.queryPhotos ? route.queryPhotos : null
+			let chain = [ { api, load, query } ].concat( meta[ 'interior' ] || [ ] )
 			return amal.concat( set ? chain : [ ] )
 		}
 		// Each route will need data loading in the browser

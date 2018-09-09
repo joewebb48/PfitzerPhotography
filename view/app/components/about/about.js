@@ -21,6 +21,10 @@ class About extends Component {
 	}
 	
 	
+	static queryPhotos( store ) {
+		return store.dispatch( getPhotos( ) )
+	}
+	
 	componentDidMount( ) {
 		const { api } = this.constructor.key
 		this.constructor.key.load( api ).then( bio => {
