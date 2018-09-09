@@ -2,6 +2,7 @@
 
 
 
+import { matchPath } from 'react-router'
 import axios from 'axios'
 
 import Home from './components/home/home'
@@ -12,24 +13,31 @@ import Contact from './components/contact/contact'
 
 
 export default function( url, net ) {
-	const id = { params: { url: url } }
 	// Root level routes are needed for route key params
 	const web = !net ? [ Home, About, Gallery, Contact ] : net
-	return web.map( route => {
+	const graph = exe => web.reduce( exe, [ ] )
+	return graph( ( amal, route ) => {
 		let { api, params } = route.key
 		// Data loading will use this predefined api function
 		let load = async ( url, data ) => await axios.get( url, data )
 		let meta = { api, load, route: { component: route, ...params } }
 		// Might only desire subroute assembly server-side
-		let server = typeof document === 'undefined'
+		let enviro = typeof document === 'undefined'
 		if ( route.key.routes ) {
 			// Aggregate any subroute metadata recursively
 			meta[ 'interior' ] = this.bind( this )( url, route.key.routes )
 		}
+		// Setup server-side data loading by passing the url
+		if ( url ) {
+			let set = matchPath( url, params )
+			let chain = [ { api, load } ].concat( meta[ 'interior' ] || [ ] )
+			return amal.concat( set ? chain : [ ] )
+		}
 		// Each route will need data loading in the browser
 		route.key.load = load
-		return meta
+		return amal.concat( meta )
 	} )
 }
+
 
 

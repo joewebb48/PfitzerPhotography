@@ -22,7 +22,8 @@ class Home extends Component {
 	
 	
 	componentDidMount( ) {
-		this.constructor.key.load( '/social' ).then( media => {
+		const { api } = this.constructor.key
+		this.constructor.key.load( api ).then( media => {
 			console.log( media )
 			this.setState( {
 				owner: media.data.owner,
@@ -50,6 +51,5 @@ class Home extends Component {
 
 
 export default Home
-
 
 
