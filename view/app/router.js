@@ -45,7 +45,7 @@ class Router extends Component {
 	}
 	
 	render( ) {
-		const { pathname: url } = this.props.location
+		const url = this.props.location.pathname
 		// Parameters for determining if Navigator should be rendered
 		const orientation = { url: this.state.location, void: url.includes( '/gallery/' ) }
 		const style = url !== '/' ? url.slice( 1 ).split( '/' )[ 0 ] : 'home'

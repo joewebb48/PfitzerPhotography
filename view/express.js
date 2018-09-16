@@ -31,18 +31,16 @@ app.get( '/*', ( request, response ) => {
 
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
-	// React's router must get the requested url path from Django first
-	const data = { url: request.body.url, data: request.body.data, box: nodeBox( ) }
 	// Data loading on the server must occur prior to rendering the app
+	const box = nodeBox( )
 	console.log( '\n\nCurrent:', request.body.url, '\n' )
 	const urls = nexus.bind( nexus )( request.body.url )
-	const load = urls.map( url => {
-		let here = { params: { url: request.body.url } }
-		return url.query ? url.query( data.box ) : null
-	} )
-	console.log( '\nPromises:\n', load, '\n\n' )
+	const load = urls.map( url => url.query ? url.query( box ) : null )
+	console.log( 'Promises:\n', load, '\n\n' )
 	// Wait for each promise before rendering to resolve for their data
 	Promise.all( load ).then( ( ) => {
+		// React's router must get the requested url path from Django first
+		const data = { url: request.body.url, data: request.body.data, box: box }
 		const root = ReactDOMServer.renderToString( <App { ...data }/> )
 		response.json( { html: root } )
 	} )
