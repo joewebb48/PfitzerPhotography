@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import Social from '../social/social'
+import Media from '../media/media'
 import './home.css'
 
 
@@ -42,7 +42,7 @@ class Home extends Component {
 						<img className="home-img" alt="image"/>
 					</Link>
 				</div>
-				<Social { ...props }/>
+				<Media { ...props }/>
 			</section>
 		)
 	}

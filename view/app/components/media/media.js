@@ -4,11 +4,11 @@
 
 import React, { Component } from 'react'
 
-import './social.css'
+import './media.css'
 
 
 
-class Social extends Component {
+class Media extends Component {
 	
 	injectLinks( ) {
 		return this.props.links.map( link => {
@@ -41,7 +41,7 @@ class Social extends Component {
 }
 
 
-export default Social
+export default Media
 
 
 
