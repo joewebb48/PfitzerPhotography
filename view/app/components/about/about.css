@@ -89,7 +89,7 @@
 	margin: auto;
 }
 
-.about-upper {
+.about-empty {
 	background: linear-gradient( to bottom, #a7a7a7 90%, transparent );
 	/* background: url( /public/img/test1.jpg ) no-repeat;
 	background-blend-mode: luminosity;
@@ -139,11 +139,5 @@
 	margin: 10% 0;
 }
 
-.about-lower {
-	background: linear-gradient( to top, #5e5e5e 100%, transparent );
-	/* background: url( /public/img/test5.jpg ) no-repeat;
-	background-blend-mode: luminosity;
-	background-position: center 50%; */
-}
 
 

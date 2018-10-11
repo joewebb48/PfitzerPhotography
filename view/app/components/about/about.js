@@ -5,6 +5,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import Slide from '../slide/slide'
 import { getPhotos } from '../../actions/photos'
 import './about.css'
 
@@ -37,25 +38,25 @@ class About extends Component {
 		} )
 	}
 	
-	affixImage( id, view ) {
-		const level = 'about-' + id
-		// Temporary values until images are fully customizable
-		const url = view ? view.fields.image : 'img/test1.jpg'
+	affixImage( view ) {
+		const url = view ? view.fields.image : ''
 		const image = this.state.artist ? '/public/' + url : null
-		return image ? <img src={ image }/> : <div className={ level }/>
+		// Include alt text when rendering the jsx image element
+		return image ? <img src={ image }/> : <div className="about-empty"/>
 	}
 	
 	render( ) {
 		const name = this.state.artist ? this.state.artist.fields.name : null
 		const about = this.state.artist ? this.state.artist.fields.about : null
-		const photo = this.state.artist ? this.state.artist.fields.image : ''
+		const graphic = this.state.artist ? this.state.artist.fields.image : ''
+		const props = { container: React.createRef( ), photos: this.props.photos }
 		return (
 			<section>
 				<div className="about-border"/>
 				<div id="about-portrait" className="about-frame">
 					<h1> { name } </h1>
 					<div className="about-image">
-						{ this.affixImage( 'upper', photo ) }
+						{ this.affixImage( graphic ) }
 					</div>
 				</div>
 				{ /* <div className="about-distort"/> */ }
@@ -63,8 +64,8 @@ class About extends Component {
 					<div className="about-text">
 						<p> { about } </p>
 					</div>
-					<div className="about-image">
-						{ this.affixImage( 'lower' ) }
+					<div className="about-image" ref={ props.container }>
+						<Slide { ...props }/>
 					</div>
 				</div>
 			</section>
@@ -75,5 +76,6 @@ class About extends Component {
 
 
 export default connect( data => ( { photos: data.photos } ), { getPhotos } )( About )
+
 
 
