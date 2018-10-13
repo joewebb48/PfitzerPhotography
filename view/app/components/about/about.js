@@ -33,9 +33,7 @@ class About extends Component {
 			this.setState( { artist: bio.data } )
 		} )
 		// Async setup for gallery photo data fetching via Redux
-		this.props.getPhotos( ).then( photos => {
-			console.log( this.props.photos )
-		} )
+		this.props.getPhotos( )
 	}
 	
 	affixImage( view ) {
@@ -48,15 +46,15 @@ class About extends Component {
 	render( ) {
 		const name = this.state.artist ? this.state.artist.fields.name : null
 		const about = this.state.artist ? this.state.artist.fields.about : null
-		const graphic = this.state.artist ? this.state.artist.fields.image : ''
-		const props = { container: React.createRef( ), photos: this.props.photos }
+		const photo = this.state.artist ? this.state.artist.fields.image : ''
+		// Mask-image browser compatability issues need fixes
 		return (
 			<section>
 				<div className="about-border"/>
 				<div id="about-portrait" className="about-frame">
 					<h1> { name } </h1>
 					<div className="about-image">
-						{ this.affixImage( graphic ) }
+						{ this.affixImage( photo ) }
 					</div>
 				</div>
 				{ /* <div className="about-distort"/> */ }
@@ -64,8 +62,8 @@ class About extends Component {
 					<div className="about-text">
 						<p> { about } </p>
 					</div>
-					<div className="about-image" ref={ props.container }>
-						<Slide { ...props }/>
+					<div className="about-image">
+						<Slide photos={ this.props.photos }/>
 					</div>
 				</div>
 			</section>
