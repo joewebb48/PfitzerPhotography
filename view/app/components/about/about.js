@@ -51,14 +51,14 @@ class About extends Component {
 		return (
 			<section>
 				<div className="about-border"/>
-				<div id="about-portrait" className="about-frame">
+				<div className="about-portrait">
 					<h1> { name } </h1>
 					<div className="about-image">
 						{ this.affixImage( photo ) }
 					</div>
 				</div>
 				{ /* <div className="about-distort"/> */ }
-				<div id="about-background" className="about-frame">
+				<div className="about-background">
 					<div className="about-text">
 						<p> { about } </p>
 					</div>

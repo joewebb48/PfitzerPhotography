@@ -29,7 +29,7 @@
 	box-shadow: inset 0 0 20px 12px black;
 }
 
-.about-frame {
+.about-portrait, .about-background {
 	position: absolute;
 	display: flex;
 	flex-wrap: wrap;
@@ -38,12 +38,12 @@
 	width: 100%;
 }
 
-#about-portrait {
+.about-portrait {
 	z-index: 2;
 	top: 0;
 }
 
-#about-background {
+.about-background {
 	z-index: 3;
 	bottom: 0;
 	/* Blends background images where they converge */
@@ -51,7 +51,7 @@
 	-webkit-mask-image: linear-gradient( transparent, #000000 15% );
 }
 
-.about-frame h1 {
+.about-portrait h1 {
 	position: absolute;
 	z-index: 5;
 	color: #ffffff;
