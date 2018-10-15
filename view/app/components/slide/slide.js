@@ -14,7 +14,7 @@ class Slide extends Component {
 		super( props )
 		// Locates the slide dimensions for selecting slide photos
 		this.element = React.createRef( )
-		this.state = { current: '', scope: { x: 0, y: 0 } }
+		this.state = { current: null, scope: { x: 0, y: 0 } }
 	}
 	
 	
@@ -26,40 +26,42 @@ class Slide extends Component {
 	}
 	
 	componentDidUpdate( ) {
-		if ( this.state.current.length === 0 && this.props.photos.length > 0 ) {
+		if ( !this.state.current && this.props.photos.length > 0 ) {
 			// Set the initial slider image before initializing the slider
-			const background = this.viewNext( )
-			console.log( '\nSelected:', background, '\n\n' )
-			this.setState( { current: '/public/' + background.image } )
-			/* setInterval( ( ) => {
+			const data = this.viewNext( 0 )
+			const url = data ? '/public/' + data.image : null
+			const text = data ? data.description : null
+			this.setState( { current: { url: url, text: text } } )
+			/* !this.state.current ? null : setInterval( ( ) => {
 				// Filtering, selection, and transition will be done here
 			}, 6000 ) */
 		}
 	}
 	
-	viewNext( ) {
+	viewNext( cycle ) {
 		// Generate an array index to randomize photo inspection
 		const random = Math.random( ) * this.props.photos.length
 		const identifier = Math.floor( random )
 		// Verify whether or not the image will fill the slider area
 		const { height, width } = this.props.photos[ identifier ].fields
 		const fill = height >= this.state.scope.y && width >= this.state.scope.x
-		console.log( '\nBounds:', 'height', this.state.scope.y, 'width', this.state.scope.x )
-		console.log( 'Image ' + identifier + ':', 'height', height, 'width', width, '\n' )
 		// Keep searching until a sufficiently sized image is found
-		return !fill ? this.viewNext( ) : this.props.photos[ identifier ].fields
+		const view = fill ? this.props.photos[ identifier ].fields : null
+		const boundary = cycle++ === 20 || fill
+		return !boundary ? this.viewNext( cycle ) : view
 	}
 	
 	render( ) {
-		const ready = this.props.photos.length > 0
-		const image = this.state.current.length > 0 ? this.state.current : null
-		const props = { ref: this.element, src: image, alt: ready ? '' : null }
-		return ready ? <img { ...props }/> : <div className="slide-empty" { ...props }/>
+		const image = this.state.current ? this.state.current.url : null
+		const synopsis = this.state.current ? this.state.current.text : null
+		const props = { ref: this.element, src: image, alt: synopsis }
+		return image ? <img { ...props }/> : <div className="slide-empty" { ...props }/>
 	}
 	
 }
 
 
 export default Slide
+
 
 
