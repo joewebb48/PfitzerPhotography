@@ -15,6 +15,7 @@ class Slide extends Component {
 		// Locates the slide dimensions for selecting slide photos
 		this.element = React.createRef( )
 		this.state = { current: null, scope: { x: 0, y: 0 } }
+		this.viewNext = this.viewNext.bind( this )
 	}
 	
 	
@@ -28,17 +29,26 @@ class Slide extends Component {
 	componentDidUpdate( ) {
 		if ( !this.state.current && this.props.photos.length > 0 ) {
 			// Set the initial slider image before initializing the slider
-			const data = this.viewNext( 0 )
-			const url = data ? '/public/' + data.image : null
-			const text = data ? data.description : null
-			this.setState( { current: { url: url, text: text } } )
-			/* !this.state.current ? null : setInterval( ( ) => {
-				// Filtering, selection, and transition will be done here
-			}, 6000 ) */
+			this.metamorphosis = this.viewNext( )
 		}
 	}
 	
-	viewNext( cycle ) {
+	componentWillUnmount( ) {
+		clearInterval( this.metamorphosis )
+	}
+	
+	viewNext( ) {
+		const data = this.yieldPhoto( 0 )
+		const url = data ? '/public/' + data.image : null
+		const text = data ? data.description : null
+		this.setState( { current: { url: url, text: text } } )
+		// Only start up the image slider if it's not already running
+		console.log( '\nNext:', { url: url, text: text } )
+		const exe = ( ) => setInterval( this.viewNext, 6000 )
+		return !this.metamorphosis ? exe( ) : undefined
+	}
+	
+	yieldPhoto( cycle ) {
 		// Generate an array index to randomize photo inspection
 		const random = Math.random( ) * this.props.photos.length
 		const identifier = Math.floor( random )
@@ -48,7 +58,7 @@ class Slide extends Component {
 		// Keep searching until a sufficiently sized image is found
 		const view = fill ? this.props.photos[ identifier ].fields : null
 		const boundary = cycle++ === 20 || fill
-		return !boundary ? this.viewNext( cycle ) : view
+		return !boundary ? this.yieldPhoto( cycle ) : view
 	}
 	
 	render( ) {
