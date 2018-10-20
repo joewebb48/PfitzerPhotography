@@ -13,16 +13,16 @@ class Slide extends Component {
 	constructor( props ) {
 		super( props )
 		// Locates the slide dimensions for selecting slide photos
-		this.element = React.createRef( )
-		this.state = { current: null, scope: { x: 0, y: 0 } }
+		this.boundary = React.createRef( )
+		this.state = { current: null, previous: null, scope: { x: 0, y: 0 } }
 		this.viewNext = this.viewNext.bind( this )
 	}
 	
 	
 	componentDidMount( ) {
 		// Identify the slider boundary to measure images against
-		const height = this.element.current.parentNode.clientHeight
-		const width = this.element.current.parentNode.clientWidth
+		const height = this.boundary.current.clientHeight
+		const width = this.boundary.current.clientWidth
 		this.setState( { scope: { x: width, y: height } } )
 	}
 	
@@ -41,10 +41,13 @@ class Slide extends Component {
 		const data = this.yieldPhoto( 0 )
 		const url = data ? '/public/' + data.image : null
 		const text = data ? data.description : null
-		this.setState( { current: { url: url, text: text } } )
+		this.setState( { current: { url, text }, previous: this.state.current } )
+		// Delete all previous image data once it is fully faded out
+		setTimeout( ( ) => this.setState( { previous: null } ), 2500 )
 		// Only start up the image slider if it's not already running
 		console.log( '\nNext:', { url: url, text: text } )
-		const exe = ( ) => setInterval( this.viewNext, 6000 )
+		console.log( 'Previous:', this.state.previous )
+		const exe = ( ) => setInterval( this.viewNext, 7500 )
 		return !this.metamorphosis ? exe( ) : undefined
 	}
 	
@@ -57,15 +60,22 @@ class Slide extends Component {
 		const fill = height >= this.state.scope.y && width >= this.state.scope.x
 		// Keep searching until a sufficiently sized image is found
 		const view = fill ? this.props.photos[ identifier ].fields : null
-		const boundary = cycle++ === 20 || fill
-		return !boundary ? this.yieldPhoto( cycle ) : view
+		const maximum = cycle++ === 20 || fill
+		return !maximum ? this.yieldPhoto( cycle ) : view
+	}
+	
+	embedImage( attrs ) {
+		return attrs ? <img src={ attrs.url } alt={ attrs.text }/> : null
 	}
 	
 	render( ) {
-		const image = this.state.current ? this.state.current.url : null
-		const synopsis = this.state.current ? this.state.current.text : null
-		const props = { ref: this.element, src: image, alt: synopsis }
-		return image ? <img { ...props }/> : <div className="slide-empty" { ...props }/>
+		// Bottom embedded image fades out on slide transition
+		return (
+			<div className="slide-view" ref={ this.boundary }>
+				{ this.embedImage( this.state.current ) }
+				{ this.embedImage( this.state.previous ) }
+			</div>
+		)
 	}
 	
 }

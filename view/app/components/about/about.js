@@ -62,9 +62,7 @@ class About extends Component {
 					<div className="about-text">
 						<p> { about } </p>
 					</div>
-					<div className="about-image">
-						<Slide photos={ this.props.photos }/>
-					</div>
+					<Slide photos={ this.props.photos }/>
 				</div>
 			</section>
 		)
