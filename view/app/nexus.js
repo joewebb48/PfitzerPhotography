@@ -36,7 +36,7 @@ export default function( url, net ) {
 			return amal.concat( set ? chain : [ ] )
 		}
 		// Each route will need data loading in the browser
-		route.key.load = load
+		api ? route.key.load = load : null
 		return amal.concat( meta )
 	} )
 }

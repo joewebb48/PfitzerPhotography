@@ -32,7 +32,7 @@ class About extends Component {
 			console.log( bio )
 			this.setState( { artist: bio.data } )
 		} )
-		// Async setup for gallery photo data fetching via Redux
+		// Async browser gallery photos data fetching via Redux
 		this.props.getPhotos( )
 	}
 	
