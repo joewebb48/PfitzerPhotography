@@ -4,8 +4,11 @@
 
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
+import Slide from '../slide/slide'
 import Media from '../media/media'
+import { getPhotos } from '../../actions/photos'
 import './home.css'
 
 
@@ -21,6 +24,10 @@ class Home extends Component {
 	}
 	
 	
+	static queryPhotos( store ) {
+		return store.dispatch( getPhotos( ) )
+	}
+	
 	componentDidMount( ) {
 		const { api } = this.constructor.key
 		this.constructor.key.load( api ).then( media => {
@@ -30,6 +37,8 @@ class Home extends Component {
 				links: media.data.links || [ ]
 			} )
 		} )
+		// Async browser gallery photos data fetching via Redux
+		this.props.getPhotos( )
 	}
 	
 	render( ) {
@@ -39,7 +48,7 @@ class Home extends Component {
 				<div className="home-portal">
 					<Link to="/gallery">
 						<div className="home-border"/>
-						<img className="home-img" alt="image"/>
+						<Slide photos={ this.props.photos }/>
 					</Link>
 				</div>
 				<Media { ...props }/>
@@ -50,6 +59,7 @@ class Home extends Component {
 }
 
 
-export default Home
+export default connect( data => ( { photos: data.photos } ), { getPhotos } )( Home )
+
 
 

@@ -2,18 +2,21 @@
 
 
 
-/* Temporary style for About page images only */
 .slide-view {
 	position: relative;
 	background: linear-gradient( to top, #5e5e5e 100%, transparent );
 	/* background: url( /public/img/test5.jpg ) no-repeat;
 	background-blend-mode: luminosity;
 	background-position: center 50%; */
+	height: 100%;
 	width: 100%;
 }
 
 .slide-view img {
 	position: absolute;
+	z-index: 1;
+	background: #616161;
+	color: #bfbfbf;
 	filter: grayscale( 100% ); /* Temporary */
 	top: 0;
 	right: -50%;
@@ -22,12 +25,13 @@
 	/* max-height: 120%; */
 	min-height: 100%;
 	/* max-width: 100%; */
-	min-width: 100%;
+	/* min-width: 100%; */
+	width: 100%;
 	margin: auto;
 }
 
 .slide-view img:nth-child( 2 ) {
-	z-index: 1;
+	z-index: 2;
 	animation: trans 2s linear both;
 }
 
