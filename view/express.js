@@ -38,7 +38,6 @@ app.post( '/render', ( request, response ) => {
 	const load = urls.map( url => url.query ? url.query( box ) : null )
 	// Wait for each promise before rendering to resolve for their data
 	Promise.all( load ).then( ( ) => {
-		console.log( '\nPromises:\n', load, '\n\n' )
 		// React's router needs originally requested url from Django first
 		const data = { url: request.body.url, data: request.body.data, box: box }
 		const root = ReactDOMServer.renderToString( <App { ...data }/> )
@@ -50,6 +49,5 @@ app.post( '/render', ( request, response ) => {
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!', '\n\n' )
 } )
-
 
 

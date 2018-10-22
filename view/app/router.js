@@ -16,8 +16,7 @@ class Router extends Component {
 	constructor( props ) {
 		super( props )
 		this.routes = {  }
-		// Might not be necessary to have any state in this component
-		this.state = { location: props.location.pathname }
+		this.state = { location: '' }
 	}
 	
 	
@@ -31,9 +30,7 @@ class Router extends Component {
 		}
 	}
 	
-	generateRoutes( ) {
-		const location = this.props.location.pathname
-		const routes = nexus.bind( nexus )( )
+	formRoutes( routes ) {
 		// Generate routes this way to allow server-side data loading
 		return routes.map( route => {
 			let props = { ...route.route, ref: React.createRef( ) }
@@ -45,15 +42,16 @@ class Router extends Component {
 	}
 	
 	render( ) {
+		const site = nexus.bind( nexus )( )
 		const url = this.props.location.pathname
 		// Parameters for determining if Navigator should be rendered
-		const orientation = { url: this.state.location, void: url.includes( '/gallery/' ) }
-		const style = url !== '/' ? url.slice( 1 ).split( '/' )[ 0 ] : 'home'
+		const props = { url, site, void: url.includes( '/gallery/' ) }
+		const area = url !== '/' ? url.slice( 1 ).split( '/' )[ 0 ] : 'home'
 		return (
-			<section className={ style + '-page' }>
-				<Base location={ this.state.location }/>
-				<Navigator { ...orientation }/>
-				{ this.generateRoutes( ) }
+			<section className={ area + '-page' }>
+				<Base location={ url }/>
+				<Navigator { ...props }/>
+				{ this.formRoutes( site ) }
 			</section>
 		)
 	}
