@@ -33,7 +33,7 @@ app.get( '/*', ( request, response ) => {
 app.post( '/render', ( request, response ) => {
 	// Data loading on the server must occur prior to rendering the app
 	const box = nodeBox( )
-	console.log( '\n\nCurrent:', request.body.url, '\n' )
+	console.log( '\n\nCurrent:', request.body.url, '\n\n' )
 	const urls = nexus.bind( nexus )( request.body.url )
 	const load = urls.map( url => url.query ? url.query( box ) : null )
 	// Wait for each promise before rendering to resolve for their data

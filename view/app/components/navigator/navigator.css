@@ -41,7 +41,9 @@ nav ul {
 nav ul li {
 	display: inline-block;
 	color: white;
-	margin: 0 7.5%;
+	width: 25%;
+	/* margin: 0 7.5%; */
 }
+
 
 
