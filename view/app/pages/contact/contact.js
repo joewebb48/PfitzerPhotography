@@ -15,7 +15,8 @@ class Contact extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { email: '' }
+		this.state = { email: '', title: '', message: '' }
+		this.updateForm = this.updateForm.bind( this )
 	}
 	
 	
@@ -27,22 +28,35 @@ class Contact extends Component {
 		} )
 	}
 	
+	updateForm( event ) {
+		const field = event.target.name
+		const value = event.target.value
+		this.setState( { [ field ]: value } )
+	}
+	
 	onSend( event ) {
 		event.preventDefault( )
-		console.log( 'Nothing submitted!' )
+		// Verify that form field input data is properly updating
+		const ready = this.state.title && this.state.message
+		const inform = form => console.log( '\n', form, '\n\n' )
+		inform( !ready ? 'Incomplete form!' : this.state )
 	}
 	
 	render( ) {
+		// Set controlled component architecture in form fields
+		const events = { onChange: this.updateForm }
+		const subject = { name: 'title', value: this.state.title }
+		const message = { name: 'message', value: this.state.message }
 		return (
 			<form onSubmit={ event => this.onSend( event ) }>
 				<h3 className="contact-email"> { this.state.email } </h3>
 				<label>
 					Subject
-					<input className="contact-field" name="title"/>
+					<input className="contact-field" { ...subject } { ...events }/>
 				</label>
 				<label>
 					Message
-					<textarea className="contact-field" name="message"/>
+					<textarea className="contact-field" { ...message } { ...events }/>
 				</label>
 				<button className="contact-submit"> Send </button>
 			</form>
