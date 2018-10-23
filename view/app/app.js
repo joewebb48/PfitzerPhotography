@@ -7,16 +7,16 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
 import Router from './router'
-import viewBox from './boxes/viewbox'
+import viewStore from './stores/viewstore'
 
 
 
 class App extends Component {
 	
 	render( ) {
-		const box = viewBox( )
+		const store = viewStore( )
 		return (
-			<Provider store={ box }>
+			<Provider store={ store }>
 				<BrowserRouter>
 					<Router/>
 				</BrowserRouter>

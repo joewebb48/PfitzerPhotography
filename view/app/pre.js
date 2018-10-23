@@ -15,7 +15,7 @@ class App extends Component {
 	render( ) {
 		const context = this.props.data ? this.props.data : {  }
 		return (
-			<Provider store={ this.props.box }>
+			<Provider store={ this.props.store }>
 				<StaticRouter location={ this.props.url } context={ context }>
 					<Router/>
 				</StaticRouter>
