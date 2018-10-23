@@ -5,10 +5,10 @@
 import { matchPath } from 'react-router'
 import axios from 'axios'
 
-import Home from './components/home/home'
-import About from './components/about/about'
-import Gallery from './components/gallery/gallery'
-import Contact from './components/contact/contact'
+import Home from './pages/home/home'
+import About from './pages/about/about'
+import Gallery from './pages/gallery/gallery'
+import Contact from './pages/contact/contact'
 
 
 

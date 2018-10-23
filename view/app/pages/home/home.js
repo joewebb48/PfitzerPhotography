@@ -6,8 +6,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-import Slide from '../slide/slide'
-import Media from '../media/media'
+import Slide from '../../components/slide/slide'
+import Media from '../../components/media/media'
 import { getPhotos } from '../../actions/photos'
 import './home.css'
 

@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import Slide from '../slide/slide'
+import Slide from '../../components/slide/slide'
 import { getPhotos } from '../../actions/photos'
 import './about.css'
 
