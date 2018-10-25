@@ -7,7 +7,7 @@ import ReactDOMServer from 'react-dom/server'
 import express from 'express'
 import parsify from 'body-parser'
 
-import App from './app/pre'
+import Server from './app/server'
 import Html from './html'
 import nexus from './app/nexus'
 import nodeStore from './app/stores/nodestore'
@@ -25,7 +25,7 @@ app.use( express.static( 'public' ) )
 // Exclusively ran from Node to render jsx with a stringified template
 app.get( '/*', ( request, response ) => {
 	const title = 'Pfitzer Photography'
-	const root = ReactDOMServer.renderToString( <App url={ request.path }/> )
+	const root = ReactDOMServer.renderToString( <Server url={ request.path }/> )
 	response.send( Html( root, title ) )
 } )
 
@@ -40,7 +40,7 @@ app.post( '/render', ( request, response ) => {
 	Promise.all( load ).then( ( ) => {
 		// React's router needs originally requested url from Django first
 		const data = { url: request.body.url, data: request.body.data, store: store }
-		const root = ReactDOMServer.renderToString( <App { ...data }/> )
+		const root = ReactDOMServer.renderToString( <Server { ...data }/> )
 		response.json( { html: root } )
 	} )
 } )
