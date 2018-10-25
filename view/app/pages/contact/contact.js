@@ -15,7 +15,9 @@ class Contact extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { email: '', title: '', message: '' }
+		const field = { value: '', error: '' }
+		const preset = { title: field, email: field }
+		this.state = { name: '', send: false, form: preset }
 		this.updateForm = this.updateForm.bind( this )
 	}
 	
@@ -24,32 +26,36 @@ class Contact extends Component {
 		const { api } = this.constructor.key
 		this.constructor.key.load( api ).then( email => {
 			console.log( email )
-			this.setState( { email: email.data.fields.email } )
+			this.setState( { name: email.data.fields.name } )
 		} )
 	}
 	
 	updateForm( event ) {
-		const field = event.target.name
-		const value = event.target.value
-		this.setState( { [ field ]: value } )
+		const { name, value } = event.target
+		// Merge the new field input values into copies of state
+		const info = { ...this.state.form[ name ], value }
+		const draft = { ...this.state.form, [ name ]: info }
+		// Update contact form with new form field input data
+		this.setState( { form: draft } )
 	}
 	
 	onSend( event ) {
 		event.preventDefault( )
+		const { title, email } = this.state.form
 		// Verify that form field input data is properly updating
-		const ready = this.state.title && this.state.message
-		const inform = form => console.log( '\n', form, '\n\n' )
-		inform( !ready ? 'Incomplete form!' : this.state )
+		const criteria = title.value && email.value
+		const ready = form => console.log( '\n', form, '\n\n' )
+		ready( !criteria ? 'Incomplete form!' : this.state )
 	}
 	
 	render( ) {
 		// Set controlled component architecture in form fields
 		const events = { onChange: this.updateForm }
-		const subject = { name: 'title', value: this.state.title }
-		const message = { name: 'message', value: this.state.message }
+		const subject = { name: 'title', value: this.state.form.title.value }
+		const message = { name: 'email', value: this.state.form.email.value }
 		return (
 			<form onSubmit={ event => this.onSend( event ) }>
-				<h3 className="contact-email"> { this.state.email } </h3>
+				<h3 className="contact-email"> Contact { this.state.name } </h3>
 				<label>
 					Subject
 					<input className="contact-field" { ...subject } { ...events }/>

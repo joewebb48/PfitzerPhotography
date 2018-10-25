@@ -95,6 +95,9 @@ def bio( request ):
 
 def email( request ):
 	address = owner( )
+	del address[ 'fields' ][ 'last_name' ]
+	name = address[ 'fields' ].pop( 'first_name', None )
+	address[ 'fields' ][ 'name' ] = name
 	return JsonResponse( address )
 
 
@@ -108,6 +111,5 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		footer[ 'links' ] = json.loads( serial )
 	return JsonResponse( footer )
-
 
 
