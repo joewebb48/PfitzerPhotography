@@ -5,9 +5,9 @@
 import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
 
-import Base from './base'
+import Base from './components/base'
 import Navigator from './components/navigator/navigator'
-import nexus from './nexus'
+import Router from './pages/router'
 
 
 
@@ -42,7 +42,7 @@ class App extends Component {
 	}
 	
 	render( ) {
-		const site = nexus.bind( nexus )( )
+		const site = Router.bind( Router )( )
 		const url = this.props.location.pathname
 		// Parameters for determining if Navigator should be rendered
 		const props = { url, site, void: url.includes( '/gallery/' ) }

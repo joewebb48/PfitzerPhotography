@@ -8,8 +8,8 @@ import express from 'express'
 import parsify from 'body-parser'
 
 import Server from './app/server'
+import Router from './app/pages/router'
 import Html from './html'
-import nexus from './app/nexus'
 import nodeStore from './app/stores/nodestore'
 
 
@@ -34,7 +34,7 @@ app.post( '/render', ( request, response ) => {
 	// Data loading on the server must occur prior to rendering the app
 	const store = nodeStore( )
 	console.log( '\n\nCurrent:', request.body.url, '\n\n' )
-	const urls = nexus.bind( nexus )( request.body.url )
+	const urls = Router.bind( Router )( request.body.url )
 	const load = urls.map( url => url.query ? url.query( store ) : null )
 	// Wait for each promise before rendering to resolve for their data
 	Promise.all( load ).then( ( ) => {
