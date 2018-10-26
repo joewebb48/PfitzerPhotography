@@ -4,7 +4,7 @@
 
 import { combineReducers } from 'redux'
 
-import photosReducer from './photo'
+import photosReducer from './photos'
 
 
 
