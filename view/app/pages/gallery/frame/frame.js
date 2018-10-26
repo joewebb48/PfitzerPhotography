@@ -20,13 +20,18 @@ class Frame extends Component {
 	}
 	
 	
+	componentWillUnmount( ) {
+		clearTimeout( this.ascend )
+		clearTimeout( this.descend )
+	}
+	
 	elevateUp( ) {
 		if ( this.state.viewMode !== 'fade' ) {
 			this.setState( { viewMode: 'view' } )
 		}
 		else if ( this.state.viewMode === 'fade' ) {
 			// Prevent panel snapping from quickly moving back
-			setTimeout( ( ) => {
+			this.ascend = setTimeout( ( ) => {
 				this.setState( { viewMode: 'view' } )
 			}, 250 )
 		}
@@ -34,7 +39,7 @@ class Frame extends Component {
 	
 	fallBack( ) {
 		if ( this.state.viewMode !== 'hide' ) {
-			setTimeout( ( ) => {
+			this.descend = setTimeout( ( ) => {
 				// Disallow panel hiding if it is being viewed again
 				if ( this.state.viewMode !== 'view' ) {
 					this.setState( { viewMode: 'hide' } )
@@ -67,5 +72,6 @@ class Frame extends Component {
 
 
 export default Frame
+
 
 
