@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react'
 
+import Label from './label/label'
 import './contact.css'
 
 
@@ -39,31 +40,25 @@ class Contact extends Component {
 		this.setState( { form: draft } )
 	}
 	
-	onSend( event ) {
+	onSend( event, form ) {
 		event.preventDefault( )
-		const { title, email } = this.state.form
 		// Verify that form field input data is properly updating
-		const criteria = title.value && email.value
+		const criteria = form.title.value && form.email.value
 		const ready = form => console.log( '\n', form, '\n\n' )
 		ready( !criteria ? 'Incomplete form!' : this.state )
 	}
 	
 	render( ) {
+		const { title, email } = this.state.form
 		// Set controlled component architecture in form fields
 		const events = { onChange: this.updateForm }
-		const subject = { name: 'title', value: this.state.form.title.value }
-		const message = { name: 'email', value: this.state.form.email.value }
+		const subject = { name: 'title', text: 'Subject', value: title.value }
+		const message = { name: 'email', text: 'Message', value: email.value }
 		return (
-			<form onSubmit={ event => this.onSend( event ) }>
-				<h3 className="contact-email"> Contact { this.state.name } </h3>
-				<label>
-					Subject
-					<input className="contact-field" { ...subject } { ...events }/>
-				</label>
-				<label>
-					Message
-					<textarea className="contact-field" { ...message } { ...events }/>
-				</label>
+			<form onSubmit={ event => this.onSend( event, this.state.form ) }>
+				<h3 className="contact-form"> Contact { this.state.name } </h3>
+				<Label html="input" { ...subject } { ...events }/>
+				<Label html="textarea" { ...message } { ...events }/>
 				<button className="contact-submit"> Send </button>
 			</form>
 		)
@@ -73,5 +68,6 @@ class Contact extends Component {
 
 
 export default Contact
+
 
 

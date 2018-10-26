@@ -9,7 +9,7 @@ form {
 	margin: 0 auto;
 }
 
-.contact-email {
+.contact-form {
 	color: #e0e0e0;
 	font-size: 2em;
 	margin: 0 0 30px;
@@ -20,7 +20,7 @@ label {
 	font-size: 1.25em;
 }
 
-.contact-field {
+input, textarea {
 	background: black;
 	border: 2px solid #101010;
 	color: white;
