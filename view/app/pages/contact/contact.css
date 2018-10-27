@@ -3,6 +3,7 @@
 
 
 form {
+	position: relative;
 	background: #313131;
 	width: 600px;
 	padding: 25px;
@@ -42,6 +43,13 @@ textarea {
 	margin: 10px 0 20px;
 }
 
+label p {
+	color: red;
+	font-size: 0.8em;
+	margin: -20px 0 25px;
+	animation: dissolve 2s linear 12s both;
+}
+
 .contact-submit {
 	background: #212121;
 	border: 0;
@@ -51,6 +59,18 @@ textarea {
 	font-size: 1.25em;
 	width: 150px;
 	padding: 15px;
+}
+
+.contact-submit:disabled{
+	/* background: #484848; */
+	color: #828282;
+}
+
+
+/* Error flash animations */
+@keyframes dissolve {
+	from { opacity: 1; }
+	to { opacity: 0; }
 }
 
 

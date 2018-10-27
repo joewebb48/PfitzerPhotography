@@ -37,29 +37,41 @@ class Contact extends Component {
 		const info = { ...this.state.form[ name ], value }
 		const draft = { ...this.state.form, [ name ]: info }
 		// Update contact form with new form field input data
-		this.setState( { form: draft } )
+		const ready = draft.title.value && draft.email.value
+		this.setState( { form: draft, send: ready } )
 	}
 	
-	onSend( event, form ) {
+	onSend( event ) {
 		event.preventDefault( )
 		// Verify that form field input data is properly updating
-		const criteria = form.title.value && form.email.value
-		const ready = form => console.log( '\n', form, '\n\n' )
-		ready( !criteria ? 'Incomplete form!' : this.state )
+		this.validateInput( this.state.form )
+	}
+	
+	validateInput( form ) {
+		const amalgam = {  }
+		const floor = { title: 10, email: 100 }
+		for ( let field in form ) {
+			let type = field === 'title' ? 'subject' : 'message'
+			let valid = form[ field ].value.length >= floor[ field ]
+			let issue = valid ? '' : 'Your ' + type + ' is too short!'
+			amalgam[ field ] = { ...form[ field ], error: issue }
+		}
+		this.setState( { form: amalgam } )
 	}
 	
 	render( ) {
 		const { title, email } = this.state.form
+		const lock = { disabled: !this.state.send }
 		// Set controlled component architecture in form fields
 		const events = { onChange: this.updateForm }
-		const subject = { name: 'title', text: 'Subject', value: title.value }
-		const message = { name: 'email', text: 'Message', value: email.value }
+		const subject = { name: 'title', text: 'Subject', ...title }
+		const message = { name: 'email', text: 'Message', ...email }
 		return (
-			<form onSubmit={ event => this.onSend( event, this.state.form ) }>
+			<form onSubmit={ event => this.onSend( event ) }>
 				<h3 className="contact-form"> Contact { this.state.name } </h3>
 				<Label html="input" { ...subject } { ...events }/>
 				<Label html="textarea" { ...message } { ...events }/>
-				<button className="contact-submit"> Send </button>
+				<button className="contact-submit" { ...lock }> Send </button>
 			</form>
 		)
 	}

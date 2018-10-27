@@ -10,9 +10,23 @@ class Label extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = {  }
+		this.state = { flash: false }
 	}
 	
+	
+	componentDidUpdate( ) {
+		if ( this.props.error && !this.state.flash ) {
+			// Expose and eventually fade out all errors shown
+			this.setState( { flash: true } )
+			this.error = setTimeout( ( ) => {
+				this.setState( { flash: false } )
+			}, 12000 )
+		}
+	}
+	
+	componentWillUnmount( ) {
+		clearTimeout( this.error )
+	}
 	
 	generateProps( field, props ) {
 		// Ignore non-component and preassigned field props
@@ -30,12 +44,18 @@ class Label extends Component {
 		return React.createElement( this.props.html, props )
 	}
 	
+	flashError( error ) {
+		// Not rendering appropriately after error text is faded
+		const shroud = !this.state.flash && error
+		return shroud ? null : <p> { error } </p>
+	}
+	
 	render( ) {
 		return (
 			<label>
 				{ this.props.text }
 				{ this.calculateField( this.props ) }
-				<span> { this.props.error } </span>
+				{ this.flashError( this.props.error ) }
 			</label>
 		)
 	}
