@@ -15,12 +15,13 @@ class Label extends Component {
 	
 	
 	componentDidUpdate( ) {
-		if ( this.props.error && !this.state.flash ) {
+		if ( this.props.error && this.props.sent ) {
+			console.log( 'Sent:', this.props.sent, this.error ? true : false )
 			// Expose and eventually fade out all errors shown
 			this.setState( { flash: true } )
 			this.error = setTimeout( ( ) => {
 				this.setState( { flash: false } )
-			}, 12000 )
+			}, this.props.diff )
 		}
 	}
 	
@@ -30,7 +31,7 @@ class Label extends Component {
 	
 	generateProps( field, props ) {
 		// Ignore non-component and preassigned field props
-		const ignore = [ 'html', 'class', 'text', 'value', 'error' ]
+		const ignore = [ 'html', 'text', 'value', 'error', 'sent', 'diff' ]
 		const query = attr => ignore.every( key => attr[ 0 ] !== key )
 		// Fuse together the new props with the screened set
 		const join = ( body, attr ) => ( { ...body, [ attr[ 0 ] ]: attr[ 1 ] } )
@@ -40,13 +41,12 @@ class Label extends Component {
 	calculateField( attrs ) {
 		const field = { className: attrs.class, value: attrs.value || '' }
 		const props = this.generateProps( field, Object.entries( attrs ) )
-		console.log( '\nField:', props )
 		return React.createElement( this.props.html, props )
 	}
 	
 	flashError( error ) {
-		// Not rendering appropriately after error text is faded
-		const shroud = !this.state.flash && error
+		// Not resetting error durations if form is resubmitted
+		const shroud = !this.state.flash
 		return shroud ? null : <p> { error } </p>
 	}
 	
