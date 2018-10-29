@@ -4,29 +4,31 @@
 
 import React, { Component } from 'react'
 
+import './label.css'
+
 
 
 class Label extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { flash: false }
+		this.state = { flash: 'void', last: 0 }
 	}
 	
 	
 	componentDidUpdate( ) {
 		if ( this.props.error && this.props.sent ) {
-			console.log( 'Sent:', this.props.sent, this.error ? true : false )
+			const tempo = this.launchPhase.bind( this )
+			const factor = this.props.diff.max - this.props.diff.hide
 			// Expose and eventually fade out all errors shown
-			this.setState( { flash: true } )
-			this.error = setTimeout( ( ) => {
-				this.setState( { flash: false } )
-			}, this.props.diff )
+			this.setState( { flash: 'flash', last: new Date( ).getTime( ) } )
+			this.alert = this.launchPhase( factor, factor, tempo )
 		}
 	}
 	
 	componentWillUnmount( ) {
-		clearTimeout( this.error )
+		clearTimeout( this.alert )
+		clearTimeout( this.hide )
 	}
 	
 	generateProps( field, props ) {
@@ -44,10 +46,21 @@ class Label extends Component {
 		return React.createElement( this.props.html, props )
 	}
 	
-	flashError( error ) {
-		// Not resetting error durations if form is resubmitted
-		const shroud = !this.state.flash
-		return shroud ? null : <p> { error } </p>
+	launchPhase( factor, time, next ) {
+		return setTimeout( ( ) => {
+			// Sift through each phase of every validation error
+			const delta = new Date( ).getTime( ) - this.state.last
+			const action = this.state.flash === 'flash' ? 'hide' : 'void'
+			this.setState( delta < factor ? { flash: 'flash' } : { flash: action, last: 0 } )
+			next ? this.hide = next( this.props.diff.max, this.props.diff.hide ) : null
+		}, time )
+	}
+	
+	throwError( error ) {
+		const shroud = this.state.flash === 'void'
+		const chrono = new Date( ).getTime( ) - this.state.last
+		const view = chrono < this.props.diff.max ? 'label-flash' : 'label-dissolve'
+		return shroud ? null : <p className={ view }> { error } </p>
 	}
 	
 	render( ) {
@@ -55,7 +68,7 @@ class Label extends Component {
 			<label>
 				{ this.props.text }
 				{ this.calculateField( this.props ) }
-				{ this.flashError( this.props.error ) }
+				{ this.throwError( this.props.error ) }
 			</label>
 		)
 	}
@@ -64,6 +77,5 @@ class Label extends Component {
 
 
 export default Label
-
 
 

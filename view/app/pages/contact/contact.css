@@ -44,10 +44,9 @@ textarea {
 }
 
 label p {
-	color: red;
+	color: white;
 	font-size: 0.8em;
 	margin: -20px 0 25px;
-	animation: dissolve 2s linear 10s both;
 }
 
 .contact-submit {
@@ -64,13 +63,6 @@ label p {
 .contact-submit:disabled{
 	/* background: #484848; */
 	color: #828282;
-}
-
-
-/* Error flash animations */
-@keyframes dissolve {
-	from { opacity: 1; }
-	to { opacity: 0; }
 }
 
 

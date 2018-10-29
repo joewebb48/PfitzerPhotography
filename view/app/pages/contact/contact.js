@@ -17,8 +17,9 @@ class Contact extends Component {
 	constructor( props ) {
 		super( props )
 		const field = { value: '', error: '' }
-		const status = { sent: false, diff: 12000 }
-		const preset = { title: field, email: field, status }
+		const chrono = { max: 12000, hide: 2000 }
+		const status = { sent: false, diff: chrono }
+		const preset = { title: field, email: field, status: status }
 		this.state = { name: '', active: false, form: preset }
 		this.updateForm = this.updateForm.bind( this )
 	}
@@ -90,6 +91,5 @@ class Contact extends Component {
 
 
 export default Contact
-
 
 
