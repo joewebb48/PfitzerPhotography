@@ -75,8 +75,8 @@ class Contact extends Component {
 		const { title, email, status } = this.state.form
 		const lock = { disabled: !this.state.active }
 		// Set controlled component architecture in form fields
-		const head = { name: 'title', text: 'Subject', ...title, ...status }
-		const body = { name: 'email', text: 'Message', ...email, ...status }
+		const head = { name: 'title', placeholder: 'Your message subject.', ...title, ...status }
+		const body = { name: 'email', placeholder: 'Your message here.', ...email, ...status }
 		return (
 			<form onSubmit={ event => this.onSend( event ) }>
 				<h3 className="contact-form"> Contact { this.state.name } </h3>
