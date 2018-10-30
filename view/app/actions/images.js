@@ -15,12 +15,12 @@ export function getImages( ) {
 		try {
 			// Must use the full non-rendering server url on the server
 			const gallery = await axios.get( 'http://localhost:8000/photos' )
-			console.log( 'Action success!\n\n' )
+			console.log( 'Images action success!\n\n' )
 			// Execute the Redux argument function with gallery data
 			relay( { type: image, feedback: gallery } )
 		}
 		catch ( error ) {
-			console.log( 'Error in action!\n\n' )
+			console.error( 'Error in Images action!\n\n' )
 		}
 	}
 }

@@ -29,10 +29,10 @@ class Image extends Component {
 			this.setState( { none: false } )
 		}
 		else {
+			const { api } = this.constructor.key
 			const url = { params: { url: this.props.location.pathname } }
 			// Server-side data loading of static context may replace axios
-			// Will be modified once route generation functions recursively
-			axios.get( '/image', url ).then( image => {
+			this.constructor.key.load( api, url ).then( image => {
 				this.setState( {
 					profile: image.data ? image.data : null,
 					none: !image.data ? true : false
