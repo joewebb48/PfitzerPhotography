@@ -17,7 +17,7 @@ import './gallery.css'
 
 class Gallery extends Component {
 	
-	static key = { api: '/photos', params: { path: '/gallery' }, routes: [ Image ] }
+	static key = { api: [ getImages ], params: { path: '/gallery' }, routes: [ Image ] }
 	
 	
 	constructor( props ) {

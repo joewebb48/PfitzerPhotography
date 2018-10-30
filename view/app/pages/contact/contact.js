@@ -3,34 +3,33 @@
 
 
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import axios from 'axios'
 
 import Label from './label/label'
+import { getBiography } from '../../actions/biography'
 import './contact.css'
 
 
 
 class Contact extends Component {
 	
-	static key = { api: '/email', params: { path: '/contact' } }
+	static key = { api: [ getBiography ], params: { path: '/contact' } }
 	
 	
 	constructor( props ) {
 		super( props )
 		const field = { value: '', error: '' }
 		const chrono = { max: 12000, hide: 2000 }
+		const preset = { title: field, email: field }
 		const status = { sent: false, diff: chrono }
-		const preset = { title: field, email: field, status: status }
-		this.state = { name: '', active: false, form: preset }
+		this.state = { active: false, form: { ...preset, status } }
 		this.updateForm = this.updateForm.bind( this )
 	}
 	
 	
 	componentDidMount( ) {
-		const { api } = this.constructor.key
-		this.constructor.key.load( api ).then( email => {
-			console.log( email )
-			this.setState( { name: email.data.fields.name } )
-		} )
+		this.props.getBiography( )
 	}
 	
 	componentDidUpdate( ) {
@@ -79,7 +78,7 @@ class Contact extends Component {
 		const body = { name: 'email', placeholder: 'Your message here.', ...email, ...status }
 		return (
 			<form onSubmit={ event => this.onSend( event ) }>
-				<h3 className="contact-form"> Contact { this.state.name } </h3>
+				{/* <h3 className="contact-form"> Contact { this.state.name } </h3> */}
 				<Label html="input" onChange={ this.updateForm } { ...head }/>
 				<Label html="textarea" onChange={ this.updateForm } { ...body }/>
 				<button className="contact-submit" { ...lock }> Send </button>
@@ -90,6 +89,7 @@ class Contact extends Component {
 }
 
 
-export default Contact
+export default connect( data => ( { biography: data.biography } ), { getBiography } )( Contact )
+
 
 
