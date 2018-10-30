@@ -5,10 +5,12 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 import axios from 'axios'
 
 import Image from './image/image'
 import Frame from './frame/frame'
+import { getImages } from '../../actions/images'
 import './gallery.css'
 
 
@@ -20,21 +22,23 @@ class Gallery extends Component {
 	
 	constructor( props ) {
 		super( props )
-		this.state = { images: [ ] }
 	}
 	
 	
+	// Fails to render gallery images initially after server-side rendering
+	/* static queryPhotos( store ) {
+		return store.dispatch( getImages( ) )
+	} */
+	
 	componentDidMount( ) {
-		const url = { params: { url: this.props.location.pathname } }
-		axios.get( '/photos', url ).then( images => {
-			this.setState( { images: images.data } )
-			// Generate a unique scaling css selector per image component
+		this.props.getImages( ).then( ( ) => {
+			// Generate unique scaling css selectors per image component
 			this.generateLevels( )
 		} )
 	}
 	
 	formGallery( ) {
-		return this.state.images.map( image => {
+		return this.props.images.map( image => {
 			let props = { url: this.props.match.url, image: image.fields }
 			return <Frame key={ image.pk } { ...props }/>
 		} )
@@ -43,7 +47,7 @@ class Gallery extends Component {
 	generateLevels( ) {
 		const css = ReactDOM.createPortal( <></>, document.styleSheets[ 0 ].ownerNode )
 		const styles = css.containerInfo.sheet
-		this.state.images.forEach( ( img, idx ) => {
+		this.props.images.forEach( ( img, idx ) => {
 			let iterator = '.frame-area:nth-last-child( ' + ( idx + 1 ) + ' )'
 			let zidstyle = iterator + ' { z-index: ' + ( idx + 5 ) + '; }'
 			styles.insertRule( zidstyle, styles.cssRules.length )
@@ -79,7 +83,7 @@ class Gallery extends Component {
 }
 
 
-export default Gallery
+export default connect( data => ( { images: data.images } ), { getImages } )( Gallery )
 
 
 

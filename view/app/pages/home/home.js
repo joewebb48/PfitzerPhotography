@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 
 import Slide from '../../components/slide/slide'
 import Media from '../../components/media/media'
-import { getPhotos } from '../../actions/photos'
+import { getImages } from '../../actions/images'
 import './home.css'
 
 
@@ -25,7 +25,7 @@ class Home extends Component {
 	
 	
 	static queryPhotos( store ) {
-		return store.dispatch( getPhotos( ) )
+		return store.dispatch( getImages( ) )
 	}
 	
 	componentDidMount( ) {
@@ -37,8 +37,7 @@ class Home extends Component {
 				links: media.data.links || [ ]
 			} )
 		} )
-		// Async browser gallery photos data fetching via Redux
-		this.props.getPhotos( )
+		this.props.getImages( )
 	}
 	
 	render( ) {
@@ -48,7 +47,7 @@ class Home extends Component {
 				<div className="home-portal">
 					<Link to="/gallery">
 						<div className="home-border"/>
-						<Slide photos={ this.props.photos }/>
+						<Slide images={ this.props.images }/>
 					</Link>
 				</div>
 				<Media { ...props }/>
@@ -59,7 +58,6 @@ class Home extends Component {
 }
 
 
-export default connect( data => ( { photos: data.photos } ), { getPhotos } )( Home )
-
+export default connect( data => ( { images: data.images } ), { getImages } )( Home )
 
 

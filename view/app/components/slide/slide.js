@@ -27,7 +27,7 @@ class Slide extends Component {
 	}
 	
 	componentDidUpdate( ) {
-		if ( !this.state.current && this.props.photos.length > 0 ) {
+		if ( !this.state.current && this.props.images.length > 0 ) {
 			// Set the initial slider image before initializing the slider
 			this.metamorphosis = this.viewNext( )
 		}
@@ -54,23 +54,24 @@ class Slide extends Component {
 	
 	yieldPhoto( cycle ) {
 		// Generate an array index to randomize photo inspection
-		const random = Math.random( ) * this.props.photos.length
+		const random = Math.random( ) * this.props.images.length
 		const identifier = Math.floor( random )
 		// Verify whether or not the image will fill the slider area
-		const { height, width } = this.props.photos[ identifier ].fields
+		const { height, width } = this.props.images[ identifier ].fields
 		const fill = height >= this.state.scope.y && width >= this.state.scope.x
 		// Keep searching until a sufficiently sized image is found
-		const view = fill ? this.props.photos[ identifier ].fields : null
+		const view = fill ? this.props.images[ identifier ].fields : null
 		const maximum = cycle++ === 20 || fill
 		return !maximum ? this.yieldPhoto( cycle ) : view
 	}
 	
 	embedImage( attrs ) {
+		// Empty slider when server-rendered without JavaScript
 		return attrs ? <img src={ attrs.url } alt={ attrs.text }/> : null
 	}
 	
 	render( ) {
-		// Bottom embedded image fades out on slide transition
+		// Bottom embedded image fades out on slider transition
 		return (
 			<div className="slide-view" ref={ this.boundary }>
 				{ this.embedImage( this.state.current ) }
@@ -83,5 +84,6 @@ class Slide extends Component {
 
 
 export default Slide
+
 
 

@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import Slide from '../../components/slide/slide'
-import { getPhotos } from '../../actions/photos'
+import { getImages } from '../../actions/images'
 import './about.css'
 
 
@@ -23,7 +23,7 @@ class About extends Component {
 	
 	
 	static queryPhotos( store ) {
-		return store.dispatch( getPhotos( ) )
+		return store.dispatch( getImages( ) )
 	}
 	
 	componentDidMount( ) {
@@ -32,8 +32,7 @@ class About extends Component {
 			console.log( bio )
 			this.setState( { artist: bio.data } )
 		} )
-		// Async browser gallery photos data fetching via Redux
-		this.props.getPhotos( )
+		this.props.getImages( )
 	}
 	
 	affixImage( view ) {
@@ -62,7 +61,7 @@ class About extends Component {
 					<div className="about-text">
 						<p> { about } </p>
 					</div>
-					<Slide photos={ this.props.photos }/>
+					<Slide images={ this.props.images }/>
 				</div>
 			</section>
 		)
@@ -71,7 +70,6 @@ class About extends Component {
 }
 
 
-export default connect( data => ( { photos: data.photos } ), { getPhotos } )( About )
-
+export default connect( data => ( { images: data.images } ), { getImages } )( About )
 
 

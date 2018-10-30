@@ -4,12 +4,12 @@
 
 import { combineReducers } from 'redux'
 
-import photosReducer from './photos'
+import imagesReducer from './images'
 
 
 
 export default combineReducers( {
-	photos: photosReducer
+	images: imagesReducer
 } )
 
 
