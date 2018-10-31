@@ -8,6 +8,7 @@ import axios from 'axios'
 
 import Label from './label/label'
 import { getBiography } from '../../actions/biography'
+import { mapBiography } from '../../helpers/stateprops'
 import './contact.css'
 
 
@@ -89,7 +90,6 @@ class Contact extends Component {
 }
 
 
-export default connect( data => ( { biography: data.biography } ), { getBiography } )( Contact )
-
+export default connect( mapBiography, { getBiography } )( Contact )
 
 

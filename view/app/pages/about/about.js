@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 
 import Slide from '../../components/slide/slide'
 import { getImages } from '../../actions/images'
+import { mapImages } from '../../helpers/stateprops'
 import './about.css'
 
 
@@ -70,6 +71,7 @@ class About extends Component {
 }
 
 
-export default connect( data => ( { images: data.images } ), { getImages } )( About )
+export default connect( mapImages, { getImages } )( About )
+
 
 

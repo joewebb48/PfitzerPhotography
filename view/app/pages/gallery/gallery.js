@@ -11,6 +11,7 @@ import axios from 'axios'
 import Image from './image/image'
 import Frame from './frame/frame'
 import { getImages } from '../../actions/images'
+import { mapImages } from '../../helpers/stateprops'
 import './gallery.css'
 
 
@@ -83,7 +84,6 @@ class Gallery extends Component {
 }
 
 
-export default connect( data => ( { images: data.images } ), { getImages } )( Gallery )
-
+export default connect( mapImages, { getImages } )( Gallery )
 
 
