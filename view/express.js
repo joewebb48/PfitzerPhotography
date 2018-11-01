@@ -35,13 +35,15 @@ app.post( '/render', ( request, response ) => {
 	const store = nodeStore( )
 	console.log( '\n\nCurrent:', request.body.url, '\n\n' )
 	const urls = Router.bind( Router )( request.body.url )
-	const load = urls.map( url => {
+	const factory = exe => urls.reduce( exe, [ ] )
+	const load = factory( ( ops, url ) => {
 		let api = url.api.map( api => store.dispatch( api( ) ) )
 		url.query ? api.push( url.query( store ) ) : null
-		return api
+		return ops.concat( api )
 	} )
 	// Wait for each promise before rendering to resolve for their data
 	Promise.all( load ).then( ( ) => {
+		console.log( 'Promises:\n', load, '\n\n' )
 		// React's router needs originally requested url from Django first
 		const data = { url: request.body.url, data: request.body.data, store: store }
 		const root = ReactDOMServer.renderToString( <Server { ...data }/> )
