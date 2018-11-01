@@ -74,12 +74,13 @@ class Contact extends Component {
 	render( ) {
 		const { title, email, status } = this.state.form
 		const lock = { disabled: !this.state.active }
+		const user = this.props.biography.fields ? this.props.biography.fields.name : ''
 		// Set controlled component architecture in form fields
 		const head = { name: 'title', placeholder: 'Your message subject.', ...title, ...status }
 		const body = { name: 'email', placeholder: 'Your message here.', ...email, ...status }
 		return (
 			<form onSubmit={ event => this.onSend( event ) }>
-				{/* <h3 className="contact-form"> Contact { this.state.name } </h3> */}
+				<h3 className="contact-form"> Contact { user.split( ' ' )[ 0 ] } </h3>
 				<Label html="input" onChange={ this.updateForm } { ...head }/>
 				<Label html="textarea" onChange={ this.updateForm } { ...body }/>
 				<button className="contact-submit" { ...lock }> Send </button>
@@ -91,5 +92,6 @@ class Contact extends Component {
 
 
 export default connect( mapBiography, { getBiography } )( Contact )
+
 
 

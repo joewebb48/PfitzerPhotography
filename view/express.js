@@ -38,6 +38,7 @@ app.post( '/render', ( request, response ) => {
 	const factory = exe => urls.reduce( exe, [ ] )
 	const load = factory( ( ops, url ) => {
 		let api = url.api.map( api => store.dispatch( api( ) ) )
+		// May update or remove once server-side data loading is ready
 		url.query ? api.push( url.query( store ) ) : null
 		return ops.concat( api )
 	} )
@@ -45,9 +46,11 @@ app.post( '/render', ( request, response ) => {
 	Promise.all( load ).then( ( ) => {
 		console.log( 'Promises:\n', load, '\n\n' )
 		// React's router needs originally requested url from Django first
-		const data = { url: request.body.url, data: request.body.data, store: store }
+		const data = { url: request.body.url, data: request.body.data, store }
 		const root = ReactDOMServer.renderToString( <Server { ...data }/> )
-		response.json( { html: root } )
+		// Stringify store data as JSON to set initial state on the browser
+		const json = JSON.stringify( store.getState( ) )
+		response.json( { html: root, state: json } )
 	} )
 } )
 
@@ -55,5 +58,6 @@ app.post( '/render', ( request, response ) => {
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!', '\n\n' )
 } )
+
 
 

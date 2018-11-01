@@ -29,6 +29,9 @@ def index( request, url = None ):
 	## Will have no page data if the visited page is an admin one
 	if page:
 		metadata[ 'title' ] = page[ 'fields' ][ 'title' ]
+	## Transform server-side Redux state for browser hydration
+	redux = metadata.pop( 'state', {  } )
+	metadata[ 'redux' ] = str( redux )
 	return render( request, 'index.html', metadata )
 
 
@@ -111,5 +114,6 @@ def social( request ):
 		serial = serializers.serialize( 'json', query )
 		footer[ 'links' ] = json.loads( serial )
 	return JsonResponse( footer )
+
 
 

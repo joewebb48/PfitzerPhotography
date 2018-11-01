@@ -31,18 +31,18 @@ class Label extends Component {
 		clearTimeout( this.hide )
 	}
 	
-	generateProps( field, props ) {
+	generateProps( props ) {
 		// Ignore non-component and preassigned field props
 		const ignore = [ 'html', 'text', 'value', 'error', 'sent', 'diff' ]
 		const query = attr => ignore.every( key => attr[ 0 ] !== key )
 		// Fuse together the new props with the screened set
 		const join = ( body, attr ) => ( { ...body, [ attr[ 0 ] ]: attr[ 1 ] } )
-		return props.filter( query ).reduce( join, field )
+		return props.filter( query ).reduce( join, {  } )
 	}
 	
 	calculateField( attrs ) {
-		const field = { className: attrs.class, value: attrs.value || '' }
-		const props = this.generateProps( field, Object.entries( attrs ) )
+		const field = this.generateProps( Object.entries( attrs ) )
+		const props = { className: attrs.class, ...field, value: attrs.value || '' }
 		return React.createElement( this.props.html, props )
 	}
 	

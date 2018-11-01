@@ -9,8 +9,8 @@ import rootReducer from '../reducers/root'
 
 
 
-export default function( ) {
-	const box = createStore( rootReducer, {  }, applyMiddleware( thunk ) )
+export default function( state ) {
+	const box = createStore( rootReducer, state, applyMiddleware( thunk ) )
 	return box
 }
 

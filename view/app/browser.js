@@ -14,7 +14,7 @@ import viewStore from './stores/viewstore'
 class Browser extends Component {
 	
 	render( ) {
-		const store = viewStore( )
+		const store = viewStore( window.initialState )
 		return (
 			<Provider store={ store }>
 				<BrowserRouter>

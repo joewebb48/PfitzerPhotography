@@ -24,7 +24,9 @@
 		
 		<noscript> You need to enable JavaScript to run this app. </noscript>
 		
-		<script defer type="text/javascript" src="{% static 'main.js' %}"></script>
+		<!-- Transfer server-side Redux state to the browser via parsed json -->
+		<script>window.initialState = JSON.parse( '{{ redux | escapejs }}' )</script>
+		<script type="text/javascript" src="{% static 'main.js' %}" defer></script>
 	</body>
 	
 </html>
