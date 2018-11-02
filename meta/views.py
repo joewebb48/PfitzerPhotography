@@ -6,7 +6,7 @@ import os
 import json
 import requests
 from django.core import serializers
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from meta.models import Page, Image, Media
@@ -105,15 +105,15 @@ def email( request ):
 
 
 def social( request ):
-	entity = bio( request ).content
-	footer = { 'owner': json.loads( entity ) }
+	media = request.GET.get( 'enabled', False )
+	enabled = json.loads( media )
 	## Verify whether or not any social media links are enabled
-	enabled = footer[ 'owner' ][ 'fields' ][ 'social' ]
 	if enabled:
 		query = Media.objects.filter( active = True )
 		serial = serializers.serialize( 'json', query )
-		footer[ 'links' ] = json.loads( serial )
-	return JsonResponse( footer )
+		footer = json.loads( serial )
+		return JsonResponse( footer, safe = False )
+	return HttpResponse( )
 
 
 

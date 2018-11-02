@@ -28,13 +28,15 @@ class Home extends Component {
 	
 	
 	componentDidMount( ) {
-		this.props.getBiography( )
-		this.props.getImages( )
-		// Modify the social api route to exclusively return links
-		axios.get( '/social' ).then( media => {
-			console.log( media )
-			this.setState( { links: media.data.links || [ ] } )
+		this.props.getBiography( ).then( ( ) => {
+			const { social } = this.props.biography.fields
+			const enabled = { params: { enabled: social } }
+			// May move to Media component as it's not used here
+			axios.get( '/social', enabled ).then( media => {
+				this.setState( { links: media.data || [ ] } )
+			} )
 		} )
+		this.props.getImages( )
 	}
 	
 	render( ) {
