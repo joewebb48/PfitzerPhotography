@@ -6,7 +6,6 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
 import Image from './image/image'
 import Frame from './frame/frame'
@@ -25,11 +24,6 @@ class Gallery extends Component {
 		super( props )
 	}
 	
-	
-	// Fails to render gallery images initially after server-side rendering
-	/* static queryPhotos( store ) {
-		return store.dispatch( getImages( ) )
-	} */
 	
 	componentDidMount( ) {
 		this.props.getImages( ).then( ( ) => {

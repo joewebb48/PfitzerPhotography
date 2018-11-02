@@ -12,7 +12,7 @@ import './image.css'
 
 class Image extends Component {
 	
-	static key = { api: '/image', params: { path: '/gallery/:image' } }
+	static key = { api: [ ], params: { path: '/gallery/:image' } }
 	
 	
 	constructor( props ) {
@@ -29,10 +29,9 @@ class Image extends Component {
 			this.setState( { none: false } )
 		}
 		else {
-			const { api } = this.constructor.key
 			const url = { params: { url: this.props.location.pathname } }
 			// Server-side data loading of static context may replace axios
-			this.constructor.key.load( api, url ).then( image => {
+			axios.get( '/image', url ).then( image => {
 				this.setState( {
 					profile: image.data ? image.data : null,
 					none: !image.data ? true : false
@@ -76,6 +75,5 @@ class Image extends Component {
 
 
 export default Image
-
 
 

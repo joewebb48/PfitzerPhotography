@@ -31,15 +31,14 @@ app.get( '/*', ( request, response ) => {
 
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
+	console.log( '\n\nCurrent:', request.body.url, '\n\n' )
 	// Data loading on the server must occur prior to rendering the app
 	const store = nodeStore( )
-	console.log( '\n\nCurrent:', request.body.url, '\n\n' )
 	const urls = Router.bind( Router )( request.body.url )
 	const factory = exe => urls.reduce( exe, [ ] )
 	const load = factory( ( ops, url ) => {
 		let api = url.api.map( api => store.dispatch( api( ) ) )
-		// May update or remove once server-side data loading is ready
-		url.query ? api.push( url.query( store ) ) : null
+		// Utilize non-Redux state data loading on the server once ready
 		return ops.concat( api )
 	} )
 	// Wait for each promise before rendering to resolve for their data
@@ -58,6 +57,5 @@ app.post( '/render', ( request, response ) => {
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!', '\n\n' )
 } )
-
 
 

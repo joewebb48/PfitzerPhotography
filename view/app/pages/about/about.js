@@ -6,47 +6,40 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import Slide from '../../components/slide/slide'
+import { getBiography } from '../../actions/biography'
 import { getImages } from '../../actions/images'
-import { mapImages } from '../../helpers/stateprops'
+import { mapUniversal } from '../../helpers/stateprops'
 import './about.css'
 
 
 
 class About extends Component {
 	
-	static key = { api: '/bio', params: { path: '/about' } }
+	static key = { api: [ getBiography, getImages ], params: { path: '/about' } }
 	
 	
 	constructor( props ) {
 		super( props )
-		this.state = { artist: null }
 	}
 	
-	
-	static queryPhotos( store ) {
-		return store.dispatch( getImages( ) )
-	}
 	
 	componentDidMount( ) {
-		const { api } = this.constructor.key
-		this.constructor.key.load( api ).then( bio => {
-			console.log( bio )
-			this.setState( { artist: bio.data } )
-		} )
+		this.props.getBiography( )
 		this.props.getImages( )
 	}
 	
 	affixImage( view ) {
 		const url = view ? view.fields.image : ''
-		const image = this.state.artist ? '/public/' + url : null
+		const image = this.props.biography.fields ? '/public/' + url : null
 		// Include alt text when rendering the jsx image element
 		return image ? <img src={ image }/> : <div className="about-empty"/>
 	}
 	
 	render( ) {
-		const name = this.state.artist ? this.state.artist.fields.name : null
-		const about = this.state.artist ? this.state.artist.fields.about : null
-		const photo = this.state.artist ? this.state.artist.fields.image : ''
+		const biography = this.props.biography.fields
+		const name = biography ? biography.name : ''
+		const about = biography ? biography.about : ''
+		const photo = biography ? biography.image : ''
 		// Mask-image browser compatability issues need fixes
 		return (
 			<section>
@@ -71,7 +64,6 @@ class About extends Component {
 }
 
 
-export default connect( mapImages, { getImages } )( About )
-
+export default connect( mapUniversal, { getBiography, getImages } )( About )
 
 

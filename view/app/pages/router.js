@@ -30,9 +30,8 @@ export default function( url, net ) {
 		// Setup server-side data fetching via passing a url
 		if ( url ) {
 			let set = matchPath( url, params )
-			// Temporary method for running a Redux action
-			let query = route.queryPhotos ? route.queryPhotos : null
-			let chain = [ { api, load, query } ].concat( meta[ 'interior' ] || [ ] )
+			// Include plain React data loading at some point
+			let chain = [ { api, load } ].concat( meta[ 'interior' ] || [ ] )
 			return amal.concat( set ? chain : [ ] )
 		}
 		// Each route will need data loading in the browser
@@ -40,6 +39,5 @@ export default function( url, net ) {
 		return amal.concat( meta )
 	} )
 }
-
 
 

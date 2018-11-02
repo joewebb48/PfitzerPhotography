@@ -23,8 +23,8 @@ class Media extends Component {
 	
 	render( ) {
 		const year = new Date( ).getFullYear( )
-		const artist = this.props.owner ? this.props.owner.fields.name : null
-		const github = this.props.owner ? this.props.owner.fields.developer : null
+		const artist = this.props.owner ? this.props.owner.name : ''
+		const github = this.props.owner ? this.props.owner.developer : ''
 		return (
 			<footer>
 				{ this.injectLinks( ) }
