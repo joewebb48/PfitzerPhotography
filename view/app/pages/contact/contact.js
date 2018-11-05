@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import axios from 'axios'
 
 import Label from './label/label'
+import Email from '../../models/email'
 import { getBiography } from '../../actions/biography'
 import { mapBiography } from '../../helpers/stateprops'
 import './contact.css'
@@ -20,11 +21,9 @@ class Contact extends Component {
 	
 	constructor( props ) {
 		super( props )
-		const field = { value: '', error: '' }
 		const chrono = { max: 12000, hide: 2000 }
-		const status = { sent: false, diff: chrono }
-		const preset = { title: field, email: field, content: field }
-		this.state = { active: false, form: { ...preset, status } }
+		const status = { sent: false, valid: false, diff: chrono }
+		this.state = { status, email: new Email( ) }
 		this.updateForm = this.updateForm.bind( this )
 	}
 	
@@ -35,58 +34,41 @@ class Contact extends Component {
 	
 	componentDidUpdate( ) {
 		// Reset the form's sent status after form submission
-		if ( this.state.form.status.sent ) {
-			const meta = { ...this.state.form.status, sent: false }
-			this.setState( { form: { ...this.state.form, status: meta } } )
+		if ( this.state.status.sent ) {
+			const meta = { ...this.state.status, sent: false }
+			this.setState( { status: meta } )
 		}
 	}
 	
 	updateForm( event ) {
-		const { name, value } = event.target
-		// Merge the new field input values into copies of state
-		const info = { ...this.state.form[ name ], value }
-		const draft = { ...this.state.form, [ name ]: info }
 		// Update contact form with new form field input data
-		const key = field => field[ 0 ] === 'status' || field[ 1 ][ 'value' ]
-		const unlock = Object.entries( draft ).every( key )
-		this.setState( { form: draft, active: unlock } )
+		const form = this.state.email.fuseForm( event.target )
+		this.setState( { email: form } )
 	}
 	
 	onSend( event ) {
 		event.preventDefault( )
+		const report = { ...this.state.status, sent: true }
 		// Validate form field data and set errors when invalid
-		this.validateInput( this.state.form )
-	}
-	
-	validateInput( form ) {
-		const floor = { title: 10, email: 10, content: 100 }
-		const subs = { title: 'subject', email: 'email', content: 'message' }
-		const amalgam = { status: { ...form.status, sent: true } }
-		for ( let field in form ) {
-			if ( field !== 'status' ) {
-				let valid = form[ field ].value.length >= floor[ field ]
-				let warn = valid ? '' : 'Your ' + subs[ field ] + ' is too short!'
-				amalgam[ field ] = { ...form[ field ], error: warn }
-			}
-		}
-		this.setState( { form: amalgam } )
+		const letter = this.state.email.validateFields( )
+		this.setState( { status: report, email: letter } )
 	}
 	
 	render( ) {
-		const { title, email, content, status } = this.state.form
-		const lock = { disabled: !this.state.active }
-		const noun = this.props.biography.fields ? this.props.biography.fields.name : ''
+		const admin = this.props.biography.fields
+		const name = admin.name ? admin.name : ''
+		const block = !this.state.email.isPopulated( )
 		// Set controlled component architecture in form fields
-		const head = { name: 'title', placeholder: 'Your message subject.', ...title, ...status }
-		const user = { name: 'email', placeholder: 'Your email address here.', ...email, ...status }
-		const body = { name: 'content', placeholder: 'Your message here.', ...content, ...status }
+		const props = this.state.email.setProps( this.state.status )
+		props.subject.placeholder = 'Enter your message subject.'
+		props.address.placeholder = 'Provide your email address.'
 		return (
 			<form onSubmit={ event => this.onSend( event ) }>
-				<h3 className="contact-form"> Contact { noun.split( ' ' )[ 0 ] } </h3>
-				<Label html="input" onChange={ this.updateForm } { ...head }/>
-				<Label html="input" onChange={ this.updateForm } { ...user }/>
-				<Label html="textarea" onChange={ this.updateForm } { ...body }/>
-				<button className="contact-submit" { ...lock }> Send </button>
+				<h3 className="contact-form"> Contact { name.split( ' ' )[ 0 ] } </h3>
+				<Label html="input" onChange={ this.updateForm } { ...props.subject }/>
+				<Label html="input" onChange={ this.updateForm } { ...props.address }/>
+				<Label html="textarea" onChange={ this.updateForm } { ...props.message }/>
+				<button className="contact-submit" disabled={ block }> Send </button>
 			</form>
 		)
 	}

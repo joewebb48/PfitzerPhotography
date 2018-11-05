@@ -33,7 +33,7 @@ class Label extends Component {
 	
 	generateProps( props ) {
 		// Ignore non-component and preassigned field props
-		const ignore = [ 'html', 'text', 'value', 'error', 'sent', 'diff' ]
+		const ignore = [ 'html', 'value', 'error', 'sent', 'valid', 'diff', 'min' ]
 		const query = attr => ignore.every( key => attr[ 0 ] !== key )
 		// Fuse together the new props with the screened set
 		const join = ( body, attr ) => ( { ...body, [ attr[ 0 ] ]: attr[ 1 ] } )
