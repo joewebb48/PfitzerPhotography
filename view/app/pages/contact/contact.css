@@ -38,36 +38,36 @@ input::placeholder, textarea::placeholder {
 
 input {
 	height: 50px;
-	margin: 10px 0 25px;
+	margin: 10px 0 15px;
 }
 
 textarea {
 	min-height: 200px;
 	resize: vertical;
-	margin: 10px 0 20px;
+	margin: 10px 0;
 }
 
 label p {
-	color: white;
+	color: #8a8a8a;
 	font-size: 0.8em;
-	margin: -20px 0 25px;
+	margin: -10px 0 5px;
 }
 
 .contact-submit {
-	background: #212121;
+	background: #272727;
 	border: 0;
-	color: white;
+	color: #c7c7c7;
 	cursor: pointer;
 	outline: none;
 	font-size: 1.25em;
 	width: 150px;
 	padding: 15px;
+	margin: 15px 0 0;
 }
 
 .contact-submit:disabled{
-	/* background: #484848; */
-	color: #828282;
+	background: #444444;
+	color: #6b6b6d;
 }
-
 
 
