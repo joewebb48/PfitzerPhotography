@@ -52,6 +52,9 @@ class Contact extends Component {
 		// Validate form field data and set errors when invalid
 		const letter = this.state.email.validateFields( )
 		this.setState( { status: report, email: letter } )
+		// Identify whether or not form field data is valid input
+		const valid = letter.invalidated === 0
+		console.log( 'Valid?', valid )
 	}
 	
 	render( ) {
@@ -77,5 +80,6 @@ class Contact extends Component {
 
 
 export default connect( mapBiography, { getBiography } )( Contact )
+
 
 

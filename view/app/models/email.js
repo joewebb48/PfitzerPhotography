@@ -9,13 +9,20 @@ class Email {
 		this.subject = dupe.subject || { value: '', error: '', min: 10 }
 		this.address = dupe.address || { value: '', error: '', min: 10 }
 		this.message = dupe.message || { value: '', error: '', min: 100 }
+		this.invalidated = 0
 	}
 	
+	
+	purgeInvalid( ) {
+		// Dump the non form field class attribute from the set
+		const pass = attr => attr !== 'invalidated'
+		return Object.keys( this ).filter( pass )
+	}
 	
 	setProps( setup ) {
 		const join = ( set, exe ) => set.reduce( exe, {  } )
 		// Combine field attributes to construct form field props
-		return join( Object.keys( this ), ( form, name ) => {
+		return join( this.purgeInvalid( ), ( form, name ) => {
 			let body = { name, placeholder: '', ...this[ name ] }
 			return { ...form, [ name ]: { ...body, ...setup } }
 		} )
@@ -24,22 +31,25 @@ class Email {
 	fuseForm( field ) {
 		const { name, value } = field
 		// Merge the new field input value into an updated form
-		const input = new Email( this )
-		input[ name ] = { ...this[ name ], value }
-		return input
+		const letter = new Email( this )
+		letter[ name ] = { ...this[ name ], value }
+		return letter
 	}
 	
 	isPopulated( ) {
 		// Look to see if any form field value is currently empty
-		return Object.keys( this ).every( key => this[ key ].value )
+		return this.purgeInvalid( ).every( key => this[ key ].value )
 	}
 	
 	validateFields( ) {
 		const form = new Email( this )
-		Object.keys( this ).forEach( field => {
+		this.purgeInvalid( ).forEach( field => {
 			let extra = field === 'address' ? 'email ' + field : field
 			let valid = this[ field ].min < this[ field ].value.length
-			form[ field ].error = valid ? '' : 'Your ' + extra + ' is too short!'
+			let text = valid ? '' : 'Your ' + extra + ' is too short!'
+			// Apply error message if any and track errors found
+			!valid ? form.invalidated++ : null
+			form[ field ].error = text
 		} )
 		return form
 	}

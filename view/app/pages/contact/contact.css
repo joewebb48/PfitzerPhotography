@@ -13,6 +13,7 @@ form {
 .contact-form {
 	color: #e0e0e0;
 	font-size: 2em;
+	font-weight: normal;
 	margin: 0 0 30px;
 }
 
@@ -69,5 +70,6 @@ label p {
 	background: #444444;
 	color: #6b6b6d;
 }
+
 
 
