@@ -36,7 +36,8 @@ class Home extends Component {
 				this.setState( { links: media.data || [ ] } )
 			} )
 		} )
-		this.props.getImages( )
+		// Load up a new batch of data if it doesn't exist already
+		this.props.images.length ? null : this.props.getImages( )
 	}
 	
 	render( ) {
@@ -59,5 +60,6 @@ class Home extends Component {
 
 
 export default connect( mapUniversal, { getBiography, getImages } )( Home )
+
 
 

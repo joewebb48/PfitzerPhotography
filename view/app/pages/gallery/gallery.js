@@ -25,11 +25,11 @@ class Gallery extends Component {
 	}
 	
 	
-	componentDidMount( ) {
-		this.props.getImages( ).then( ( ) => {
-			// Generate unique scaling css selectors per image component
-			this.generateLevels( )
-		} )
+	async componentDidMount( ) {
+		// Retrieve any necessary data if it hasn't already been generated
+		this.props.images.length ? null : await this.props.getImages( )
+		// Generate every z-index css selector for each image component
+		this.generateLevels( )
 	}
 	
 	formGallery( ) {

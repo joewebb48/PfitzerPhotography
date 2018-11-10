@@ -66,7 +66,6 @@ class Label extends Component {
 	render( ) {
 		return (
 			<label>
-				{ this.props.text }
 				{ this.calculateField( this.props ) }
 				{ this.throwError( this.props.error ) }
 			</label>
@@ -77,5 +76,6 @@ class Label extends Component {
 
 
 export default Label
+
 
 

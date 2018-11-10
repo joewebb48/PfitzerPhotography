@@ -25,7 +25,8 @@ class About extends Component {
 	
 	componentDidMount( ) {
 		this.props.getBiography( )
-		this.props.getImages( )
+		// Only load a new set of data if it doesn't exist already
+		this.props.images.length ? null : this.props.getImages( )
 	}
 	
 	affixImage( view ) {
@@ -65,5 +66,6 @@ class About extends Component {
 
 
 export default connect( mapUniversal, { getBiography, getImages } )( About )
+
 
 

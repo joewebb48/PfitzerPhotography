@@ -59,8 +59,8 @@ class Contact extends Component {
 	
 	render( ) {
 		const admin = this.props.biography.fields
-		const name = admin.name ? admin.name : ''
 		const block = !this.state.email.isPopulated( )
+		const name = admin && admin.name ? admin.name : ''
 		// Set controlled component architecture in form fields
 		const props = this.state.email.setProps( this.state.status )
 		props.subject.placeholder = 'Enter your message subject.'
