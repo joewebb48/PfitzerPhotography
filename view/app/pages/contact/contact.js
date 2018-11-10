@@ -22,7 +22,7 @@ class Contact extends Component {
 	constructor( props ) {
 		super( props )
 		const chrono = { max: 12000, hide: 2000 }
-		const status = { sent: false, valid: false, diff: chrono }
+		const status = { sent: false, diff: chrono }
 		this.state = { status, email: new Email( ) }
 		this.updateForm = this.updateForm.bind( this )
 	}
