@@ -20,11 +20,12 @@ class Email {
 	}
 	
 	setProps( setup ) {
+		const info = { sent: setup.sent, diff: setup.diff }
 		const join = ( set, exe ) => set.reduce( exe, {  } )
 		// Combine field attributes to construct form field props
 		return join( this.purgeInvalid( ), ( form, name ) => {
 			let body = { name, placeholder: '', ...this[ name ] }
-			return { ...form, [ name ]: { ...body, ...setup } }
+			return { ...form, [ name ]: { ...body, ...info } }
 		} )
 	}
 	
@@ -58,6 +59,5 @@ class Email {
 
 
 export default Email
-
 
 

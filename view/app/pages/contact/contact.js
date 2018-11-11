@@ -21,9 +21,8 @@ class Contact extends Component {
 	
 	constructor( props ) {
 		super( props )
-		const chrono = { max: 12000, hide: 2000 }
-		const status = { sent: false, diff: chrono }
-		this.state = { status, email: new Email( ) }
+		const diff = { max: 12000, hide: 2000 }
+		this.state = { diff, sent: false, email: new Email( ) }
 		this.updateForm = this.updateForm.bind( this )
 	}
 	
@@ -36,9 +35,8 @@ class Contact extends Component {
 	
 	componentDidUpdate( ) {
 		// Reset the form's sent status after form submission
-		if ( this.state.status.sent ) {
-			const meta = { ...this.state.status, sent: false }
-			this.setState( { status: meta } )
+		if ( this.state.sent ) {
+			this.setState( { sent: false } )
 		}
 	}
 	
@@ -48,27 +46,26 @@ class Contact extends Component {
 		this.setState( { email: form } )
 	}
 	
-	onSend( event ) {
+	onTransfer( event ) {
 		event.preventDefault( )
-		const report = { ...this.state.status, sent: true }
 		// Validate form field data and set errors when invalid
 		const letter = this.state.email.validateFields( )
-		this.setState( { status: report, email: letter } )
+		this.setState( { sent: true, email: letter } )
 		// Identify whether or not form field data is valid input
 		const valid = letter.invalidated === 0
 		console.log( 'Valid?', valid )
 	}
 	
 	render( ) {
-		const admin = this.props.biography.fields
+		const artist = this.props.biography.fields
 		const block = !this.state.email.isPopulated( )
-		const name = admin && admin.name ? admin.name : ''
+		const name = artist && artist.name ? artist.name : ''
 		// Set controlled component architecture in form fields
-		const props = this.state.email.setProps( this.state.status )
+		const props = this.state.email.setProps( this.state )
 		props.subject.placeholder = 'Enter your message subject.'
 		props.address.placeholder = 'Provide your email address.'
 		return (
-			<form onSubmit={ event => this.onSend( event ) }>
+			<form onSubmit={ event => this.onTransfer( event ) }>
 				<h3 className="contact-form"> Contact { name.split( ' ' )[ 0 ] } </h3>
 				<Label html="input" onChange={ this.updateForm } { ...props.subject }/>
 				<Label html="input" onChange={ this.updateForm } { ...props.address }/>
@@ -82,6 +79,5 @@ class Contact extends Component {
 
 
 export default connect( mapBiography, { getBiography } )( Contact )
-
 
 
