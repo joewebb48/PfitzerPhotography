@@ -52,8 +52,22 @@ class Contact extends Component {
 		const letter = this.state.email.validateFields( )
 		this.setState( { sent: true, email: letter } )
 		// Identify whether or not form field data is valid input
-		const valid = letter.invalidated === 0
-		console.log( 'Valid?', valid )
+		if ( letter.invalidated === 0 ) {
+			// Try an http post request via the xsrf token name
+			const xsrf = { xsrfCookieName: 'xsrf', xsrfHeaderName: 'xsrf' }
+			axios.post( '/email', letter, xsrf ).then( echo => console.log( echo ) )
+		}
+	}
+	
+	// Might not need this method but will keep here for now
+	parseXsrf( token ) {
+		const jar = document.cookie.split( ';' )
+		const run = exe => jar.reduce( exe, '' )
+		// Locate the current xsrf token using cookies for later
+		return run( ( every, cookie ) => {
+			let match = cookie.trim( ).startsWith( token )
+			return match ? cookie.split( '=' )[ 1 ] : every
+		} )
 	}
 	
 	render( ) {

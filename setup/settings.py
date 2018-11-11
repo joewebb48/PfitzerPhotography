@@ -107,6 +107,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# CSRF protection
+# https://docs.djangoproject.com/en/2.0/ref/csrf/#ajax
+
+CSRF_HEADER_NAME = 'HTTP_XSRF'
+
+CSRF_COOKIE_NAME = 'xsrf'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 

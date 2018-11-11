@@ -6,6 +6,7 @@ import os
 import json
 import requests
 from django.core import serializers
+from django.middleware import csrf
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -29,6 +30,8 @@ def index( request, url = None ):
 	## Will have no page data if the visited page is an admin one
 	if page:
 		metadata[ 'title' ] = page[ 'fields' ][ 'title' ]
+		## Xsrf token is necessary to make post requests via ajax
+		csrf.get_token( request )
 	## Transform server-side Redux state for browser hydration
 	redux = metadata.pop( 'state', {  } )
 	metadata[ 'redux' ] = str( redux )
@@ -97,11 +100,8 @@ def bio( request ):
 
 
 def email( request ):
-	address = owner( )
-	del address[ 'fields' ][ 'last_name' ]
-	name = address[ 'fields' ].pop( 'first_name', None )
-	address[ 'fields' ][ 'name' ] = name.title( )
-	return JsonResponse( address )
+	print( '\n\nSuccess!!!\n\n' )
+	return HttpResponse( )
 
 
 def social( request ):
