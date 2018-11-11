@@ -47,10 +47,11 @@ class Email {
 		this.purgeInvalid( ).forEach( field => {
 			let extra = field === 'address' ? 'email ' + field : field
 			let valid = this[ field ].min < this[ field ].value.length
-			let text = valid ? '' : 'Your ' + extra + ' is too short!'
+			let text = valid ? '' : 'Your ' + extra + ' must be at least'
+			let mini = valid ? '' : ' ' + this[ field ].min + ' characters!'
 			// Apply error message if any and track errors found
 			!valid ? form.invalidated++ : null
-			form[ field ].error = text
+			form[ field ].error = text + mini
 		} )
 		return form
 	}
@@ -59,5 +60,6 @@ class Email {
 
 
 export default Email
+
 
 

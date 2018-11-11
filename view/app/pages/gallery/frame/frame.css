@@ -44,8 +44,8 @@
 	position: absolute;
 	z-index: 3;
 	background: transparent;
-	left: 1px;
 	right: 1px;
+	left: 1px;
 	height: 99%;
 	width: 99%;
 	box-shadow: 0 0 20px 12px black;

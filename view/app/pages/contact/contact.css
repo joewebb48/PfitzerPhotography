@@ -49,9 +49,12 @@ textarea {
 }
 
 label p {
+	position: absolute;
 	color: #8a8a8a;
-	font-size: 0.8em;
-	margin: -10px 0 5px;
+	font-size: 0.75em;
+	right: 0;
+	left: 0;
+	margin: -15px 0 0;
 }
 
 .contact-submit {
@@ -63,13 +66,12 @@ label p {
 	font-size: 1.25em;
 	width: 150px;
 	padding: 15px;
-	margin: 15px 0 0;
+	margin: 20px 0 0;
 }
 
 .contact-submit:disabled{
 	background: #444444;
 	color: #6b6b6d;
 }
-
 
 
