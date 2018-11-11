@@ -100,7 +100,7 @@ def email( request ):
 	address = owner( )
 	del address[ 'fields' ][ 'last_name' ]
 	name = address[ 'fields' ].pop( 'first_name', None )
-	address[ 'fields' ][ 'name' ] = name
+	address[ 'fields' ][ 'name' ] = name.title( )
 	return JsonResponse( address )
 
 

@@ -27,17 +27,17 @@ class Home extends Component {
 	}
 	
 	
-	componentDidMount( ) {
-		this.props.getBiography( ).then( ( ) => {
-			const { social } = this.props.biography.fields
-			const enabled = { params: { enabled: social } }
-			// May move to Media component as it's not used here
-			axios.get( '/social', enabled ).then( media => {
-				this.setState( { links: media.data || [ ] } )
-			} )
-		} )
-		// Load up a new batch of data if it doesn't exist already
+	async componentDidMount( ) {
+		const volume = Object.keys( this.props.biography )
+		// Load a new batch of data if it doesn't exist already
+		volume.length ? null : await this.props.getBiography( )
 		this.props.images.length ? null : this.props.getImages( )
+		// May move to Media component as it isn't used here
+		const { social } = this.props.biography.fields
+		const enabled = { params: { enabled: social } }
+		axios.get( '/social', enabled ).then( media => {
+			this.setState( { links: media.data || [ ] } )
+		} )
 	}
 	
 	render( ) {

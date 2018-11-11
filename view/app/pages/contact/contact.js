@@ -29,7 +29,9 @@ class Contact extends Component {
 	
 	
 	componentDidMount( ) {
-		this.props.getBiography( )
+		const identity = Object.keys( this.props.biography )
+		// Collect missing data if any that hasn't yet loaded up
+		identity.length ? null : this.props.getBiography( )
 	}
 	
 	componentDidUpdate( ) {

@@ -24,31 +24,32 @@ class About extends Component {
 	
 	
 	componentDidMount( ) {
-		this.props.getBiography( )
-		// Only load a new set of data if it doesn't exist already
+		const character = Object.keys( this.props.biography )
+		// Only load a new set of data when it doesn't exist yet
+		character.length ? null : this.props.getBiography( )
 		this.props.images.length ? null : this.props.getImages( )
 	}
 	
 	affixImage( view ) {
 		const url = view ? view.fields.image : ''
 		const image = this.props.biography.fields ? '/public/' + url : null
-		// Include alt text when rendering the jsx image element
-		return image ? <img src={ image }/> : <div className="about-empty"/>
+		const props = { src: image, alt: view ? view.fields.description : '' }
+		return image ? <img { ...props }/> : <div className="about-empty"/>
 	}
 	
 	render( ) {
 		const biography = this.props.biography.fields
-		const name = biography ? biography.name : ''
+		const noun = biography ? biography.name : ''
 		const about = biography ? biography.about : ''
-		const photo = biography ? biography.image : ''
+		const graphic = biography ? biography.image : ''
 		// Mask-image browser compatability issues need fixes
 		return (
 			<section>
 				<div className="about-border"/>
 				<div className="about-portrait">
-					<h1> { name } </h1>
+					<h1> { noun } </h1>
 					<div className="about-image">
-						{ this.affixImage( photo ) }
+						{ this.affixImage( graphic ) }
 					</div>
 				</div>
 				{ /* <div className="about-distort"/> */ }
@@ -66,6 +67,5 @@ class About extends Component {
 
 
 export default connect( mapUniversal, { getBiography, getImages } )( About )
-
 
 
