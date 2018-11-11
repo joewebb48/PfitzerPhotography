@@ -59,17 +59,6 @@ class Contact extends Component {
 		}
 	}
 	
-	// Might not need this method but will keep here for now
-	parseXsrf( token ) {
-		const jar = document.cookie.split( ';' )
-		const run = exe => jar.reduce( exe, '' )
-		// Locate the current xsrf token using cookies for later
-		return run( ( every, cookie ) => {
-			let match = cookie.trim( ).startsWith( token )
-			return match ? cookie.split( '=' )[ 1 ] : every
-		} )
-	}
-	
 	render( ) {
 		const artist = this.props.biography.fields
 		const block = !this.state.email.isPopulated( )
@@ -93,5 +82,6 @@ class Contact extends Component {
 
 
 export default connect( mapBiography, { getBiography } )( Contact )
+
 
 
