@@ -49,13 +49,20 @@ class Contact extends Component {
 	onTransfer( event ) {
 		event.preventDefault( )
 		// Validate form field data and set errors when invalid
-		const letter = this.state.email.validateFields( )
-		this.setState( { sent: true, email: letter } )
+		const email = this.state.email.validateFields( )
+		this.setState( { sent: true, email: email } )
 		// Identify whether or not form field data is valid input
-		if ( letter.invalidated === 0 ) {
-			// Try an http post request via the xsrf token name
+		if ( email.invalidated === 0 ) {
+			// Wrap data in a query string for any post protocol
+			const wrap = email.harvestQuery( )
+			const head = 'application/x-www-form-urlencoded'
+			// Xsrf token is used to send post data to the server
 			const xsrf = { xsrfCookieName: 'xsrf', xsrfHeaderName: 'xsrf' }
-			axios.post( '/email', letter, xsrf ).then( echo => console.log( echo ) )
+			const config = { ...xsrf, headers: { 'Content-Type': head } }
+			// Post the email data to the backend for processing
+			axios.post( '/email', wrap, config ).then( echo => {
+				console.log( 'Email:', echo.data )
+			} )
 		}
 	}
 	
@@ -82,6 +89,5 @@ class Contact extends Component {
 
 
 export default connect( mapBiography, { getBiography } )( Contact )
-
 
 

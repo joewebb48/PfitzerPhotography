@@ -2,6 +2,10 @@
 
 
 
+import querystring from 'querystring'
+
+
+
 class Email {
 	
 	constructor( ancestor ) {
@@ -56,10 +60,18 @@ class Email {
 		return form
 	}
 	
+	harvestQuery( ) {
+		// Generate a query string for using form data via email
+		const query = item => querystring.stringify( item )
+		const trans = ( obj, run ) => query( obj.reduce( run, {  } ) ) 
+		return trans( this.purgeInvalid( ), ( body, data ) => {
+			return { ...body, [ data ]: this[ data ].value }
+		} )
+	}
+	
 }
 
 
 export default Email
-
 
 

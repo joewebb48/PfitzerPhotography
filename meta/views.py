@@ -7,6 +7,7 @@ import json
 import requests
 from django.core import serializers
 from django.middleware import csrf
+from django.core.mail import EmailMessage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -100,14 +101,17 @@ def bio( request ):
 
 
 def email( request ):
-	print( '\n\nSuccess!!!\n\n' )
-	return HttpResponse( )
+	## Grab email form data and create the new email message
+	info = request.POST.dict( )
+	contact = EmailMessage( )
+	## Returning json is temporary for inspecting sent form data
+	return JsonResponse( info )
 
 
 def social( request ):
 	media = request.GET.get( 'enabled', False )
 	enabled = json.loads( media )
-	## Verify whether or not any social media links are enabled
+	## Verify whether any social media links have been enabled
 	if enabled:
 		query = Media.objects.filter( active = True )
 		serial = serializers.serialize( 'json', query )
