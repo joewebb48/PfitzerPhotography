@@ -15,7 +15,7 @@ urlpatterns = [
 	path( 'data', views.data, name = 'data' ),
 	path( 'photos', views.photos, name = 'photos' ),
 	path( 'image', views.image, name = 'image' ),
-	path( 'bio', views.bio, name = 'bio' ),
+	path( 'bio', views.biography, name = 'bio' ),
 	path( 'social', views.social, name = 'social' ),
 	path( 'email', views.email, name = 'email' ),
 	## Fallback wildcard routing for any dynamic url

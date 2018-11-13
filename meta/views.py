@@ -19,12 +19,14 @@ from meta.ops import owner, dateify
 def index( request, url = None ):
 	tags = data( request ).content
 	page = json.loads( tags )
+	## React's StaticRouter needs the url from Django instead
+	domain = request.scheme + '://' + request.get_host( )
+	info = { 'url': domain, 'path': request.path, 'data': page }
 	## Get jsx views from the Node server that processes them
 	feedback = requests.post(
 		'http://localhost:3000/render',
 		headers = { 'Content-Type': 'application/json' },
-		## React's StaticRouter needs the url from Django instead
-		data = json.dumps( { 'url': request.path, 'data': page } )
+		data = json.dumps( info )
 	)
 	## Serialized React frontend that will be embedded into html
 	metadata = feedback.json( )
@@ -91,21 +93,13 @@ def image( request ):
 		return JsonResponse( None, safe = False )
 
 
-def bio( request ):
+def biography( request ):
 	user = owner( )
 	## Build a new full name key from the removed name fields
 	first = user[ 'fields' ].pop( 'first_name', None )
 	last = user[ 'fields' ].pop( 'last_name', None )
 	user[ 'fields' ][ 'name' ] = '{0} {1}'.format( first, last )
 	return JsonResponse( user )
-
-
-def email( request ):
-	## Grab email form data and create the new email message
-	info = request.POST.dict( )
-	contact = EmailMessage( )
-	## Returning json is temporary for inspecting sent form data
-	return JsonResponse( info )
 
 
 def social( request ):
@@ -118,6 +112,14 @@ def social( request ):
 		footer = json.loads( serial )
 		return JsonResponse( footer, safe = False )
 	return HttpResponse( )
+
+
+def email( request ):
+	## Grab email form data and create the new email message
+	info = request.POST.dict( )
+	contact = EmailMessage( )
+	## Returning json is temporary for inspecting sent form data
+	return JsonResponse( info )
 
 
 

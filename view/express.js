@@ -31,13 +31,13 @@ app.get( '/*', ( request, response ) => {
 
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
-	console.log( '\n\nCurrent:', request.body.url, '\n\n' )
+	console.log( '\n\nCurrent:', request.body.path, '\n\n' )
 	// Data loading on the server must occur prior to rendering the app
 	const store = nodeStore( )
-	const urls = Router.bind( Router )( request.body.url )
+	const urls = Router.bind( Router )( request.body.path )
 	const factory = exe => urls.reduce( exe, [ ] )
 	const load = factory( ( ops, url ) => {
-		let api = url.api.map( api => store.dispatch( api( ) ) )
+		let api = url.api.map( api => store.dispatch( api( request.body.url ) ) )
 		// Utilize non-Redux state data loading on the server once ready
 		return ops.concat( api )
 	} )
@@ -45,7 +45,7 @@ app.post( '/render', ( request, response ) => {
 	Promise.all( load ).then( ( ) => {
 		console.log( 'Promises:\n', load, '\n\n' )
 		// React's router needs originally requested url from Django first
-		const data = { url: request.body.url, data: request.body.data, store }
+		const data = { url: request.body.path, data: request.body.data, store }
 		const root = ReactDOMServer.renderToString( <Server { ...data }/> )
 		// Stringify store data as JSON to set initial state on the browser
 		const json = JSON.stringify( store.getState( ) )
