@@ -19,8 +19,8 @@ class Email {
 	
 	purgeInvalid( ) {
 		// Dump the non form field class attribute from the set
-		const pass = attr => attr !== 'invalidated'
-		return Object.keys( this ).filter( pass )
+		const screen = attr => attr !== 'invalidated'
+		return Object.keys( this ).filter( screen )
 	}
 	
 	setProps( setup ) {
@@ -28,8 +28,8 @@ class Email {
 		const join = ( set, exe ) => set.reduce( exe, {  } )
 		// Combine field attributes to construct form field props
 		return join( this.purgeInvalid( ), ( form, name ) => {
-			let body = { name, placeholder: '', ...this[ name ] }
-			return { ...form, [ name ]: { ...body, ...info } }
+			let base = { name, placeholder: '', ...this[ name ] }
+			return { ...form, [ name ]: { ...base, ...info } }
 		} )
 	}
 	
@@ -47,25 +47,26 @@ class Email {
 	}
 	
 	validateFields( ) {
-		const form = new Email( this )
+		const parcel = new Email( this )
 		this.purgeInvalid( ).forEach( field => {
 			let extra = field === 'address' ? 'email ' + field : field
 			let valid = this[ field ].min < this[ field ].value.length
-			let text = valid ? '' : 'Your ' + extra + ' must be at least'
+			let alert = valid ? '' : 'Your ' + extra + ' must be at least'
 			let mini = valid ? '' : ' ' + this[ field ].min + ' characters!'
 			// Apply error message if any and track errors found
-			!valid ? form.invalidated++ : null
-			form[ field ].error = text + mini
+			!valid ? parcel.invalidated++ : null
+			parcel[ field ].error = alert + mini
 		} )
-		return form
+		return parcel
 	}
 	
-	harvestQuery( ) {
+	harvestQuery( bio ) {
 		// Generate a query string for using form data via email
+		const whom = { recipient: bio.fields.email }
 		const query = item => querystring.stringify( item )
-		const trans = ( obj, run ) => query( obj.reduce( run, {  } ) ) 
+		const trans = ( obj, run ) => query( obj.reduce( run, {  } ) )
 		return trans( this.purgeInvalid( ), ( body, data ) => {
-			return { ...body, [ data ]: this[ data ].value }
+			return { ...body, [ data ]: this[ data ].value, ...whom }
 		} )
 	}
 	
@@ -73,5 +74,6 @@ class Email {
 
 
 export default Email
+
 
 

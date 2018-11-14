@@ -116,10 +116,14 @@ def social( request ):
 
 def email( request ):
 	## Grab email form data and create the new email message
-	info = request.POST.dict( )
-	contact = EmailMessage( )
+	heading = request.POST.get( 'subject', '' )
+	concept = request.POST.get( 'message', '' )
+	inception = request.POST.get( 'address', '' )
+	## Different endpoint addresses used in development testing
+	towards = [ request.POST.get( 'recipient', '' ) ]
+	""" postage = EmailMessage( heading, concept, inception, towards ) """
+	postage = EmailMessage( heading, concept, inception, [ 'email@website.com' ] )
 	## Returning json is temporary for inspecting sent form data
-	return JsonResponse( info )
-
+	return JsonResponse( request.POST.dict( ) )
 
 

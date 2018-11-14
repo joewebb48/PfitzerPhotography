@@ -54,7 +54,7 @@ class Contact extends Component {
 		// Identify whether or not form field data is valid input
 		if ( email.invalidated === 0 ) {
 			// Wrap data in a query string for any post protocol
-			const wrap = email.harvestQuery( )
+			const wrap = email.harvestQuery( this.props.biography )
 			const head = 'application/x-www-form-urlencoded'
 			// Xsrf token is used to send post data to the server
 			const xsrf = { xsrfCookieName: 'xsrf', xsrfHeaderName: 'xsrf' }
