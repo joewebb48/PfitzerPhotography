@@ -115,6 +115,12 @@ CSRF_HEADER_NAME = 'HTTP_XSRF'
 CSRF_COOKIE_NAME = 'xsrf'
 
 
+# Email
+# https://docs.djangoproject.com/en/2.1/topics/email/
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 

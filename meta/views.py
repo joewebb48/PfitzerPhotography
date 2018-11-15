@@ -116,14 +116,18 @@ def social( request ):
 
 def email( request ):
 	## Grab email form data and create the new email message
-	heading = request.POST.get( 'subject', '' )
-	concept = request.POST.get( 'message', '' )
-	inception = request.POST.get( 'address', '' )
+	topic = request.POST.get( 'subject', '' )
+	bulk = request.POST.get( 'message', '' )
+	who = request.POST.get( 'address', '' )
 	## Different endpoint addresses used in development testing
-	towards = [ request.POST.get( 'recipient', '' ) ]
-	""" postage = EmailMessage( heading, concept, inception, towards ) """
-	postage = EmailMessage( heading, concept, inception, [ 'email@website.com' ] )
+	""" route = [ request.POST.get( 'recipient', '' ) ] """
+	route = [ 'email@website.com' ]
+	## Send the email via the development backend email server
+	args = topic, bulk, who, route
+	post = EmailMessage( *args )
+	post.send( )
 	## Returning json is temporary for inspecting sent form data
 	return JsonResponse( request.POST.dict( ) )
+
 
 
