@@ -25,9 +25,12 @@ class Gallery extends Component {
 	}
 	
 	
-	async componentDidMount( ) {
+	componentDidMount( ) {
 		// Retrieve any necessary data if it hasn't already been generated
-		this.props.images.length ? null : await this.props.getImages( )
+		this.props.images.length ? null : this.props.getImages( )
+	}
+	
+	componentDidUpdate( ) {
 		// Generate every z-index css selector for each image component
 		this.generateLevels( )
 	}
@@ -79,5 +82,6 @@ class Gallery extends Component {
 
 
 export default connect( mapImages, { getImages } )( Gallery )
+
 
 
