@@ -56,14 +56,16 @@ class Frame extends Component {
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (
 			<div className="frame-area" { ...events }>
-				<Link to={ { pathname: url, state: { image: this.props.image } } }>
+				<div className="frame-elastic">
 					<div className="frame-shadow"/>
-					<div className="frame-image">
-						<div className="frame-border"/>
-						<img className="frame-thumbnail" { ...props }/>
-					</div>
-				</Link>
-				<Panel mode={ this.state.viewMode } image={ this.props.image }/>
+					<Link to={ { pathname: url, state: { image: this.props.image } } }>
+						<div className="frame-image">
+							<div className="frame-border"/>
+							<img className="frame-thumbnail" { ...props }/>
+						</div>
+					</Link>
+					<Panel mode={ this.state.viewMode } image={ this.props.image }/>
+				</div>
 			</div>
 		)
 	}
