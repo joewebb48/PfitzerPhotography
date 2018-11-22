@@ -11,6 +11,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
+from meta.forms import ContactForm
 from meta.models import Page, Image, Media
 from meta.ops import owner, dateify
 
@@ -122,10 +123,11 @@ def email( request ):
 	## Different endpoint addresses used in development testing
 	""" route = [ request.POST.get( 'recipient', '' ) ] """
 	route = [ 'email@website.com' ]
+	## Intercept and perform validation upon the submitted form
+	post = ContactForm( request.POST )
 	## Send the email via the development backend email server
 	args = topic, bulk, who, route
-	post = EmailMessage( *args )
-	post.send( )
+	EmailMessage( *args ).send( )
 	## Returning json is temporary for inspecting sent form data
 	return JsonResponse( request.POST.dict( ) )
 

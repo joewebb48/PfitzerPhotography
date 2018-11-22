@@ -2,15 +2,15 @@
 
 
 
-from django.forms import ModelForm, ImageField
+from django import forms
 
 from meta.widgets import ImageWidget
 from meta.models import Setting, Image
 
 
 
-class SettingForm( ModelForm ):
-	portrait = ImageField( label = 'Self portrait', widget = ImageWidget( ), required = False )
+class SettingForm( forms.ModelForm ):
+	portrait = forms.ImageField( label = 'Self portrait', widget = ImageWidget( ), required = False )
 	
 	def __init__( self, *args, **kwargs ):
 		## Form needs the current portrait set to view it
@@ -25,13 +25,23 @@ class SettingForm( ModelForm ):
 
 
 
-class ImageForm( ModelForm ):
+class ImageForm( forms.ModelForm ):
+	## Additional field will be necessary for size pricing
+	pass
 	
 	
 	class Meta:
 		model = Image
 		fields = [ 'name', 'image', 'description', 'viewable', 'for_sale', 'price', 'date_taken' ]
 		widgets = { 'image': ImageWidget( ) }
+
+
+
+class ContactForm( forms.Form ):
+	subject = forms.CharField( min_length = 10 )
+	address = forms.EmailField( min_length = 10 )
+	recipient = forms.EmailField( min_length = 10 )
+	message = forms.CharField( min_length = 75 )
 
 
 

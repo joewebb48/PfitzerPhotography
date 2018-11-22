@@ -19,8 +19,8 @@ class Email {
 	
 	purgeInvalid( ) {
 		// Dump the non form field class attribute from the set
-		const screen = attr => attr !== 'invalidated'
-		return Object.keys( this ).filter( screen )
+		const scrap = attr => attr !== 'invalidated'
+		return Object.keys( this ).filter( scrap )
 	}
 	
 	setProps( setup ) {
@@ -29,7 +29,8 @@ class Email {
 		// Combine field attributes to construct form field props
 		return join( this.purgeInvalid( ), ( form, name ) => {
 			let base = { name, placeholder: '', ...this[ name ] }
-			return { ...form, [ name ]: { ...base, ...info } }
+			let union = { ...base, required: true, ...info }
+			return { ...form, [ name ]: union }
 		} )
 	}
 	
@@ -86,6 +87,5 @@ class Email {
 
 
 export default Email
-
 
 
