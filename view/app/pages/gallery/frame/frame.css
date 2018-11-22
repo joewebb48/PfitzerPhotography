@@ -4,7 +4,7 @@
 
 .frame-area {
 	position: relative;
-	background: #444444;
+	background: #0e0e0e;
 	/* border: 4px solid white; */
 	/* border-radius: 2px; */
 	flex-basis: 225px;
@@ -21,6 +21,7 @@
 .frame-elastic {
 	position: relative;
 	background: black;
+	/* background: #0e0e0e; */
 	height: inherit;
 	width: 100%;
 	transition: height 750ms;
@@ -72,6 +73,5 @@
 	min-width: 100%;
 	margin: auto;
 }
-
 
 

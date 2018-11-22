@@ -12,7 +12,7 @@ class Email {
 		const dupe = ancestor ? ancestor : {  }
 		this.subject = dupe.subject || { value: '', error: '', min: 10 }
 		this.address = dupe.address || { value: '', error: '', min: 10 }
-		this.message = dupe.message || { value: '', error: '', min: 100 }
+		this.message = dupe.message || { value: '', error: '', min: 75 }
 		this.invalidated = 0
 	}
 	
@@ -57,7 +57,19 @@ class Email {
 			!valid ? parcel.invalidated++ : null
 			parcel[ field ].error = alert + mini
 		} )
+		parcel.analyzeEmail( )
 		return parcel
+	}
+	
+	analyzeEmail( ) {
+		// Ignore all further validation if there's already an error
+		if ( this.address.error.length === 0 ) {
+			const regex = /^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+			const check = regex.test( this.address.value )
+			const flash = check ? '' : 'Your email is improperly formatted!'
+			!check ? this.invalidated++ : null
+			this.address.error = flash
+		}
 	}
 	
 	harvestQuery( bio ) {
