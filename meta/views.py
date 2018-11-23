@@ -116,20 +116,24 @@ def social( request ):
 
 
 def email( request ):
-	## Grab email form data and create the new email message
-	topic = request.POST.get( 'subject', '' )
-	bulk = request.POST.get( 'message', '' )
-	who = request.POST.get( 'address', '' )
-	## Different endpoint addresses used in development testing
-	""" route = [ request.POST.get( 'recipient', '' ) ] """
-	route = [ 'email@website.com' ]
 	## Intercept and perform validation upon the submitted form
 	post = ContactForm( request.POST )
-	## Send the email via the development backend email server
-	args = topic, bulk, who, route
-	EmailMessage( *args ).send( )
+	if post.is_valid( ):
+		## Create the email message using the cleaned form input
+		topic = post.cleaned_data[ 'subject' ]
+		bulk = post.cleaned_data[ 'message' ]
+		who = post.cleaned_data[ 'address' ]
+		## Different endpoint addresses with development testing
+		""" route = [ post.cleaned_data[ 'recipient' ] ] """
+		route = [ 'email@website.com' ]
+		## Send the email via the development mode email server
+		args = topic, bulk, who, route
+		EmailMessage( *args ).send( )
 	## Returning json is temporary for inspecting sent form data
-	return JsonResponse( request.POST.dict( ) )
-
+	new = { 'valid': post.is_valid( ) }
+	for key, field in request.POST.dict( ).items( ):
+		clean = post.cleaned_data.get( key, False )
+		new[ key ] = { 'original': field, 'clean': clean }
+	return JsonResponse( new )
 
 
