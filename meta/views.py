@@ -34,7 +34,7 @@ def index( request, url = None ):
 	## Will have no page data if the visited page is an admin one
 	if page:
 		## Embed additional head tags utilized for SEO when ready
-		metadata[ 'title' ] = page[ 'fields' ][ 'title' ]
+		metadata[ 'page' ] = page[ 'fields' ]
 		## Xsrf token is necessary to make post requests via ajax
 		csrf.get_token( request )
 	## Transform server-side Redux state for browser hydration

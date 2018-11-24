@@ -7,7 +7,10 @@
 	
 	<head>
 		<meta charset="utf-8"/>
-		<title>{{ title }}</title>
+		<title>{{ page.title }}</title>
+		
+		<!-- Dynamically generated page content metadata is embedded here -->
+		<meta name="description" content="{{ page.description }}"/>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<meta name="theme-color" content="#000000"/>
@@ -30,6 +33,5 @@
 	</body>
 	
 </html>
-
 
 

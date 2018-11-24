@@ -31,10 +31,10 @@ class Base extends Component {
 	}
 	
 	generateTags( info ) {
-		// Set up a proxy to the DOM's head tag to safely access it
+		// Set up a proxy for accessing the DOM's head tag safely
 		const proxy = ReactDOM.createPortal( <></>, document.head )
 		const raws = Array.from( proxy.containerInfo.children )
-		// Undo the native DOM head tags and create them as jsx
+		// Delete the native DOM head tags and regenerate as jsx
 		const tags = raws.map( tag => {
 			let label = tag.tagName.toLowerCase( )
 			let keys = Object.keys( tag.attributes )
@@ -49,9 +49,12 @@ class Base extends Component {
 					attrs[ name ] = value
 				} )
 			}
+			// Update new tag with any updated page information
+			let desc = attrs.name && attrs.name === 'description' && info
 			let inner = tag.textContent.length > 0 ? tag.textContent : null
+			attrs.content = desc ? info.data.fields.description : attrs.content
 			inner = label === 'title' && info ? info.data.fields.title : inner
-			// Instantiate the jsx tag element via the extracted data
+			// Instantiate jsx tag element using the extracted data
 			return React.createElement( label, attrs, inner )
 		} )
 		this.setState( { tags: tags } )
@@ -84,6 +87,5 @@ class Base extends Component {
 
 
 export default Base
-
 
 
