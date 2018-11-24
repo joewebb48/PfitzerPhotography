@@ -20,7 +20,7 @@ from meta.ops import owner, dateify
 def index( request, url = None ):
 	tags = data( request ).content
 	page = json.loads( tags )
-	## React's StaticRouter needs the url from Django instead
+	## React's StaticRouter needs the url used by Django instead
 	domain = request.scheme + '://' + request.get_host( )
 	info = { 'url': domain, 'path': request.path, 'data': page }
 	## Get jsx views from the Node server that processes them
@@ -33,6 +33,7 @@ def index( request, url = None ):
 	metadata = feedback.json( )
 	## Will have no page data if the visited page is an admin one
 	if page:
+		## Embed additional head tags utilized for SEO when ready
 		metadata[ 'title' ] = page[ 'fields' ][ 'title' ]
 		## Xsrf token is necessary to make post requests via ajax
 		csrf.get_token( request )
@@ -129,11 +130,12 @@ def email( request ):
 		## Send the email via the development mode email server
 		args = topic, bulk, who, route
 		EmailMessage( *args ).send( )
-	## Returning json is temporary for inspecting sent form data
+	## Json temporary returned to inspect all received form data
 	new = { 'valid': post.is_valid( ) }
 	for key, field in request.POST.dict( ).items( ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
+
 
 

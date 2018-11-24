@@ -70,6 +70,7 @@ class Contact extends Component {
 		const artist = this.props.biography.fields
 		const block = !this.state.email.isPopulated( )
 		const name = artist && artist.name ? artist.name : ''
+		const locality = artist && artist.email ? artist.email : ''
 		// Set controlled component architecture in form fields
 		const props = this.state.email.setProps( this.state )
 		props.subject.placeholder = 'Enter your message subject.'
@@ -77,6 +78,7 @@ class Contact extends Component {
 		return (
 			<form onSubmit={ event => this.onTransfer( event ) }>
 				<h3 className="contact-form"> Contact { name.split( ' ' )[ 0 ] } </h3>
+				<h5 className="contact-address"> { locality } </h5>
 				<Label html="input" onChange={ this.updateForm } { ...props.subject }/>
 				<Label html="input" onChange={ this.updateForm } { ...props.address }/>
 				<Label html="textarea" onChange={ this.updateForm } { ...props.message }/>

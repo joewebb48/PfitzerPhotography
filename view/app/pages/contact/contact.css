@@ -14,7 +14,14 @@ form {
 	color: #e0e0e0;
 	font-size: 2em;
 	font-weight: normal;
-	margin: 0 0 30px;
+	margin: 0 0 12px;
+}
+
+.contact-address {
+	color: #a6a5a9;
+	font-size: 1.25em;
+	font-weight: normal;
+	margin: 0 0 15px;
 }
 
 label {
@@ -73,5 +80,6 @@ label p {
 	background: #444444;
 	color: #6b6b6d;
 }
+
 
 
