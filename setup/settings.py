@@ -14,6 +14,8 @@
 
 import os
 
+from setup import vault
+
 
 
 # Build paths inside the project like this: os.path.join( BASE_DIR, ... )
@@ -24,7 +26,7 @@ BASE_DIR = os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) )
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '=#^#%ly@8ft2&2^qd)5**4r6xh$x$v20rol)%=u6)gn3&ek&vq'
+SECRET_KEY = vault.environ.get( 'SECRET_KEY' )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
