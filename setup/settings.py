@@ -94,6 +94,12 @@ DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.sqlite3',
 		'NAME': os.path.join( BASE_DIR, 'db.sqlite3' )
+	},
+	'mysql': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'pfitzer_photography',
+		'USER': vault.environ.get( 'USER' ),
+		'PASSWORD': vault.environ.get( 'PASSWORD' )
 	}
 }
 
