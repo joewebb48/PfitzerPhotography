@@ -30,6 +30,13 @@
 	animation: appear 1s 500ms backwards, subdue 1s 5s forwards;
 }
 
+.gallery-empty {
+	position: absolute;
+	color: #a9a9a9;
+	font-size: 2em;
+	margin: 15% 0;
+}
+
 
 @keyframes appear {
 	from { opacity: 0; }
@@ -40,6 +47,5 @@
 	from { opacity: 1; }
 	to { opacity: 0; }
 }
-
 
 

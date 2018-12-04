@@ -42,6 +42,10 @@ class Gallery extends Component {
 		} )
 	}
 	
+	viewNone( ) {
+		return <p className="gallery-empty"> The gallery is empty! </p>
+	}
+	
 	generateLevels( ) {
 		const css = ReactDOM.createPortal( <></>, document.styleSheets[ 0 ].ownerNode )
 		const styles = css.containerInfo.sheet
@@ -71,7 +75,7 @@ class Gallery extends Component {
 			return (
 				<section>
 					{ this.isUnknown( ) }
-					{ this.formGallery( ) }
+					{ this.props.images.length ? this.formGallery( ) : this.viewNone( ) }
 				</section>
 			)
 		}
