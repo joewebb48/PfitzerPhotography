@@ -10,6 +10,27 @@ form {
 	margin: 0 auto;
 }
 
+.contact-redirect {
+	position: absolute;
+	background: #525252;
+	max-width: 400px;
+	top: 20%;
+	left: 0;
+	right: 0;
+	padding: 50px 25px;
+	margin: 0 auto;
+	box-shadow: 0 5px 25px 5px #000000bf;
+}
+
+.contact-redirect p {
+	color: #b9b9b9;
+	font-size: 1.25em;
+}
+
+.contact-redirect p:first-child {
+	margin: 0 0 40px;
+}
+
 .contact-form {
 	color: #e0e0e0;
 	font-size: 2em;
@@ -19,7 +40,7 @@ form {
 
 .contact-address {
 	color: #a6a5a9;
-	font-size: 1.25em;
+	font-size: 1em;
 	font-weight: normal;
 	margin: 0 0 15px;
 }
@@ -80,6 +101,5 @@ label p {
 	background: #444444;
 	color: #6b6b6d;
 }
-
 
 

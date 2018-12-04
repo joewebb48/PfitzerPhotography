@@ -75,8 +75,8 @@ class Email {
 	
 	harvestQuery( bio ) {
 		// Generate a query string for using form data via email
-		const whom = { recipient: bio.fields.email }
-		const query = item => querystring.stringify( item )
+		const whom = { recipient: bio.fields ? bio.fields.email : '' }
+		const query = morph => querystring.stringify( morph )
 		const trans = ( obj, run ) => query( obj.reduce( run, {  } ) )
 		return trans( this.purgeInvalid( ), ( body, data ) => {
 			return { ...body, [ data ]: this[ data ].value, ...whom }

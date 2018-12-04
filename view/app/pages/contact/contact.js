@@ -22,7 +22,8 @@ class Contact extends Component {
 	constructor( props ) {
 		super( props )
 		const diff = { max: 12000, hide: 2000 }
-		this.state = { diff, sent: false, email: new Email( ) }
+		const meta = { sent: false, redirect: false }
+		this.state = { diff, ...meta, email: new Email( ) }
 		this.updateForm = this.updateForm.bind( this )
 	}
 	
@@ -40,10 +41,17 @@ class Contact extends Component {
 		}
 	}
 	
+	componentWillUnmount( ) {
+		// Kill redirects if route changes before timeout is done
+		clearTimeout( this.countdown )
+	}
+	
 	updateForm( event ) {
 		// Update contact form with new form field input data
-		const form = this.state.email.fuseForm( event.target )
-		this.setState( { email: form } )
+		if ( !this.state.redirect ) {
+			const form = this.state.email.fuseForm( event.target )
+			this.setState( { email: form } )
+		}
 	}
 	
 	onTransfer( event ) {
@@ -62,8 +70,23 @@ class Contact extends Component {
 			// Post the email data to the backend for processing
 			axios.post( '/email', wrap, config ).then( echo => {
 				console.log( 'Email:', echo.data )
+				// Trigger redirect if the email is sent successfully
+				!echo.data.valid ? null : this.setState( ( ) => {
+					return { redirect: true, email: new Email( ) }
+				} )
 			} )
 		}
+	}
+	
+	issueRedirect( ) {
+		const index = ( ) => this.props.history.push( '/' )
+		this.countdown = setTimeout( index, 5000 )
+		return (
+			<div className="contact-redirect">
+				<p> Your email has been sent! </p>
+				<p> Redirecting you to home... </p>
+			</div>
+		)
 	}
 	
 	render( ) {
@@ -77,6 +100,7 @@ class Contact extends Component {
 		props.address.placeholder = 'Provide your email address.'
 		return (
 			<form onSubmit={ event => this.onTransfer( event ) }>
+				{ this.state.redirect ? this.issueRedirect( ) : null }
 				<h3 className="contact-form"> Contact { name.split( ' ' )[ 0 ] } </h3>
 				<h5 className="contact-address"> { locality } </h5>
 				<Label html="input" onChange={ this.updateForm } { ...props.subject }/>
