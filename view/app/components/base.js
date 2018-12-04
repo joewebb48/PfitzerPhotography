@@ -25,8 +25,8 @@ class Base extends Component {
 		// Only execute page data changes when the url changes
 		if ( this.props.location !== props.location ) {
 			let url = { params: { url: this.props.location } }
-			let data = props.location ? await axios.get( '/data', url ) : false
-			this.generateTags( data )
+			let data = props.location ? await axios.get( '/data', url ) : null
+			this.generateTags( data ? data.data : false )
 		}
 	}
 	

@@ -96,18 +96,19 @@ def image( request ):
 
 
 def biography( request ):
-	user = owner( )
-	## Build a new full name key from the removed name fields
-	first = user[ 'fields' ].pop( 'first_name', None )
-	last = user[ 'fields' ].pop( 'last_name', None )
-	user[ 'fields' ][ 'name' ] = '{0} {1}'.format( first, last )
+	user = owner( ) or dict( )
+	if 'fields' in user:
+		## Build a new full name key from the erased name fields
+		first = user[ 'fields' ].pop( 'first_name', None )
+		last = user[ 'fields' ].pop( 'last_name', None )
+		user[ 'fields' ][ 'name' ] = '{0} {1}'.format( first, last )
 	return JsonResponse( user )
 
 
 def social( request ):
 	media = request.GET.get( 'enabled', False )
 	enabled = json.loads( media )
-	## Verify whether any social media links have been enabled
+	## Verify whether any social media icons have been enabled
 	if enabled:
 		query = Media.objects.filter( active = True )
 		serial = serializers.serialize( 'json', query )
@@ -136,6 +137,5 @@ def email( request ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
-
 
 

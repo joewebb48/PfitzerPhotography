@@ -41,6 +41,9 @@
 .about-portrait {
 	z-index: 2;
 	top: 0;
+	/* Fade out portrait images toward the background */
+	mask-image: linear-gradient( #000000 85%, transparent );
+	-webkit-mask-image: linear-gradient( #000000 85%, transparent );
 }
 
 .about-background {
@@ -63,6 +66,8 @@
 
 .about-image {
 	position: relative;
+	background: linear-gradient( to bottom, #a7a7a7 100%, transparent );
+	height: 100%;
 	width: 100%;
 }
 
@@ -78,13 +83,6 @@
 	/* max-width: 100%; */
 	min-width: 100%;
 	margin: auto;
-}
-
-.about-empty {
-	background: linear-gradient( to bottom, #a7a7a7 90%, transparent );
-	/* background: url( /public/img/test1.jpg ) no-repeat;
-	background-blend-mode: luminosity;
-	background-position: center 50%; */
 }
 
 .about-distort {

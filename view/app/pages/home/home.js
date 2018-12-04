@@ -33,7 +33,8 @@ class Home extends Component {
 		volume.length ? null : await this.props.getBiography( )
 		this.props.images.length ? null : this.props.getImages( )
 		// May move to Media component as it isn't used here
-		const { social } = this.props.biography.fields
+		const biography = this.props.biography.fields
+		const social = biography ? biography.social : false
 		const enabled = { params: { enabled: social } }
 		axios.get( '/social', enabled ).then( media => {
 			this.setState( { links: media.data || [ ] } )
@@ -60,6 +61,5 @@ class Home extends Component {
 
 
 export default connect( mapUniversal, { getBiography, getImages } )( Home )
-
 
 

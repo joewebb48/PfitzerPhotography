@@ -34,7 +34,7 @@ class About extends Component {
 		const url = view ? view.fields.image : ''
 		const image = this.props.biography.fields ? '/public/' + url : null
 		const props = { src: image, alt: view ? view.fields.description : '' }
-		return image ? <img { ...props }/> : <div className="about-empty"/>
+		return !image ? null : <img { ...props }/>
 	}
 	
 	render( ) {
