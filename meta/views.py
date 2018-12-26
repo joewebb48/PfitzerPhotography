@@ -96,7 +96,7 @@ def image( request ):
 
 
 def biography( request ):
-	user = owner( ) or dict( )
+	user = owner( )
 	if 'fields' in user:
 		## Build a new full name key from the erased name fields
 		first = user[ 'fields' ].pop( 'first_name', None )

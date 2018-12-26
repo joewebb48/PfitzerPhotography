@@ -16,7 +16,6 @@ export function getBiography( url ) {
 			// Must use the full non-rendering server url on the server
 			const host = url ? url + '/bio' : '/bio'
 			const admin = await axios.get( host )
-			console.log( 'Biography action success!\n\n' )
 			// Execute the Redux argument function with the bio data
 			relay( { type: biography, feedback: admin } )
 		}
@@ -25,5 +24,6 @@ export function getBiography( url ) {
 		}
 	}
 }
+
 
 

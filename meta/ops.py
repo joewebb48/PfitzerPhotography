@@ -12,7 +12,7 @@ from meta.models import Setting
 
 def owner( ):
 	## Will fail if the settings object in the database isn't defined
-	if not Setting.DoesNotExist:
+	try:
 		query = Setting.objects.get( pk = 1 )
 		serial = serializers.serialize( 'json', [ query ] )
 		person = json.loads( serial )[ 0 ]
@@ -22,6 +22,8 @@ def owner( ):
 			foreign = serializers.serialize( 'json', [ query.image ] )
 			person[ 'fields' ][ 'image' ] = json.loads( foreign )[ 0 ]
 		return person
+	except Setting.DoesNotExist:
+		return dict( )
 
 
 def dateify( item ):

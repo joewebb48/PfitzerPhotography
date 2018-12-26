@@ -17,7 +17,7 @@ class Base extends Component {
 	
 	
 	componentDidMount( ) {
-		this.generateTags( )
+		this.generateTags( false )
 	}
 	
 	async componentDidUpdate( props ) {
@@ -52,8 +52,8 @@ class Base extends Component {
 			// Update new tag with any updated page information
 			let desc = attrs.name && attrs.name === 'description' && info
 			let inner = tag.textContent.length > 0 ? tag.textContent : null
-			attrs.content = desc ? info.data.fields.description : attrs.content
-			inner = label === 'title' && info ? info.data.fields.title : inner
+			attrs.content = desc ? info.fields.description : attrs.content
+			inner = label === 'title' && info ? info.fields.title : inner
 			// Instantiate jsx tag element using the extracted data
 			return React.createElement( label, attrs, inner )
 		} )

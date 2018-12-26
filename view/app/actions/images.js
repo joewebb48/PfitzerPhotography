@@ -16,7 +16,6 @@ export function getImages( url ) {
 			// Must use the full non-rendering server url on the server
 			const host = url ? url + '/photos' : '/photos'
 			const gallery = await axios.get( host )
-			console.log( 'Images action success!\n\n' )
 			// Execute the Redux argument function with gallery data
 			relay( { type: image, feedback: gallery } )
 		}
@@ -25,5 +24,6 @@ export function getImages( url ) {
 		}
 	}
 }
+
 
 
