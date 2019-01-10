@@ -81,7 +81,7 @@ class ImageAdmin( admin.ModelAdmin ):
 
 
 class MediaAdmin( admin.ModelAdmin ):
-	pass
+	list_display = 'platform', 'icon', 'url', 'active', 'modified_at', 'created_at'
 
 
 
