@@ -6,6 +6,7 @@ import os
 from django.contrib import admin
 from django.forms import ModelForm
 
+from setup.settings import STATIC_URL
 from meta.forms import SettingForm, ImageForm
 from meta.models import Setting, Page, Image, Media
 
@@ -63,8 +64,9 @@ class ImageAdmin( admin.ModelAdmin ):
 		if request.POST.get( 'post' ):
 			## Delete the selected images in bulk
 			for obj in queryset:
-				if os.path.isfile( obj.image.url[ 1: ] ):
-					os.remove( obj.image.url[ 1: ] )
+				garbageurl = STATIC_URL + obj.image.name
+				os.remove( obj.image.url[ 1: ] ) if os.path.isfile( obj.image.url[ 1: ] ) else None
+				os.remove( garbageurl[ 1: ] ) if os.path.isfile( garbageurl[ 1: ] ) else None
 		return admin.actions.delete_selected( modeladmin, request, queryset )
 
 

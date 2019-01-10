@@ -96,7 +96,10 @@ class Image( models.Model ):
 	
 	def delete( self, *args, **kwargs ):
 		super( Image, self ).delete( *args, **kwargs )
-		os.remove( self.image.url[ 1: ] )
+		dumpurl = STATIC_URL + self.image.name
+		## Look for the remaining images if any and delete them
+		os.remove( self.image.url[ 1: ] ) if os.path.isfile( self.image.url[ 1: ] ) else None
+		os.remove( dumpurl[ 1: ] ) if os.path.isfile( dumpurl[ 1: ] ) else None
 	
 	def copy( self, previous, mediaurl ):
 		if os.path.isfile( self.image.url[ 1: ] ):
@@ -112,6 +115,7 @@ class Image( models.Model ):
 class Media( models.Model ):
 	platform = models.CharField( max_length = 100, unique = True )
 	url = models.URLField( unique = True )
+	## Will change icon field to an image object foreign relation
 	icon = models.ImageField( unique = True )
 	active = models.BooleanField( default = False )
 	created_at = models.DateTimeField( auto_now_add = True )
