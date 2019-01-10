@@ -24,6 +24,13 @@ admin.site.index_title = pfitzer_admin
 class SettingAdmin( admin.ModelAdmin ):
 	form = SettingForm
 	actions = None
+	list_display = 'name', 'email', 'portrait', 'social', 'developer', 'modified_at'
+	
+	def name( self, obj ):
+		return obj.first_name.title( ) + ' ' + obj.last_name.title( )
+	
+	def portrait( self, obj ):
+		return obj.image
 	
 	def save_model( self, request, obj, form, change ):
 		image = request.FILES.get( 'portrait', None )
@@ -81,5 +88,6 @@ admin.site.register( Setting, SettingAdmin )
 admin.site.register( Page, PageAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
+
 
 
