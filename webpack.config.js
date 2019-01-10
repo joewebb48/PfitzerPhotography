@@ -29,8 +29,7 @@ module.exports = ( ) => {
 			plugins: [
 				new CopyWebpackPlugin( [
 					'root/favicon.ico',
-					'root/admin.css',
-					{ from: 'root/img', to: 'img' }
+					'root/admin.css'
 				] ),
 				new HtmlWebpackPlugin( {
 					inject: false,
@@ -92,6 +91,5 @@ module.exports = ( ) => {
 		}
 	]
 }
-
 
 

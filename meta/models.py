@@ -3,7 +3,10 @@
 
 
 import os
+import shutil
 from django.db import models
+
+from setup.settings import MEDIA_URL, STATIC_URL
 
 
 
@@ -71,11 +74,12 @@ class Image( models.Model ):
 		imagename = 'img/' + self.name + extension
 		## Get the previous, next, and uploaded urls respectively
 		preurl = previous.image.url if previous else ''
-		nexturl = '/root/' + imagename
+		nexturl = MEDIA_URL + imagename
 		loadurl = self.image.url
 		## Edit the existing image file to reflect the name change
 		if os.path.isfile( self.image.url[ 1: ] ) and self.image.name != imagename:
-			self.image.save( imagename, self.image, save = False )
+			with self.image.open( ):
+				self.image.save( imagename, self.image, save = False )
 			os.remove( loadurl[ 1: ] )
 		## Replace the old image with the updated image version
 		elif not os.path.isfile( self.image.url[ 1: ] ) and os.path.isfile( nexturl[ 1: ] ):
@@ -87,10 +91,21 @@ class Image( models.Model ):
 		## Trash the old file for one with a new name and image
 		if os.path.isfile( preurl[ 1: ] ) and preurl != nexturl:
 			os.remove( preurl[ 1: ] )
+		## Copy the newly saved image into the public img folder
+		self.copy( previous, nexturl )
 	
 	def delete( self, *args, **kwargs ):
 		super( Image, self ).delete( *args, **kwargs )
 		os.remove( self.image.url[ 1: ] )
+	
+	def copy( self, previous, mediaurl ):
+		if os.path.isfile( self.image.url[ 1: ] ):
+			## Overwrite the previous public image should it exist
+			if previous:
+				os.remove( STATIC_URL[ 1: ] + previous.image.name )
+			## Make viewable with a new or updated image copy
+			viewurl = STATIC_URL + self.image.name
+			shutil.copy2( mediaurl[ 1: ], viewurl[ 1: ] )
 
 
 
@@ -112,6 +127,5 @@ class Media( models.Model ):
 			os.remove( preurl[ 1: ] )
 		self.icon.save( iconname, self.icon, save = False )
 		super( Media, self ).save( *args, **kwargs )
-
 
 

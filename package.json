@@ -21,8 +21,8 @@
 	},
 	"scripts": {
 		"node": "node node/node.js",
-		"pre": "mode=development webpack --reporter basic --progress --watch",
-		"start": "concurrently \"npm:pre\" \"npm:node\"",
+		"pre": "webpack --reporter basic --progress --watch",
+		"start": "mode=development concurrently \"npm:pre\" \"npm:node\"",
 		"build": "mode=production webpack"
 	},
 	"devDependencies": {
