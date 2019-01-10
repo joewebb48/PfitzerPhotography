@@ -58,8 +58,9 @@ class SettingAdmin( admin.ModelAdmin ):
 
 
 class PageAdmin( admin.ModelAdmin ):
+	list_display = 'page', 'title', 'description', 'modified_at'
+	
 	## Update later to disable add and remove
-	pass
 
 
 
@@ -88,6 +89,5 @@ admin.site.register( Setting, SettingAdmin )
 admin.site.register( Page, PageAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
-
 
 
