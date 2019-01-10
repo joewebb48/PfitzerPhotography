@@ -35,6 +35,10 @@ class Setting( models.Model ):
 		if self.pk == 1:
 			return
 		super( Setting, self ).delete( *args, **kwargs )
+	
+	
+	class Meta:
+		db_table = 'settings'
 
 
 
@@ -47,12 +51,17 @@ class Page( models.Model ):
 	
 	def __str__( self ):
 		return self.page.title( )
+	
+	
+	class Meta:
+		db_table = 'pages'
 
 
 
 class Image( models.Model ):
 	name = models.CharField( max_length = 100, unique = True )
 	image = models.ImageField( height_field = 'height', width_field = 'width' )
+	url = models.URLField( editable = False, unique = True )
 	height = models.IntegerField( editable = False )
 	width = models.IntegerField( editable = False )
 	description = models.TextField( blank = True )
@@ -74,25 +83,25 @@ class Image( models.Model ):
 		imagename = 'img/' + self.name + extension
 		## Get the previous, next, and uploaded urls respectively
 		preurl = previous.image.url if previous else ''
-		nexturl = MEDIA_URL + imagename
 		loadurl = self.image.url
+		self.url = MEDIA_URL + imagename
 		## Edit the existing image file to reflect the name change
 		if os.path.isfile( self.image.url[ 1: ] ) and self.image.name != imagename:
 			with self.image.open( ):
 				self.image.save( imagename, self.image, save = False )
 			os.remove( loadurl[ 1: ] )
 		## Replace the old image with the updated image version
-		elif not os.path.isfile( self.image.url[ 1: ] ) and os.path.isfile( nexturl[ 1: ] ):
-			os.remove( nexturl[ 1: ] )
+		elif not os.path.isfile( self.image.url[ 1: ] ) and os.path.isfile( self.url[ 1: ] ):
+			os.remove( self.url[ 1: ] )
 			self.image.save( imagename, self.image, save = False )
 		## Invoke the superclass save method with a new path
 		self.image.name = imagename
 		super( Image, self ).save( *args, **kwargs )
 		## Trash the old file for one with a new name and image
-		if os.path.isfile( preurl[ 1: ] ) and preurl != nexturl:
+		if os.path.isfile( preurl[ 1: ] ) and preurl != self.url:
 			os.remove( preurl[ 1: ] )
 		## Copy the newly saved image into the public img folder
-		self.copy( previous, nexturl )
+		self.copy( previous )
 	
 	def delete( self, *args, **kwargs ):
 		super( Image, self ).delete( *args, **kwargs )
@@ -101,14 +110,18 @@ class Image( models.Model ):
 		os.remove( self.image.url[ 1: ] ) if os.path.isfile( self.image.url[ 1: ] ) else None
 		os.remove( dumpurl[ 1: ] ) if os.path.isfile( dumpurl[ 1: ] ) else None
 	
-	def copy( self, previous, mediaurl ):
+	def copy( self, previous ):
 		if os.path.isfile( self.image.url[ 1: ] ):
 			## Overwrite the previous public image should it exist
 			if previous:
 				os.remove( STATIC_URL[ 1: ] + previous.image.name )
 			## Make viewable with a new or updated image copy
 			viewurl = STATIC_URL + self.image.name
-			shutil.copy2( mediaurl[ 1: ], viewurl[ 1: ] )
+			shutil.copy2( self.url[ 1: ], viewurl[ 1: ] )
+	
+	
+	class Meta:
+		db_table = 'images'
 
 
 
@@ -131,5 +144,10 @@ class Media( models.Model ):
 			os.remove( preurl[ 1: ] )
 		self.icon.save( iconname, self.icon, save = False )
 		super( Media, self ).save( *args, **kwargs )
+	
+	
+	class Meta:
+		db_table = 'media'
+
 
 
