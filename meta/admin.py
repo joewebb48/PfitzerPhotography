@@ -59,6 +59,7 @@ class PageAdmin( admin.ModelAdmin ):
 class ImageAdmin( admin.ModelAdmin ):
 	form = ImageForm
 	actions = [ 'delete_selected' ]
+	list_display = 'name', 'viewable', 'height', 'width', 'date_taken', 'url', 'modified_at', 'uploaded_at'
 	
 	def delete_selected( modeladmin, request, queryset ):
 		if request.POST.get( 'post' ):
@@ -80,6 +81,5 @@ admin.site.register( Setting, SettingAdmin )
 admin.site.register( Page, PageAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
-
 
 
