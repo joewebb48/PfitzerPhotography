@@ -4,6 +4,7 @@
 
 import os
 from django.contrib import admin
+from django.utils.html import format_html
 from django.forms import ModelForm
 
 from setup.settings import STATIC_URL
@@ -24,13 +25,23 @@ admin.site.index_title = pfitzer_admin
 class SettingAdmin( admin.ModelAdmin ):
 	form = SettingForm
 	actions = None
-	list_display = 'name', 'email', 'portrait', 'social', 'developer', 'modified_at'
+	list_display = 'name', 'email', 'portrait', 'social', 'develop', 'modified_at'
 	
-	def name( self, obj ):
-		return obj.first_name.title( ) + ' ' + obj.last_name.title( )
+	def __init__( self, model, admin ):
+		type( self ).develop.short_description = 'developer website'
+		super( ).__init__( model, admin )
 	
-	def portrait( self, obj ):
-		return obj.image
+	def name( self, field ):
+		return field.first_name.title( ) + ' ' + field.last_name.title( )
+	
+	def portrait( self, field ):
+		html = '<a href="{}">{}</a>'
+		path = STATIC_URL + field.image.image.name
+		return format_html( html, path, field.image.url[ 1: ] )
+	
+	def develop( self, field ):
+		html = '<a href="{}">{}</a>'
+		return format_html( html, field.developer, field.developer )
 	
 	def save_model( self, request, obj, form, change ):
 		image = request.FILES.get( 'portrait', None )
@@ -58,6 +69,7 @@ class SettingAdmin( admin.ModelAdmin ):
 
 
 class PageAdmin( admin.ModelAdmin ):
+	ordering = [ 'created_at' ]
 	list_display = 'page', 'title', 'description', 'modified_at'
 	
 	## Update later to disable add and remove
@@ -67,7 +79,16 @@ class PageAdmin( admin.ModelAdmin ):
 class ImageAdmin( admin.ModelAdmin ):
 	form = ImageForm
 	actions = [ 'delete_selected' ]
-	list_display = 'name', 'viewable', 'height', 'width', 'date_taken', 'url', 'modified_at', 'uploaded_at'
+	list_display = '__str__', 'viewable', 'imgpath', 'date_taken', 'modified_at', 'uploaded_at'
+	
+	def __init__( self, model, admin ):
+		type( self ).imgpath.short_description = 'url'
+		super( ).__init__( model, admin )
+	
+	def imgpath( self, field ):
+		html = '<a href="{}">{}</a>'
+		path = STATIC_URL + field.image.name
+		return format_html( html, path, field.url[ 1: ] )
 	
 	def delete_selected( modeladmin, request, queryset ):
 		if request.POST.get( 'post' ):
@@ -81,7 +102,25 @@ class ImageAdmin( admin.ModelAdmin ):
 
 
 class MediaAdmin( admin.ModelAdmin ):
-	list_display = 'platform', 'icon', 'url', 'active', 'modified_at', 'created_at'
+	list_display = 'website', 'graphic', 'location', 'active', 'modified_at', 'created_at'
+	
+	def __init__( self, model, admin ):
+		type( self ).website.short_description = 'platform'
+		type( self ).graphic.short_description = 'icon'
+		type( self ).location.short_description = 'url'
+		super( ).__init__( model, admin )
+	
+	def website( self, field ):
+		return field.platform.title( )
+	
+	def graphic( self, field ):
+		html = '<a href="{}">{}</a>'
+		path = STATIC_URL + field.icon.name
+		return format_html( html, path, field.icon.url[ 1: ] )
+	
+	def location( self, field ):
+		html = '<a href="{}">{}</a>'
+		return format_html( html, field.url, field.url )
 
 
 
@@ -89,5 +128,6 @@ admin.site.register( Setting, SettingAdmin )
 admin.site.register( Page, PageAdmin )
 admin.site.register( Image, ImageAdmin )
 admin.site.register( Media, MediaAdmin )
+
 
 
