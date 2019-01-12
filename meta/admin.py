@@ -5,10 +5,9 @@
 import os
 from django.contrib import admin
 from django.utils.html import format_html
-from django.forms import ModelForm
 
 from setup.settings import STATIC_URL
-from meta.forms import SettingForm, ImageForm
+from meta.forms import SettingForm, ImageForm, MediaForm
 from meta.models import Setting, Page, Image, Media
 
 
@@ -117,6 +116,7 @@ class ImageAdmin( admin.ModelAdmin ):
 
 
 class MediaAdmin( admin.ModelAdmin ):
+	form = MediaForm
 	ordering = [ 'platform' ]
 	list_display = 'website', 'iconview', 'location', 'active', 'modified_at', 'created_at'
 	

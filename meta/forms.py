@@ -5,7 +5,7 @@
 from django import forms
 
 from meta.widgets import ImageWidget
-from meta.models import Setting, Image
+from meta.models import Setting, Image, Media
 
 
 
@@ -34,6 +34,18 @@ class ImageForm( forms.ModelForm ):
 		model = Image
 		fields = [ 'name', 'image', 'description', 'viewable', 'for_sale', 'price', 'date_taken' ]
 		widgets = { 'image': ImageWidget( ) }
+
+
+
+class MediaForm( forms.ModelForm ):
+	## Include icon field when made into image objects
+	pass
+	
+	
+	class Meta:
+		model = Media
+		fields = [ 'platform', 'url', 'icon', 'active' ]
+		widgets = { 'icon': ImageWidget( ) }
 
 
 

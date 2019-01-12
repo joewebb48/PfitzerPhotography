@@ -44,7 +44,7 @@ td > a > img {
 	min-width: 75%;
 }
 
-p.file-upload, .field-image input {
+p.file-upload, p.url, .field-image input {
 	font-size: 12px;
 }
 
@@ -53,6 +53,12 @@ p.file-upload, .field-image input {
 	display: block;
 	max-height: 450px;
 	padding: 5px 0 0;
+}
+
+.field-icon img {
+	background: black;
+	padding: 20px;
+	margin: 5px 0 0;
 }
 
 
