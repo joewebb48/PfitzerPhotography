@@ -6,7 +6,7 @@ import os
 from django.contrib import admin
 from django.utils.html import format_html
 
-from setup.settings import STATIC_URL
+from pfitzer.settings import STATIC_URL
 from meta.portfolio.forms import SettingForm, ImageForm, MediaForm
 from meta.portfolio.models import Setting, Page, Image, Media
 

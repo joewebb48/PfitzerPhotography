@@ -6,7 +6,7 @@ import os
 import shutil
 from django.db import models
 
-from setup.settings import MEDIA_URL, STATIC_URL
+from pfitzer.settings import MEDIA_URL, STATIC_URL
 
 
 

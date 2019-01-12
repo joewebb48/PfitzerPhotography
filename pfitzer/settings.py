@@ -57,7 +57,7 @@ MIDDLEWARE = [
 	'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
-ROOT_URLCONF = 'setup.urls'
+ROOT_URLCONF = 'pfitzer.urls'
 
 
 # Templates
@@ -84,7 +84,7 @@ TEMPLATES = [
 
 FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
-WSGI_APPLICATION = 'setup.wsgi.application'
+WSGI_APPLICATION = 'pfitzer.wsgi.application'
 
 
 # Database

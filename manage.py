@@ -10,7 +10,7 @@ import re
 
 
 if __name__ == '__main__':
-	os.environ.setdefault( 'DJANGO_SETTINGS_MODULE', 'setup.settings' )
+	os.environ.setdefault( 'DJANGO_SETTINGS_MODULE', 'pfitzer.settings' )
 	## Set additional hidden environment settings
 	with open( 'vault.json' ) as vault:
 		## Convert json entry keys to snake casing
