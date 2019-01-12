@@ -11,9 +11,9 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
-from meta.forms import ContactForm
-from meta.models import Page, Image, Media
-from meta.ops import owner, dateify
+from meta.portfolio.forms import ContactForm
+from meta.portfolio.models import Page, Image, Media
+from meta.portfolio.ops import owner, dateify
 
 
 

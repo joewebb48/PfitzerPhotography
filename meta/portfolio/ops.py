@@ -6,7 +6,7 @@ import json
 from django.core import serializers
 from datetime import datetime
 
-from meta.models import Setting
+from meta.portfolio.models import Setting
 
 
 

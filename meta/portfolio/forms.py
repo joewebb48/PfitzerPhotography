@@ -4,8 +4,8 @@
 
 from django import forms
 
-from meta.widgets import ImageWidget
-from meta.models import Setting, Image, Media
+from meta.portfolio.widgets import ImageWidget
+from meta.portfolio.models import Setting, Image, Media
 
 
 

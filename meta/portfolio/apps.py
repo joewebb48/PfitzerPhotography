@@ -7,13 +7,13 @@ from django.contrib.admin.apps import AdminConfig
 
 
 
-class MetaConfig( AppConfig ):
-	name = 'meta'
+class PortfolioConfig( AppConfig ):
+	name = 'portfolio'
 
 
 
 class AdminConfig( AdminConfig ):
-	default_site = 'meta.admin.site'
+	default_site = 'meta.portfolio.admin.site'
 
 
 

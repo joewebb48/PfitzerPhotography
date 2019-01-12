@@ -7,8 +7,8 @@ from django.contrib import admin
 from django.utils.html import format_html
 
 from setup.settings import STATIC_URL
-from meta.forms import SettingForm, ImageForm, MediaForm
-from meta.models import Setting, Page, Image, Media
+from meta.portfolio.forms import SettingForm, ImageForm, MediaForm
+from meta.portfolio.models import Setting, Page, Image, Media
 
 
 

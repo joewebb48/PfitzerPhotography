@@ -4,7 +4,7 @@
 
 from django.urls import path
 
-from meta import views
+from meta.portfolio import views
 
 
 
