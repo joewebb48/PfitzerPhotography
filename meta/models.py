@@ -139,7 +139,7 @@ class Media( models.Model ):
 	
 	def save( self, *args, **kwargs ):
 		iconname = 'img/' + self.icon.url[ 6: ]
-		preurl = '/root/' + iconname
+		preurl = MEDIA_URL + iconname
 		if os.path.isfile( preurl[ 1: ] ):
 			os.remove( preurl[ 1: ] )
 		self.icon.save( iconname, self.icon, save = False )
@@ -148,6 +148,8 @@ class Media( models.Model ):
 	
 	class Meta:
 		db_table = 'media'
+		## Stop default pluralization from appending 's' to the end
+		verbose_name_plural = 'media'
 
 
 
