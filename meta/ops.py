@@ -18,7 +18,6 @@ def owner( ):
 		person = json.loads( serial )[ 0 ]
 		## Foreign key image object must be serialized separately
 		if query and query.image:
-			print( type( query.image ) )
 			foreign = serializers.serialize( 'json', [ query.image ] )
 			person[ 'fields' ][ 'image' ] = json.loads( foreign )[ 0 ]
 		return person
@@ -34,6 +33,5 @@ def dateify( item ):
 		## Format each date string with the American date format
 		item[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
 	return item
-
 
 

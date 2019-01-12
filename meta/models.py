@@ -66,9 +66,10 @@ class Image( models.Model ):
 	width = models.IntegerField( editable = False )
 	description = models.TextField( blank = True )
 	viewable = models.BooleanField( default = False )
-	for_sale = models.BooleanField( default = False )
+	## Nullify merchandising fields until e-commerce integration
+	""" for_sale = models.BooleanField( default = False ) """
 	## Validators needed to require price is set if for_sale is true
-	price = models.DecimalField( max_digits = 10, decimal_places = 2, blank = True, null = True )
+	""" price = models.DecimalField( max_digits = 10, decimal_places = 2, blank = True, null = True ) """
 	date_taken = models.DateField( verbose_name = 'photo taken at', blank = True, null = True )
 	uploaded_at = models.DateTimeField( auto_now_add = True )
 	modified_at = models.DateTimeField( auto_now = True )
@@ -150,6 +151,5 @@ class Media( models.Model ):
 		db_table = 'media'
 		## Stop default pluralization from appending 's' to the end
 		verbose_name_plural = 'media'
-
 
 

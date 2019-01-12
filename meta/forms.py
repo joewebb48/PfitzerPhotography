@@ -32,7 +32,7 @@ class ImageForm( forms.ModelForm ):
 	
 	class Meta:
 		model = Image
-		fields = [ 'name', 'image', 'description', 'viewable', 'for_sale', 'price', 'date_taken' ]
+		fields = [ 'name', 'image', 'description', 'viewable', 'date_taken' ]
 		widgets = { 'image': ImageWidget( ) }
 
 
