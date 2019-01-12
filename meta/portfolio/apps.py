@@ -3,21 +3,15 @@
 
 
 from django.apps import AppConfig
-from django.contrib.admin.apps import AdminConfig
 
 
 
 class PortfolioConfig( AppConfig ):
-	name = 'portfolio'
+	name = 'meta.portfolio'
 
 
 
-class AdminConfig( AdminConfig ):
-	default_site = 'meta.portfolio.admin.site'
-
-
-
-admin = AdminConfig
+portfolio = PortfolioConfig
 
 
 

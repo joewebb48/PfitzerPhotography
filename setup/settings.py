@@ -37,8 +37,8 @@ ALLOWED_HOSTS = [ ]
 # Application definition
 
 INSTALLED_APPS = [
-	'meta.portfolio',
-	'meta.portfolio.apps.admin',
+	'meta.admin.apps.admin',
+	'meta.portfolio.apps.portfolio',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
