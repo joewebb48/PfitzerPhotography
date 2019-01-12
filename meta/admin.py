@@ -12,12 +12,17 @@ from meta.models import Setting, Page, Image, Media
 
 
 
-pfitzer_title = 'Pfitzer Photography Admin'
-pfitzer_admin = 'Pfitzer Photography Administration'
-
-admin.site.site_title = pfitzer_title
-admin.site.site_header = pfitzer_admin
-admin.site.index_title = pfitzer_admin
+class AdminSite( admin.AdminSite ):
+	site_title = 'Pfitzer Photography Admin'
+	site_header = 'Pfitzer Photography Administration'
+	index_title = site_header
+	
+	def __init__( self ):
+		super( ).__init__( )
+		self.register( Setting, SettingAdmin )
+		self.register( Page, PageAdmin )
+		self.register( Image, ImageAdmin )
+		self.register( Media, MediaAdmin )
 
 
 
@@ -144,10 +149,7 @@ class MediaAdmin( admin.ModelAdmin ):
 
 
 
-admin.site.register( Setting, SettingAdmin )
-admin.site.register( Page, PageAdmin )
-admin.site.register( Image, ImageAdmin )
-admin.site.register( Media, MediaAdmin )
+site = AdminSite
 
 
 
