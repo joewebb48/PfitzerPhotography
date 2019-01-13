@@ -6,7 +6,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import Browser from './app/browser'
-import '../root/styles.css'
+import '../static/styles.css'
 
 
 

@@ -28,12 +28,12 @@ module.exports = ( ) => {
 			},
 			plugins: [
 				new CopyWebpackPlugin( [
-					'root/favicon.ico',
-					'root/admin.css'
+					'static/favicon.ico',
+					'static/admin.css'
 				] ),
 				new HtmlWebpackPlugin( {
 					inject: false,
-					template: 'root/index.html',
+					template: 'static/index.html',
 					minify: {
 						removeComments: true
 					}
