@@ -61,7 +61,7 @@ class Image extends Component {
 		// May refactor image path code to be at the start of the method
 		const data = this.state.profile || this.props.location.state || null
 		const summary = data ? data.fields ? data.fields : data.image : ''
-		const image = '/public/' + summary.image
+		const image = '/root/' + summary.image
 		const props = { ref: this.image, src: image, alt: summary.description }
 		const events = { onLoad: this.zoomImage, onClick: this.zoomImage }
 		// Initial reloads sometimes display the wrong cursor zoom icon

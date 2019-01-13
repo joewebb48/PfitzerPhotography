@@ -40,7 +40,7 @@ class Slide extends Component {
 	
 	viewNext( ) {
 		const data = this.yieldPhoto( 0 )
-		const url = data ? '/public/' + data.image : null
+		const url = data ? '/root/' + data.image : null
 		const text = data ? data.description : null
 		this.setState( { current: { url, text }, previous: this.state.current } )
 		// Delete all previous image data once it is fully faded out

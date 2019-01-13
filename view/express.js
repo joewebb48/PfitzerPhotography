@@ -19,7 +19,7 @@ const app = express( )
 
 app.use( parsify.json( ) )
 
-app.use( express.static( 'public' ) )
+app.use( express.static( 'root' ) )
 
 
 // Exclusively ran from Node to render jsx with a stringified template
