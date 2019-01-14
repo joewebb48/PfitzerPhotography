@@ -33,20 +33,20 @@ class SettingAdmin( admin.ModelAdmin ):
 		html = '<a href="{}">{}</a>'
 		return format_html( html, field.developer, field.developer )
 	
-	def save_model( self, request, photo, form, change ):
+	def save_model( self, request, config, form, change ):
 		image = request.FILES.get( 'portrait', None )
 		if image:
 			## Create portrait image if none exists
-			if not photo.image:
-				text = 'A portrait photo of ' + photo.__str__( ) + '.'
+			if 'portrait' not in form.initial:
+				text = 'A portrait photo of ' + config.__str__( ) + '.'
 				portrait = Image( name = 'portrait', description = text, image = image )
 				portrait.save( )
-				photo.image = portrait
+				config.image = portrait
 			## Set portrait to the new file upload
 			else:
-				photo.image.image = image
-				photo.image.save( )
-		super( ).save_model( request, photo, form, change )
+				config.image.image = image
+				config.image.save( )
+		super( ).save_model( request, config, form, change )
 	
 	def has_add_permission( self, request ):
 		## Keep object creation from happening
@@ -64,6 +64,7 @@ class SettingAdmin( admin.ModelAdmin ):
 
 class PageAdmin( admin.ModelAdmin ):
 	ordering = [ 'created_at' ]
+	actions = None
 	list_display = 'page', 'title', 'description', 'modified_at'
 	
 	## Update later to disable add and remove
@@ -109,6 +110,7 @@ class ImageAdmin( admin.ModelAdmin ):
 class MediaAdmin( admin.ModelAdmin ):
 	form = MediaForm
 	ordering = [ 'platform' ]
+	actions = [ 'delete_selected' ]
 	list_display = 'website', 'iconview', 'location', 'active', 'modified_at', 'created_at'
 	
 	def __init__( self, model, admin ):
@@ -122,16 +124,68 @@ class MediaAdmin( admin.ModelAdmin ):
 	
 	def iconview( self, field ):
 		html = '<a href="{}"><img src="{}" alt="{}"/></a>'
-		path = STATIC_URL + field.icon.name
-		return format_html( html, path, path, field.platform )
+		path = STATIC_URL + field.image.image.name
+		return format_html( html, path, path, field.image.description )
 	
 	def location( self, field ):
 		html = '<a href="{}">{}</a>'
 		return format_html( html, field.url, field.url )
 	
+	def save_model( self, request, media, form, change ):
+		image = request.FILES.get( 'icon', None )
+		if image:
+			## Generate missing social media icon
+			if 'icon' not in form.initial:
+				text = media.__str__( ) + ' logo icon.'
+				icon = Image( name = media.platform, description = text, image = image )
+				icon.save( )
+				media.image = icon
+			## Modify icon using the uploaded file
+			else:
+				media.image.image = image
+				media.image.save( )
+		super( ).save_model( request, media, form, change )
+	
+	def get_deleted_objects( self, queryset, request ):
+		## Preserve original arguments for later
+		catalog = list( )
+		keep = queryset
+		for media in queryset:
+			if self.model == queryset.model:
+				catalog.append( media.image_id )
+				## Need to change for bulk deleting
+				icon = type( media.image ).objects.filter( pk = media.image_id )
+				look = queryset.filter( image_id = media.image )
+				queryset = icon
+		## Alter context settings for media objs
+		erased = super( ).get_deleted_objects( queryset, request )
+		params = list( erased[ 0 ] )
+		grouping = params.pop( -1 ).pop( 0 ), [ params.pop( 0 ) ]
+		status = dict( sorted( erased[ 1 ].items( ), reverse = True ) )
+		## Integrate new context configuration
+		context = list( grouping ), status, *erased[ 2: ]
+		return context
+	
+	def delete_selected( modeladmin, request, queryset ):
+		for media in queryset:
+			icon = type( media.image ).objects.filter( id = media.image_id )
+			queryset = icon
+		## Obtain the original delete context info
+		waste = admin.actions.delete_selected( modeladmin, request, queryset )
+		## Begin changes to match media model
+		data = dict( waste.context_data[ 'model_count' ] ).items( )
+		quant = dict( sorted( otherdict, reverse = True ) ).items( )
+		amal = list( hold.context_data[ 'deletable_objects' ][ 0 ] )
+		## Lambda function might be used later
+		""" zap = lambda obj: obj if type( obj ) != list else zap( obj.pop( -1 ) ) """
+		## Fuse edited assembly of context data
+		waste.context_data[ 'deletable_objects' ] = [ amal ]
+		waste.context_data[ 'objects_name' ] = 'media'
+		waste.context_data[ 'model_count' ] = quant
+		return waste
+	
 	
 	class Media:
 		css = { 'all': [ 'admin.css' ] }
-
 
 

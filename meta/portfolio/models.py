@@ -17,7 +17,7 @@ class Setting( models.Model ):
 	social = models.BooleanField( verbose_name = 'social media enabled', default = False )
 	about = models.TextField( blank = True )
 	developer = models.URLField( verbose_name = 'developer website' )
-	image = models.OneToOneField( 'Image', models.SET_NULL, null = True )
+	image = models.OneToOneField( 'Image', on_delete = models.SET_NULL, null = True )
 	created_at = models.DateTimeField( auto_now_add = True )
 	modified_at = models.DateTimeField( auto_now = True )
 	
@@ -129,23 +129,13 @@ class Image( models.Model ):
 class Media( models.Model ):
 	platform = models.CharField( max_length = 100, unique = True )
 	url = models.URLField( unique = True )
-	## Will change icon field to an image object foreign relation
-	icon = models.ImageField( unique = True )
 	active = models.BooleanField( default = False )
+	image = models.OneToOneField( 'Image', on_delete = models.CASCADE, related_name = 'media' )
 	created_at = models.DateTimeField( auto_now_add = True )
 	modified_at = models.DateTimeField( auto_now = True )
 	
 	def __str__( self ):
 		return self.platform.title( )
-	
-	def save( self, *args, **kwargs ):
-		filename = os.path.basename( self.icon.name )
-		iconname = 'img/' + filename
-		preurl = MEDIA_URL + iconname
-		if os.path.isfile( preurl[ 1: ] ):
-			os.remove( preurl[ 1: ] )
-		self.icon.save( iconname, self.icon, save = False )
-		super( Media, self ).save( *args, **kwargs )
 	
 	
 	class Meta:

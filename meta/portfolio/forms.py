@@ -13,9 +13,10 @@ class SettingForm( forms.ModelForm ):
 	portrait = forms.ImageField( label = 'Self portrait', widget = ImageWidget( ), required = False )
 	
 	def __init__( self, *args, **kwargs ):
-		## Form needs the current portrait set to view it
-		portrait = kwargs[ 'instance' ].image.image
-		kwargs[ 'initial' ] = { 'portrait': portrait }
+		if 'instance' in kwargs and kwargs[ 'instance' ]:
+			## Form needs the current portrait set to view
+			portrait = kwargs[ 'instance' ].image.image
+			kwargs[ 'initial' ] = { 'portrait': portrait }
 		super( ).__init__( *args, **kwargs )
 	
 	
@@ -38,14 +39,19 @@ class ImageForm( forms.ModelForm ):
 
 
 class MediaForm( forms.ModelForm ):
-	## Include icon field when made into image objects
-	pass
+	icon = forms.ImageField( widget = ImageWidget( ), required = True )
+	
+	def __init__( self, *args, **kwargs ):
+		if 'instance' in kwargs and kwargs[ 'instance' ]:
+			## View current icon on form using initial value
+			icon = kwargs[ 'instance' ].image.image
+			kwargs[ 'initial' ] = { 'icon': icon }
+		super( ).__init__( *args, **kwargs )
 	
 	
 	class Meta:
 		model = Media
 		fields = [ 'platform', 'url', 'icon', 'active' ]
-		widgets = { 'icon': ImageWidget( ) }
 
 
 
