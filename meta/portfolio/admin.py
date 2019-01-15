@@ -158,31 +158,11 @@ class MediaAdmin( admin.ModelAdmin ):
 				look = queryset.filter( image_id = media.image )
 				queryset = icon
 		## Alter context settings for media objs
-		erased = super( ).get_deleted_objects( queryset, request )
-		params = list( erased[ 0 ] )
-		grouping = params.pop( -1 ).pop( 0 ), [ params.pop( 0 ) ]
-		status = dict( sorted( erased[ 1 ].items( ), reverse = True ) )
+		ejection = super( ).get_deleted_objects( queryset, request )
+		params = ejection[ 0 ].pop( -1 ).pop( 0 ), ejection[ 0 ]
+		assembly = dict( sorted( ejection[ 1 ].items( ), reverse = True ) )
 		## Integrate new context configuration
-		context = list( grouping ), status, *erased[ 2: ]
-		return context
-	
-	def delete_selected( modeladmin, request, queryset ):
-		for media in queryset:
-			icon = type( media.image ).objects.filter( id = media.image_id )
-			queryset = icon
-		## Obtain the original delete context info
-		waste = admin.actions.delete_selected( modeladmin, request, queryset )
-		## Begin changes to match media model
-		data = dict( waste.context_data[ 'model_count' ] ).items( )
-		quant = dict( sorted( otherdict, reverse = True ) ).items( )
-		amal = list( hold.context_data[ 'deletable_objects' ][ 0 ] )
-		## Lambda function might be used later
-		""" zap = lambda obj: obj if type( obj ) != list else zap( obj.pop( -1 ) ) """
-		## Fuse edited assembly of context data
-		waste.context_data[ 'deletable_objects' ] = [ amal ]
-		waste.context_data[ 'objects_name' ] = 'media'
-		waste.context_data[ 'model_count' ] = quant
-		return waste
+		return list( params ), assembly, ejection[ 2 ], ejection[ 3 ]
 	
 	
 	class Media:
