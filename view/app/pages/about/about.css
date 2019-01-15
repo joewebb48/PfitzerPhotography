@@ -121,6 +121,7 @@
 	background-repeat: no-repeat; */
 	box-shadow: 0 0 100px 75px #00000099;
 	text-shadow: 2px 2px 2px #1f1f1f;
+	line-height: 1.5;
 	text-align: left;
 	text-indent: 50px;
 	max-height: 75%;
@@ -132,6 +133,5 @@
 	font-size: 30px;
 	line-height: 850px;
 }
-
 
 

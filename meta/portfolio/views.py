@@ -13,7 +13,7 @@ from django.shortcuts import render
 
 from meta.portfolio.forms import ContactForm
 from meta.portfolio.models import Page, Image, Media
-from meta.portfolio.ops import owner, dateify
+from meta.portfolio.ops import owner, dateify, trans
 
 
 
@@ -111,8 +111,7 @@ def social( request ):
 	## Verify whether any social media icons have been enabled
 	if enabled:
 		query = Media.objects.filter( active = True )
-		serial = serializers.serialize( 'json', query )
-		footer = json.loads( serial )
+		footer = list( trans( query, 'image' ) )
 		return JsonResponse( footer, safe = False )
 	return HttpResponse( )
 
@@ -137,5 +136,6 @@ def email( request ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
+
 
 

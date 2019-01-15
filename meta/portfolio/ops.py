@@ -14,13 +14,8 @@ def owner( ):
 	## Will fail if the settings object in the database isn't defined
 	try:
 		query = Setting.objects.get( pk = 1 )
-		serial = serializers.serialize( 'json', [ query ] )
-		person = json.loads( serial )[ 0 ]
-		## Foreign key image object must be serialized separately
-		if query and query.image:
-			foreign = serializers.serialize( 'json', [ query.image ] )
-			person[ 'fields' ][ 'image' ] = json.loads( foreign )[ 0 ]
-		return person
+		person = list( trans( [ query ], 'image' ) )
+		return person.pop( 0 )
 	except Setting.DoesNotExist:
 		return dict( )
 
@@ -33,5 +28,20 @@ def dateify( item ):
 		## Format each date string with the American date format
 		item[ 'fields' ][ 'date' ] = '{0}-{1}-{2}'.format( date.month, date.day, date.year )
 	return item
+
+
+def trans( query, using ):
+	## Generator function to fuse related objects because it's fun
+	for value in query:
+		serial = serializers.serialize( 'json', [ value ] )
+		element = json.loads( serial )[ 0 ]
+		## Identify the foreign key objects to include in the original
+		identity = getattr( value, using, None )
+		if identity:
+			## Any related objects must be serialized independently
+			foreign = serializers.serialize( 'json', [ identity ] )
+			element[ 'fields' ][ using ] = json.loads( foreign )[ 0 ]
+		yield element
+
 
 
