@@ -164,6 +164,12 @@ class MediaAdmin( admin.ModelAdmin ):
 		## Integrate new context configuration
 		return list( params ), assembly, ejection[ 2 ], ejection[ 3 ]
 	
+	def delete_queryset( self, request, queryset ):
+		icons = list( media.image for media in queryset )
+		super( ).delete_queryset( request, queryset )
+		## Bulk deletion only cascades manually
+		for icon in icons: icon.delete( )
+	
 	
 	class Media:
 		css = { 'all': [ 'admin.css' ] }

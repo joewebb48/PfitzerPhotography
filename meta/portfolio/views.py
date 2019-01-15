@@ -73,8 +73,7 @@ def photos( request ):
 	serial = serializers.serialize( 'json', query )
 	gallery = json.loads( serial )
 	## Update image date fields for more readable viewed dates
-	for image in gallery:
-		image = dateify( image )
+	for image in gallery: image = dateify( image )
 	return JsonResponse( gallery, safe = False )
 
 
@@ -136,6 +135,5 @@ def email( request ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
-
 
 
