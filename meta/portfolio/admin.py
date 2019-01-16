@@ -9,6 +9,7 @@ from django.utils.html import format_html
 from pfitzer.settings import STATIC_URL
 from meta.portfolio.forms import SettingForm, ImageForm, MediaForm
 from meta.portfolio.models import Setting, Page, Image, Media
+from meta.portfolio.ops import invert
 
 
 
@@ -147,22 +148,18 @@ class MediaAdmin( admin.ModelAdmin ):
 		super( ).save_model( request, media, form, change )
 	
 	def get_deleted_objects( self, queryset, request ):
-		## Preserve original arguments for later
 		catalog = list( )
-		keep = queryset
 		for media in queryset:
+			## Foreign keys for the new queryset
 			if self.model == queryset.model:
 				catalog.append( media.image_id )
-				## Need to change for bulk deleting
-				icon = type( media.image ).objects.filter( pk = media.image_id )
-				look = queryset.filter( image_id = media.image )
-				queryset = icon
+		keepset = Image.objects.filter( pk__in = catalog )
 		## Alter context settings for media objs
-		ejection = super( ).get_deleted_objects( queryset, request )
-		params = ejection[ 0 ].pop( -1 ).pop( 0 ), ejection[ 0 ]
+		ejection = super( ).get_deleted_objects( keepset, request )
+		params = invert( ejection[ 0 ], len( ejection[ 0 ] ) )
 		assembly = dict( sorted( ejection[ 1 ].items( ), reverse = True ) )
-		## Integrate new context configuration
-		return list( params ), assembly, ejection[ 2 ], ejection[ 3 ]
+		## Implement new context configuration
+		return params, assembly, ejection[ 2 ], ejection[ 3 ]
 	
 	def delete_queryset( self, request, queryset ):
 		icons = list( media.image for media in queryset )
@@ -173,5 +170,6 @@ class MediaAdmin( admin.ModelAdmin ):
 	
 	class Media:
 		css = { 'all': [ 'admin.css' ] }
+
 
 

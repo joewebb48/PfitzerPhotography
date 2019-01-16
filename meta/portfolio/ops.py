@@ -44,4 +44,14 @@ def trans( query, using ):
 		yield element
 
 
+def invert( params, volume ):
+	container = list( )
+	for idx in range( 0, volume, 2 ):
+		## Rotate each segment's object tags with its counterpart
+		anterior = params[ idx + 1 ].pop( 0 )
+		posterior = params[ idx ]
+		subset = [ anterior, [ posterior ] ]
+		container.extend( subset )
+	return container
+
 
