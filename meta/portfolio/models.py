@@ -137,6 +137,10 @@ class Media( models.Model ):
 	def __str__( self ):
 		return self.platform.title( )
 	
+	def save( self, *args, **kwargs ):
+		self.platform = self.platform.title( )
+		super( Media, self ).save( *args, **kwargs )
+	
 	
 	class Meta:
 		db_table = 'media'

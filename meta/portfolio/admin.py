@@ -112,16 +112,12 @@ class MediaAdmin( admin.ModelAdmin ):
 	form = MediaForm
 	ordering = [ 'platform' ]
 	actions = [ 'delete_selected' ]
-	list_display = 'website', 'iconview', 'location', 'active', 'modified_at', 'created_at'
+	list_display = 'platform', 'iconview', 'location', 'active', 'modified_at', 'created_at'
 	
 	def __init__( self, model, admin ):
-		type( self ).website.short_description = 'platform'
 		type( self ).iconview.short_description = 'icon'
 		type( self ).location.short_description = 'url'
 		super( ).__init__( model, admin )
-	
-	def website( self, field ):
-		return field.platform.title( )
 	
 	def iconview( self, field ):
 		html = '<a href="{}"><img src="{}" alt="{}"/></a>'
@@ -151,8 +147,7 @@ class MediaAdmin( admin.ModelAdmin ):
 		catalog = list( )
 		for media in queryset:
 			## Foreign keys for the new queryset
-			if self.model == queryset.model:
-				catalog.append( media.image_id )
+			catalog.append( media.image_id )
 		keepset = Image.objects.filter( pk__in = catalog )
 		## Alter context settings for media objs
 		ejection = super( ).get_deleted_objects( keepset, request )
@@ -161,11 +156,18 @@ class MediaAdmin( admin.ModelAdmin ):
 		## Implement new context configuration
 		return params, assembly, ejection[ 2 ], ejection[ 3 ]
 	
+	def delete_selected( modeladmin, request, queryset ):
+		return admin.actions.delete_selected( modeladmin, request, queryset )
+	
 	def delete_queryset( self, request, queryset ):
 		icons = list( media.image for media in queryset )
 		super( ).delete_queryset( request, queryset )
 		## Bulk deletion only cascades manually
 		for icon in icons: icon.delete( )
+	
+	def delete_model( self, request, media ):
+		super( ).delete_model( request, media )
+		media.image.delete( )
 	
 	
 	class Media:
