@@ -89,8 +89,13 @@ class ImageAdmin( admin.ModelAdmin ):
 	
 	def get_queryset( self, request ):
 		queryset = super( ).get_queryset( request )
-		## Hide media icon objects when added
-		return queryset.exclude( name = 'portrait' )
+		## Locate image pks that have relations
+		obscured = list( )
+		for image in queryset:
+			## Hide any non-gallery images found
+			if hasattr( image, 'media' ) or hasattr( image, 'setting' ):
+				obscured.append( image.id )
+		return queryset.exclude( pk__in = obscured )
 	
 	def delete_selected( modeladmin, request, queryset ):
 		if request.POST.get( 'post' ):
@@ -172,6 +177,5 @@ class MediaAdmin( admin.ModelAdmin ):
 	
 	class Media:
 		css = { 'all': [ 'admin.css' ] }
-
 
 

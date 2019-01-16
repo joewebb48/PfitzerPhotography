@@ -61,7 +61,7 @@ class Page( models.Model ):
 class Image( models.Model ):
 	name = models.CharField( max_length = 100, unique = True )
 	image = models.ImageField( height_field = 'height', width_field = 'width' )
-	url = models.URLField( editable = False, unique = True )
+	url = models.FilePathField( path = MEDIA_URL + 'img', editable = False, unique = True )
 	height = models.IntegerField( editable = False )
 	width = models.IntegerField( editable = False )
 	description = models.TextField( blank = True )
@@ -129,7 +129,9 @@ class Image( models.Model ):
 class Media( models.Model ):
 	platform = models.CharField( max_length = 100, unique = True )
 	url = models.URLField( unique = True )
+	## Highly likely replaced by the image model viewable field
 	active = models.BooleanField( default = False )
+	## Will add default choices field for social media icons soon
 	image = models.OneToOneField( 'Image', on_delete = models.CASCADE, related_name = 'media' )
 	created_at = models.DateTimeField( auto_now_add = True )
 	modified_at = models.DateTimeField( auto_now = True )
