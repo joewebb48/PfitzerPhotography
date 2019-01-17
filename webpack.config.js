@@ -3,10 +3,14 @@
 
 
 const NodeExternals = require( 'webpack-node-externals' )
+const BundleAnalyzerPlugin = require( 'webpack-bundle-analyzer' ).BundleAnalyzerPlugin
 
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' )
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' )
+const BabelMinifyPlugin = require( 'babel-minify-webpack-plugin' )
+const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
+const OptimizeCSSPlugin = require( 'optimize-css-assets-webpack-plugin' )
 
 
 
@@ -29,7 +33,8 @@ module.exports = ( ) => {
 			plugins: [
 				new CopyWebpackPlugin( [
 					'static/favicon.ico',
-					'static/admin.css'
+					'static/admin.css',
+					{ from: 'static/img', to: 'img' }
 				] ),
 				new HtmlWebpackPlugin( {
 					inject: false,
@@ -42,7 +47,19 @@ module.exports = ( ) => {
 					filename: 'styles.css',
 					chunkFilename: '[id].css'
 				} ),
-			],
+			// Plugins for production
+			].concat( dev ? [ ] : [
+				new BabelMinifyPlugin( {
+					mangle: {
+						topLevel: true
+					}
+				} ),
+				new BundleAnalyzerPlugin( {
+					generateStatsFile: false,
+					openAnalyzer: false
+				} )
+			] ),
+			devtool: dev ? 'eval-source-map' : false,
 			stats: {
 				cachedAssets: false,
 				colors: true,
@@ -52,6 +69,40 @@ module.exports = ( ) => {
 			},
 			watchOptions: {
 				ignored: /node_modules/
+			},
+			optimization: {
+				splitChunks: {
+					name: false,
+					chunks: 'all',
+					cacheGroups: {
+						vendor: {
+							test: /[\\/]node_modules[\\/]/,
+							filename: 'vendor.js',
+							priority: 0
+						},
+						polyfills: {
+							test: /[\\/]@babel\/polyfill[\\/]/,
+							filename: 'polyfills.js',
+							priority: 1
+						}
+					}
+				},
+				minimizer: [
+					new UglifyJsPlugin( {
+						cache: true,
+						parallel: true,
+						uglifyOptions: {
+							output: {
+								comments: false,
+							},
+						},
+					} ),
+					new OptimizeCSSPlugin( {  } )
+				],
+				// Optimizations for production
+				...dev ? {  } : {
+					concatenateModules: true
+				}
 			},
 			output: {
 				filename: '[name].js',
@@ -91,5 +142,6 @@ module.exports = ( ) => {
 		}
 	]
 }
+
 
 

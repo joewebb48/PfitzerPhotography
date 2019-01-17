@@ -29,7 +29,9 @@
 		
 		<!-- Transfer server-side Redux state to the browser via parsed json -->
 		<script>window.initialState = JSON.parse( '{{ redux | escapejs }}' )</script>
-		<script type="text/javascript" src="{% static 'main.js' %}" defer></script>
+		<script type="text/javascript" src="{% static 'polyfills.js' %}"></script>
+		<script type="text/javascript" src="{% static 'vendor.js' %}"></script>
+		<script type="text/javascript" src="{% static 'main.js' %}"></script>
 	</body>
 	
 </html>

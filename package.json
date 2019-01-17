@@ -23,7 +23,7 @@
 		"node": "node node/node.js",
 		"pre": "webpack --reporter basic --progress --watch",
 		"start": "mode=development concurrently \"npm:pre\" \"npm:node\"",
-		"build": "mode=production webpack"
+		"build": "mode=production webpack --reporter basic --progress"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.1.2",
@@ -31,12 +31,16 @@
 		"@babel/preset-env": "^7.1.0",
 		"@babel/preset-react": "^7.0.0",
 		"babel-loader": "^8.0.4",
+		"babel-minify-webpack-plugin": "^0.3.1",
 		"concurrently": "^4.0.1",
 		"copy-webpack-plugin": "^4.5.4",
 		"css-loader": "^1.0.0",
 		"html-webpack-plugin": "^3.2.0",
 		"mini-css-extract-plugin": "^0.4.4",
+		"optimize-css-assets-webpack-plugin": "^5.0.1",
+		"uglifyjs-webpack-plugin": "^2.1.1",
 		"webpack": "^4.23.0",
+		"webpack-bundle-analyzer": "^3.0.3",
 		"webpack-command": "^0.4.1",
 		"webpack-node-externals": "^1.7.2"
 	}
