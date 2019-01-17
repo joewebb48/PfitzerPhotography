@@ -87,21 +87,21 @@ module.exports = ( ) => {
 						}
 					}
 				},
-				minimizer: [
-					new UglifyJsPlugin( {
-						cache: true,
-						parallel: true,
-						uglifyOptions: {
-							output: {
-								comments: false,
-							},
-						},
-					} ),
-					new OptimizeCSSPlugin( {  } )
-				],
 				// Optimizations for production
 				...dev ? {  } : {
-					concatenateModules: true
+					concatenateModules: true,
+					minimizer: [
+						new UglifyJsPlugin( {
+							cache: true,
+							parallel: true,
+							uglifyOptions: {
+								output: {
+									comments: false,
+								},
+							},
+						} ),
+						new OptimizeCSSPlugin( {  } )
+					]
 				}
 			},
 			output: {
@@ -121,6 +121,14 @@ module.exports = ( ) => {
 					{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
 				]
 			},
+			// Plugins for production
+			plugins: [ ].concat( dev ? [ ] : [
+				new BabelMinifyPlugin( {
+					mangle: {
+						topLevel: true
+					}
+				} )
+			] ),
 			externals: [
 				NodeExternals( )
 			],
@@ -133,6 +141,38 @@ module.exports = ( ) => {
 			},
 			watchOptions: {
 				ignored: /node_modules/
+			},
+			optimization: {
+				splitChunks: {
+					name: false,
+					chunks: 'all',
+					cacheGroups: {
+						vendor: {
+							test: /[\\/]node_modules[\\/]/,
+							filename: 'vendor.js',
+							priority: 0
+						},
+						polyfills: {
+							test: /[\\/]@babel\/polyfill[\\/]/,
+							filename: 'polyfills.js',
+							priority: 1
+						}
+					}
+				},
+				// Optimizations for production
+				...dev ? {  } : {
+					concatenateModules: true,
+					minimizer: [
+						new UglifyJsPlugin( {
+							parallel: true,
+							uglifyOptions: {
+								output: {
+									comments: false,
+								},
+							},
+						} )
+					]
+				}
 			},
 			target: 'node',
 			output: {
