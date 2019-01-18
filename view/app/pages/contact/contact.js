@@ -69,7 +69,6 @@ class Contact extends Component {
 			const config = { ...xsrf, headers: { 'Content-Type': head } }
 			// Post the email data to the backend for processing
 			axios.post( '/email', wrap, config ).then( echo => {
-				console.log( 'Email:', echo.data )
 				// Trigger redirect if the email is sent successfully
 				!echo.data.valid ? null : this.setState( ( ) => {
 					return { redirect: true, email: new Email( ) }
@@ -83,8 +82,11 @@ class Contact extends Component {
 		this.countdown = setTimeout( index, 5000 )
 		return (
 			<div className="contact-redirect">
-				<p> Your email has been sent! </p>
-				<p> Redirecting you to home... </p>
+				<p>
+					Email messaging is currently disabled. <br/>
+					However, your email was processed successfully.
+				</p>
+				<p> Redirecting you to the home page... </p>
 			</div>
 		)
 	}

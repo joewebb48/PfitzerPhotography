@@ -49,8 +49,6 @@ class Slide extends Component {
 		// Delete all previous image data once it is fully faded out
 		const fadeout = ( kill, exe ) => setTimeout( exe.bind( this, kill ), 2500 )
 		this.deconstruction = fadeout( { previous: null }, this.setState )
-		console.log( '\nNext:', { url: url, text: text } )
-		console.log( 'Previous:', this.state.previous )
 		const transform = ( ) => setInterval( this.viewNext, 7500 )
 		return !this.metamorphosis ? transform( ) : undefined
 	}

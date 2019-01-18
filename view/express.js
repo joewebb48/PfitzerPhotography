@@ -31,7 +31,6 @@ app.get( '/*', ( request, response ) => {
 
 // Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
-	console.log( '\n\nCurrent:', request.body.path, '\n\n' )
 	// Data loading on the server must occur prior to rendering the app
 	const store = nodeStore( )
 	const urls = Router.bind( Router )( request.body.path )
@@ -43,7 +42,6 @@ app.post( '/render', ( request, response ) => {
 	} )
 	// Wait for each promise before rendering to resolve for their data
 	Promise.all( load ).then( ( ) => {
-		console.log( 'Promises:\n', load, '\n\n' )
 		// React's router needs originally requested url from Django first
 		const data = { url: request.body.path, data: request.body.data, store }
 		const root = ReactDOMServer.renderToString( <Server { ...data }/> )

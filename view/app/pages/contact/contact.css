@@ -17,18 +17,21 @@ form {
 	top: 20%;
 	left: 0;
 	right: 0;
-	padding: 50px 25px;
+	padding: 40px 25px 50px;
 	margin: 0 auto;
-	box-shadow: 0 5px 25px 5px #000000bf;
-}
-
-.contact-redirect p {
-	color: #b9b9b9;
-	font-size: 1.25em;
+	box-shadow: 0 5px 25px 5px #00000060;
 }
 
 .contact-redirect p:first-child {
+	color: #b9b9b9;
+	font-size: 1em;
+	line-height: 1.5;
 	margin: 0 0 40px;
+}
+
+.contact-redirect p {
+	color: #d0d0d0;
+	font-size: 1.125em;
 }
 
 .contact-form {
@@ -101,5 +104,6 @@ label p {
 	background: #444444;
 	color: #6b6b6d;
 }
+
 
 
