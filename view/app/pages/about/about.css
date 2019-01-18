@@ -73,6 +73,7 @@
 
 .about-image img {
 	position: absolute;
+	background: black;
 	filter: grayscale( 100% ); /* Temporary */
 	top: 0;
 	right: -50%;
@@ -133,5 +134,6 @@
 	font-size: 30px;
 	line-height: 850px;
 }
+
 
 

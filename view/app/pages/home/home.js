@@ -43,16 +43,15 @@ class Home extends Component {
 	
 	render( ) {
 		const owner = this.props.biography.fields
-		const props = { owner, links: this.state.links }
 		return (
 			<section>
 				<div className="home-portal">
 					<Link to="/gallery">
 						<div className="home-border"/>
-						<Slide images={ this.props.images }/>
+						<Slide images={ this.props.images } default={ { x: 850, y: 500 } }/>
 					</Link>
 				</div>
-				<Media { ...props }/>
+				<Media owner={ owner } links={ this.state.links }/>
 			</section>
 		)
 	}
@@ -61,5 +60,6 @@ class Home extends Component {
 
 
 export default connect( mapUniversal, { getBiography, getImages } )( Home )
+
 
 

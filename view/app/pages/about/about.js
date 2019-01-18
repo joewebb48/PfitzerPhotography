@@ -57,7 +57,7 @@ class About extends Component {
 					<div className="about-text">
 						<p> { about } </p>
 					</div>
-					<Slide images={ this.props.images }/>
+					<Slide images={ this.props.images } default={ { x: 850, y: 880 } }/>
 				</div>
 			</section>
 		)

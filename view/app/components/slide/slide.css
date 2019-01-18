@@ -15,7 +15,8 @@
 .slide-view img {
 	position: absolute;
 	z-index: 1;
-	background: #616161;
+	/* background: #616161; */
+	background: black;
 	color: #bfbfbf;
 	filter: grayscale( 100% ); /* Temporary */
 	top: 0;
@@ -41,5 +42,6 @@
 	from { opacity: 1; }
 	to { opacity: 0; }
 }
+
 
 

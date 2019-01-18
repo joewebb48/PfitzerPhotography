@@ -30,10 +30,13 @@ class Slide extends Component {
 		if ( !this.state.current && this.props.images.length > 0 ) {
 			// Set the initial slider image before initializing the slider
 			this.metamorphosis = this.viewNext( )
+			// Future implementation for img server-side rendering
+			/* this.preintercessor = setTimeout( ( ) => {  }, 7500 ) */
 		}
 	}
 	
 	componentWillUnmount( ) {
+		/* clearTimeout( this.preintercessor ) */
 		clearInterval( this.metamorphosis )
 		clearTimeout( this.deconstruction )
 	}
@@ -84,6 +87,5 @@ class Slide extends Component {
 
 
 export default Slide
-
 
 

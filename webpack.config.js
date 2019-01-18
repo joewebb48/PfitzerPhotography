@@ -11,6 +11,7 @@ const BabelMinifyPlugin = require( 'babel-minify-webpack-plugin' )
 const UglifyJsPlugin = require( 'uglifyjs-webpack-plugin' )
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' )
 const OptimizeCSSPlugin = require( 'optimize-css-assets-webpack-plugin' )
+const CleanWebpackPlugin = require( 'clean-webpack-plugin' )
 
 
 
@@ -40,13 +41,20 @@ module.exports = ( ) => {
 					inject: false,
 					template: 'static/index.html',
 					minify: {
-						removeComments: true
+						removeComments: true,
+						...dev ? {  } : {
+							collapseWhitespace: true,
+							removeRedundantAttributes: true,
+							removeScriptTypeAttributes: true,
+							removeStyleLinkTypeAttributes: true
+						}
 					}
 				} ),
 				new MiniCssExtractPlugin( {
 					filename: 'styles.css',
 					chunkFilename: '[id].css'
 				} ),
+				new CleanWebpackPlugin( 'root' )
 			// Plugins for production
 			].concat( dev ? [ ] : [
 				new BabelMinifyPlugin( {
@@ -75,15 +83,15 @@ module.exports = ( ) => {
 					name: false,
 					chunks: 'all',
 					cacheGroups: {
+						polyfill: {
+							test: /[\\/](core-js|@babel\/polyfill)[\\/]/,
+							filename: 'polyfill.js',
+							priority: 1
+						},
 						vendor: {
 							test: /[\\/]node_modules[\\/]/,
 							filename: 'vendor.js',
 							priority: 0
-						},
-						polyfills: {
-							test: /[\\/]@babel\/polyfill[\\/]/,
-							filename: 'polyfills.js',
-							priority: 1
 						}
 					}
 				},
@@ -147,15 +155,15 @@ module.exports = ( ) => {
 					name: false,
 					chunks: 'all',
 					cacheGroups: {
+						polyfill: {
+							test: /[\\/](core-js|@babel\/polyfill)[\\/]/,
+							filename: 'polyfill.js',
+							priority: 1
+						},
 						vendor: {
 							test: /[\\/]node_modules[\\/]/,
 							filename: 'vendor.js',
 							priority: 0
-						},
-						polyfills: {
-							test: /[\\/]@babel\/polyfill[\\/]/,
-							filename: 'polyfills.js',
-							priority: 1
 						}
 					}
 				},

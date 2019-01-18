@@ -27,11 +27,15 @@ p {
 }
 
 noscript {
-	display: block;
-	color: #c5a3f7;
-	font-size: x-large;
+	position: absolute;
+	color: #a4a0ab;
+	font-size: 1.125em;
 	text-align: center;
-	margin: 125px;
+	top: 150px;
+	right: 0;
+	left: 0;
+	margin: 20px auto;
 }
+
 
 
