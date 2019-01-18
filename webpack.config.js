@@ -33,7 +33,6 @@ module.exports = ( ) => {
 			},
 			plugins: [
 				new CopyWebpackPlugin( [
-					'static/favicon.ico',
 					'static/admin.css',
 					{ from: 'static/img', to: 'img' }
 				] ),
@@ -190,6 +189,5 @@ module.exports = ( ) => {
 		}
 	]
 }
-
 
 

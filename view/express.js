@@ -9,7 +9,6 @@ import parsify from 'body-parser'
 
 import Server from './app/server'
 import Router from './app/pages/router'
-import Html from './html'
 import nodeStore from './app/stores/nodestore'
 
 
@@ -22,14 +21,6 @@ app.use( parsify.json( ) )
 app.use( express.static( 'root' ) )
 
 
-// Exclusively ran from Node to render jsx with a stringified template
-app.get( '/*', ( request, response ) => {
-	const title = 'Pfitzer Photography'
-	const root = ReactDOMServer.renderToString( <Server url={ request.path }/> )
-	response.send( Html( root, title ) )
-} )
-
-// Http request from Django to serialize jsx for server-side rendering 
 app.post( '/render', ( request, response ) => {
 	// Data loading on the server must occur prior to rendering the app
 	const store = nodeStore( )
@@ -55,5 +46,6 @@ app.post( '/render', ( request, response ) => {
 app.listen( 3000, ( ) => {
 	console.log( 'Node running on port 3000!', '\n\n' )
 } )
+
 
 
