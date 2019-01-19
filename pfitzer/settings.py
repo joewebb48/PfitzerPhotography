@@ -34,6 +34,9 @@ DEBUG = True if ENVIRONMENT != 'Production' else False
 ALLOWED_HOSTS = [ ]
 
 
+SESSION_COOKIE_SECURE = False if ENVIRONMENT != 'Production' else True
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -122,6 +125,8 @@ CSRF_HEADER_NAME = 'HTTP_XSRF'
 
 CSRF_COOKIE_NAME = 'xsrf'
 
+CSRF_COOKIE_SECURE = False if ENVIRONMENT != 'Production' else True
+
 
 # Email
 # https://docs.djangoproject.com/en/2.1/topics/email/
@@ -157,5 +162,6 @@ MEDIA_ROOT = os.path.join( BASE_DIR, 'static/' )
 STATIC_URL = '/root/'
 
 MEDIA_URL = '/static/'
+
 
 
