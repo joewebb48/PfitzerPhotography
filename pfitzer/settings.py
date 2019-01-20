@@ -59,7 +59,9 @@ MIDDLEWARE = [
 	'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
-	'django.middleware.clickjacking.XFrameOptionsMiddleware'
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	## Whitenoise allows serving static files in production
+	'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'pfitzer.urls'

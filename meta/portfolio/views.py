@@ -18,7 +18,7 @@ from meta.portfolio.ops import owner, dateify, trans
 
 
 def index( request, url = None ):
-	tags = data( request ).content
+	""" tags = data( request ).content
 	page = json.loads( tags )
 	## React's StaticRouter needs the url used by Django instead
 	domain = request.scheme + '://' + request.get_host( )
@@ -39,7 +39,8 @@ def index( request, url = None ):
 		csrf.get_token( request )
 	## Transform server-side Redux state for browser hydration
 	redux = metadata.pop( 'state', {  } )
-	metadata[ 'redux' ] = str( redux )
+	metadata[ 'redux' ] = str( redux ) """
+	metadata = { 'page': { 'title': 'title', 'description': 'info' } }
 	return render( request, 'index.html', metadata )
 
 
@@ -135,5 +136,6 @@ def email( request ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
+
 
 
