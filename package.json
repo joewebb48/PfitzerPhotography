@@ -24,7 +24,7 @@
 		"pre": "webpack --reporter basic --progress --watch",
 		"start": "mode=development concurrently \"npm:pre\" \"npm:node\"",
 		"build": "mode=production webpack --reporter basic --progress",
-		"postinstall": "NODE_ENV=production && npm run build"
+		"postinstall": "python manage.py collectstatic --noinput && npm run build"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.2.2",

@@ -98,7 +98,9 @@ WSGI_APPLICATION = 'pfitzer.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'pfitzer_photography',
+		'NAME': os.environ.get( 'DATABASE' ),
+		'HOST': os.environ.get( 'HOST' ),
+		'PORT': os.environ.get( 'PORT' ),
 		'USER': os.environ.get( 'USER' ),
 		'PASSWORD': os.environ.get( 'PASSWORD' )
 	},

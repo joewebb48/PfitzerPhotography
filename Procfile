@@ -1,3 +1,2 @@
-release: python manage.py collectstatic --noinput
-web: npm run node
-web: python manage.py runserver
+web: node node/node.js &
+web: gunicorn pfitzer.wsgi --log-file -
