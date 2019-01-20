@@ -53,7 +53,7 @@ module.exports = ( ) => {
 					filename: 'styles.css',
 					chunkFilename: '[id].css'
 				} ),
-				new CleanWebpackPlugin( 'root' )
+				new CleanWebpackPlugin( 'root', { exclude: [ 'admin', 'widget.html' ] } )
 			// Plugins for production
 			].concat( dev ? [ ] : [
 				new BabelMinifyPlugin( {

@@ -152,10 +152,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATICFILES_DIRS = [
-	os.path.join( BASE_DIR, 'root' )
+	os.path.join( BASE_DIR, 'root' ),
+	os.path.join( BASE_DIR, 'static' )
 ]
 
-""" STATIC_ROOT = os.path.join( BASE_DIR, 'static/' ) """
+STATIC_ROOT = os.path.join( BASE_DIR, 'root/' )
 
 MEDIA_ROOT = os.path.join( BASE_DIR, 'static/' )
 
