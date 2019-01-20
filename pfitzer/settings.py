@@ -31,7 +31,9 @@ SECRET_KEY = os.environ.get( 'SECRET_KEY' )
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if ENVIRONMENT != 'Production' else False
 
-ALLOWED_HOSTS = [ ]
+ALLOWED_HOSTS = [
+	'pfitzer-photography.herokuapp.com'
+]
 
 
 SESSION_COOKIE_SECURE = False if ENVIRONMENT != 'Production' else True
@@ -152,7 +154,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATICFILES_DIRS = [
-	os.path.join( BASE_DIR, 'root' ),
 	os.path.join( BASE_DIR, 'static' )
 ]
 
