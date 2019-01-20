@@ -32,10 +32,6 @@ module.exports = ( ) => {
 				]
 			},
 			plugins: [
-				new CopyWebpackPlugin( [
-					'static/admin.css',
-					{ from: 'static/img', to: 'img' }
-				] ),
 				new HtmlWebpackPlugin( {
 					inject: false,
 					template: 'static/index.html',
@@ -54,8 +50,14 @@ module.exports = ( ) => {
 					chunkFilename: '[id].css'
 				} ),
 				new CleanWebpackPlugin( 'root', { exclude: [ 'admin', 'widget.html' ] } )
+			// Plugins for development
+			].concat( dev ? [
+				new CopyWebpackPlugin( [
+					'static/admin.css',
+					{ from: '/static/img', to: 'img' }
+				] ),
 			// Plugins for production
-			].concat( dev ? [ ] : [
+			] : [
 				new BabelMinifyPlugin( {
 					mangle: {
 						topLevel: true
@@ -63,7 +65,8 @@ module.exports = ( ) => {
 				} ),
 				new BundleAnalyzerPlugin( {
 					generateStatsFile: false,
-					openAnalyzer: false
+					openAnalyzer: false,
+					analyzerMode: 'disabled'
 				} )
 			] ),
 			devtool: dev ? 'eval-source-map' : false,
@@ -189,5 +192,6 @@ module.exports = ( ) => {
 		}
 	]
 }
+
 
 
