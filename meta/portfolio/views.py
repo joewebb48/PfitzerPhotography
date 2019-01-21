@@ -18,9 +18,9 @@ from meta.portfolio.ops import owner, dateify, trans
 
 
 def index( request, url = None ):
-	""" tags = data( request ).content
+	tags = data( request ).content
 	page = json.loads( tags )
-	## React's StaticRouter needs the url used by Django instead
+	""" ## React's StaticRouter needs the url used by Django instead
 	domain = request.scheme + '://' + request.get_host( )
 	info = { 'url': domain, 'path': request.path, 'data': page }
 	## Get jsx views from the Node server that processes them
@@ -30,17 +30,18 @@ def index( request, url = None ):
 		data = json.dumps( info )
 	)
 	## Serialized React frontend that will be embedded into html
-	metadata = feedback.json( )
+	metadata = feedback.json( ) """
+	metadata = { 'page': dict( ) }
 	## Will have no page data if the visited page is an admin one
 	if page:
 		## Embed additional head tags utilized for SEO when ready
 		metadata[ 'page' ] = page[ 'fields' ]
 		## Xsrf token is necessary to make post requests via ajax
 		csrf.get_token( request )
-	## Transform server-side Redux state for browser hydration
+	""" ## Transform server-side Redux state for browser hydration
 	redux = metadata.pop( 'state', {  } )
-	metadata[ 'redux' ] = str( redux ) """
-	metadata = { 'page': { 'title': 'title', 'description': 'info' } }
+	metadata[ 'redux' ] = str( redux )
+	metadata = { 'page': { 'title': 'title', 'description': 'info' } } """
 	return render( request, 'index.html', metadata )
 
 
@@ -136,6 +137,5 @@ def email( request ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
-
 
 
