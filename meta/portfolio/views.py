@@ -40,8 +40,8 @@ def index( request, url = None ):
 		csrf.get_token( request )
 	""" ## Transform server-side Redux state for browser hydration
 	redux = metadata.pop( 'state', {  } )
-	metadata[ 'redux' ] = str( redux )
-	metadata = { 'page': { 'title': 'title', 'description': 'info' } } """
+	metadata[ 'redux' ] = str( redux ) """
+	metadata = { 'page': { 'title': 'title', 'description': 'info' } }
 	return render( request, 'index.html', metadata )
 
 

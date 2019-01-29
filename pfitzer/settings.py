@@ -16,19 +16,19 @@ import os
 
 
 
-# Build paths inside the project like this: os.path.join( BASE_DIR, ... )
+## Build paths inside the project like this: os.path.join( BASE_DIR, ... )
 BASE_DIR = os.path.dirname( os.path.dirname( os.path.abspath( __file__ ) ) )
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
+## Quick-start development settings - unsuitable for production
+## See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 ENVIRONMENT = os.environ.get( 'PFITZER_ENVIRONMENT' )
 
-# SECURITY WARNING: keep the secret key used in production secret!
+## SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get( 'SECRET_KEY' )
 
-# SECURITY WARNING: don't run with debug turned on in production!
+## SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if ENVIRONMENT != 'Production' else False
 
 ALLOWED_HOSTS = [
@@ -39,7 +39,7 @@ ALLOWED_HOSTS = [
 SESSION_COOKIE_SECURE = False if ENVIRONMENT != 'Production' else True
 
 
-# Application definition
+## Application definition
 
 INSTALLED_APPS = [
 	'meta.admin.apps.admin',
@@ -67,8 +67,8 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'pfitzer.urls'
 
 
-# Templates
-# https://docs.djangoproject.com/en/2.1/topics/templates/
+## Templates
+## https://docs.djangoproject.com/en/2.1/topics/templates/
 
 TEMPLATES = [
 	{
@@ -94,16 +94,16 @@ FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 WSGI_APPLICATION = 'pfitzer.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+## Database
+## https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
 		'NAME': os.environ.get( 'DATABASE' ),
 		'HOST': os.environ.get( 'HOST' ),
-		'PORT': os.environ.get( 'PORT' ),
-		'USER': os.environ.get( 'USER' ),
+		'PORT': os.environ.get( 'MYSQL' ),
+		'USER': os.environ.get( 'USERNAME' ),
 		'PASSWORD': os.environ.get( 'PASSWORD' )
 	},
 	'legacy': {
@@ -113,8 +113,8 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+## Password validation
+## https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
 	{ 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator' },
@@ -124,8 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# CSRF protection
-# https://docs.djangoproject.com/en/2.1/ref/csrf/#ajax
+## CSRF protection
+## https://docs.djangoproject.com/en/2.1/ref/csrf/#ajax
 
 CSRF_HEADER_NAME = 'HTTP_XSRF'
 
@@ -134,14 +134,14 @@ CSRF_COOKIE_NAME = 'xsrf'
 CSRF_COOKIE_SECURE = False if ENVIRONMENT != 'Production' else True
 
 
-# Email
-# https://docs.djangoproject.com/en/2.1/topics/email/
+## Email
+## https://docs.djangoproject.com/en/2.1/topics/email/
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/2.1/topics/i18n/
+## Internationalization
+## https://docs.djangoproject.com/en/2.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -154,8 +154,8 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
+## Static files (CSS, JavaScript, Images)
+## https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATICFILES_DIRS = [
 	os.path.join( BASE_DIR, 'static' )

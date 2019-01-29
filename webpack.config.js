@@ -54,7 +54,7 @@ module.exports = ( ) => {
 			].concat( dev ? [
 				new CopyWebpackPlugin( [
 					'static/admin.css',
-					{ from: '/static/img', to: 'img' }
+					{ from: 'static/img', to: 'img' }
 				] ),
 			// Plugins for production
 			] : [
