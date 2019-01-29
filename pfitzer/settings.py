@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get( 'SECRET_KEY' )
 DEBUG = True if ENVIRONMENT != 'Production' else False
 
 ALLOWED_HOSTS = [
-	'pfitzer-photography.herokuapp.com'
+	'pfitzer-photography.herokuapp.com' if ENVIRONMENT == 'Production' else 'localhost'
 ]
 
 
@@ -158,10 +158,10 @@ USE_TZ = True
 ## https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATICFILES_DIRS = [
-	os.path.join( BASE_DIR, 'static' )
+	os.path.join( BASE_DIR, 'root' if ENVIRONMENT != 'Production' else 'static' )
 ]
 
-STATIC_ROOT = os.path.join( BASE_DIR, 'root/' )
+STATIC_ROOT = os.path.join( BASE_DIR, 'root/' ) if ENVIRONMENT == 'Production' else None
 
 MEDIA_ROOT = os.path.join( BASE_DIR, 'static/' )
 

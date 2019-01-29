@@ -38,7 +38,7 @@ app.post( '/render', ( request, response ) => {
 		const root = ReactDOMServer.renderToString( <Server { ...data }/> )
 		// Stringify store data as JSON to set initial state on the browser
 		const json = JSON.stringify( store.getState( ) )
-		response.json( { html: root, state: json } )
+		response.json( { html: root, render: 'ssr', state: json } )
 	} )
 } )
 

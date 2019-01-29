@@ -13,7 +13,7 @@ if __name__ == '__main__':
 	os.environ.setdefault( 'DJANGO_SETTINGS_MODULE', 'pfitzer.settings' )
 	## Not used in Heroku apps to set environment
 	## Set additional hidden environment settings
-	""" with open( 'vault.json' ) as vault:
+	""" with open( 'heroku.json' ) as vault:
 		## Convert json entry keys to snake casing
 		formula = re.compile( r'([a-z0-9])([A-Z])' )
 		for key, value in json.load( vault ).items( ):

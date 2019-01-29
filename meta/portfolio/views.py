@@ -20,10 +20,10 @@ from meta.portfolio.ops import owner, dateify, trans
 def index( request, url = None ):
 	tags = data( request ).content
 	page = json.loads( tags )
-	""" ## React's StaticRouter needs the url used by Django instead
+	## React's StaticRouter needs the url used by Django instead
 	domain = request.scheme + '://' + request.get_host( )
 	info = { 'url': domain, 'path': request.path, 'data': page }
-	## Get jsx views from the Node server that processes them
+	""" ## Get jsx views from the Node server that processes them
 	feedback = requests.post(
 		'http://localhost:3000/render',
 		headers = { 'Content-Type': 'application/json' },
@@ -41,7 +41,7 @@ def index( request, url = None ):
 	""" ## Transform server-side Redux state for browser hydration
 	redux = metadata.pop( 'state', {  } )
 	metadata[ 'redux' ] = str( redux ) """
-	metadata = { 'page': { 'title': 'title', 'description': 'info' } }
+	metadata[ 'page' ] = { 'title': 'title', 'description': 'info' }
 	return render( request, 'index.html', metadata )
 
 
