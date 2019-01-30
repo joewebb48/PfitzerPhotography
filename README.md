@@ -3,6 +3,7 @@
 
 #### Built in React and Redux with Django and Server-Side Rendering
 
+View a live prototype of the site at https://pfitzer-photography.herokuapp.com.
 
 This README file is a work in progress!
 
