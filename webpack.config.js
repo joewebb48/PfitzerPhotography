@@ -17,7 +17,7 @@ const CleanWebpackPlugin = require( 'clean-webpack-plugin' )
 
 module.exports = ( ) => {
 	// Application environment
-	const dev = process.env.mode === 'development' ? true : false
+	const dev = process.env.MODE === 'development' ? true : false
 	return [
 		// Browser configuration
 		{

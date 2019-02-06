@@ -22,8 +22,8 @@
 	"scripts": {
 		"node": "node node/node.js",
 		"pre": "webpack --reporter basic --progress --watch",
-		"start": "mode=development concurrently \"npm:pre\" \"npm:node\"",
-		"build": "mode=production webpack --reporter basic --progress"
+		"start": "MODE=development concurrently \"npm:pre\" \"npm:node\"",
+		"build": "MODE=production webpack --reporter basic --progress"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.2.2",
