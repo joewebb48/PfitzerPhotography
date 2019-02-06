@@ -23,25 +23,27 @@ def index( request, url = None ):
 	## React's StaticRouter needs the url used by Django instead
 	domain = request.scheme + '://' + request.get_host( )
 	info = { 'url': domain, 'path': request.path, 'data': page }
-	""" ## Get jsx views from the Node server that processes them
+	export = int( os.getenv( 'PORT' ) ) + 1 if os.getenv( 'PORT' ) else 3000
+	## Get jsx views from the Node server that processes them
 	feedback = requests.post(
-		'http://localhost:3000/render',
+		'http://127.0.0.1:' + str( export ) + '/render',
 		headers = { 'Content-Type': 'application/json' },
 		data = json.dumps( info )
 	)
 	## Serialized React frontend that will be embedded into html
-	metadata = feedback.json( ) """
-	metadata = { 'page': dict( ) }
-	## Will have no page data if the visited page is an admin one
+	metadata = feedback.json( )
+	""" ## Will have no page data if the visited page is an admin one
 	if page:
 		## Embed additional head tags utilized for SEO when ready
 		metadata[ 'page' ] = page[ 'fields' ]
 		## Xsrf token is necessary to make post requests via ajax
 		csrf.get_token( request )
-	""" ## Transform server-side Redux state for browser hydration
-	redux = metadata.pop( 'state', {  } )
+	## Transform server-side Redux state for browser hydration
+	redux = metadata.pop( 'state', dict( ) )
 	metadata[ 'redux' ] = str( redux ) """
-	metadata[ 'page' ] = { 'title': 'title', 'description': 'info' }
+	""" metadata[ 'page' ] = { 'title': 'title', 'description': metadata.get( 'render', request.path ) } """
+	using = request.get_port( ) + ' | ' + str( export )
+	metadata[ 'page' ] = { 'title': 'title', 'description': using }
 	return render( request, 'index.html', metadata )
 
 

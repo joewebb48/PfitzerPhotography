@@ -1,2 +1,1 @@
-web: node node/node.js &
-web: gunicorn pfitzer.wsgi --log-file -
+web: gunicorn pfitzer.wsgi -b 0.0.0.0:$PORT

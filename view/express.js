@@ -14,6 +14,7 @@ import nodeStore from './app/stores/nodestore'
 
 
 const app = express( )
+const port = process.env.PORT || 3000
 
 
 app.use( parsify.json( ) )
@@ -22,7 +23,7 @@ app.use( express.static( 'root' ) )
 
 
 app.post( '/render', ( request, response ) => {
-	// Data loading on the server must occur prior to rendering the app
+	/* // Data loading on the server must occur prior to rendering the app
 	const store = nodeStore( )
 	const urls = Router.bind( Router )( request.body.path )
 	const factory = exe => urls.reduce( exe, [ ] )
@@ -39,12 +40,13 @@ app.post( '/render', ( request, response ) => {
 		// Stringify store data as JSON to set initial state on the browser
 		const json = JSON.stringify( store.getState( ) )
 		response.json( { html: root, render: 'ssr', state: json } )
-	} )
+	} ) */
+	response.json( { render: 'SSR: ' + process.env.PORT + ' | ' + port } )
 } )
 
 
-app.listen( 3000, ( ) => {
-	console.log( 'Node running on port 3000!', '\n\n' )
+app.listen( port, ( ) => {
+	console.log( 'Node running on port ' + port + '!', '\n\n' )
 } )
 
 

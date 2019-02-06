@@ -4,20 +4,20 @@
 	It exposes the WSGI callable as a module-level variable named ``application``.
 	
 	For more information on this file, see
-		https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
+		https://docs.djangoproject.com/en/2.1/howto/deployment/wsgi/
 """
 
 
 
 import os
-from django.core.wsgi import get_wsgi_application
+
+from pfitzer.app import get_meta_application
 
 
 
 os.environ.setdefault( 'DJANGO_SETTINGS_MODULE', 'pfitzer.settings' )
 
 
-application = get_wsgi_application( )
-
+application, prerenderer = get_meta_application( )
 
 
