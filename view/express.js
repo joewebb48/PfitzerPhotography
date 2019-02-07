@@ -23,7 +23,7 @@ app.use( express.static( 'root' ) )
 
 
 app.post( '/render', ( request, response ) => {
-	/* // Data loading on the server must occur prior to rendering the app
+	// Data loading on the server must occur prior to rendering the app
 	const store = nodeStore( )
 	const urls = Router.bind( Router )( request.body.path )
 	const factory = exe => urls.reduce( exe, [ ] )
@@ -39,15 +39,13 @@ app.post( '/render', ( request, response ) => {
 		const root = ReactDOMServer.renderToString( <Server { ...data }/> )
 		// Stringify store data as JSON to set initial state on the browser
 		const json = JSON.stringify( store.getState( ) )
-		response.json( { html: root, render: 'ssr', state: json } )
-	} ) */
-	response.json( { render: 'SSR: ' + process.env.PORT + ' | ' + port } )
+		response.json( { html: root, state: json } )
+	} )
 } )
 
 
 app.listen( port, ( ) => {
 	console.log( 'Node running on port ' + port + '!', '\n\n' )
 } )
-
 
 

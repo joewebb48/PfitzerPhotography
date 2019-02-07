@@ -32,7 +32,7 @@ def index( request, url = None ):
 	)
 	## Serialized React frontend that will be embedded into html
 	metadata = feedback.json( )
-	""" ## Will have no page data if the visited page is an admin one
+	## Will have no page data if the visited page is an admin one
 	if page:
 		## Embed additional head tags utilized for SEO when ready
 		metadata[ 'page' ] = page[ 'fields' ]
@@ -40,10 +40,7 @@ def index( request, url = None ):
 		csrf.get_token( request )
 	## Transform server-side Redux state for browser hydration
 	redux = metadata.pop( 'state', dict( ) )
-	metadata[ 'redux' ] = str( redux ) """
-	""" metadata[ 'page' ] = { 'title': 'title', 'description': metadata.get( 'render', request.path ) } """
-	using = request.get_port( ) + ' | ' + str( export )
-	metadata[ 'page' ] = { 'title': 'title', 'description': using }
+	metadata[ 'redux' ] = str( redux )
 	return render( request, 'index.html', metadata )
 
 
@@ -139,5 +136,6 @@ def email( request ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
+
 
 

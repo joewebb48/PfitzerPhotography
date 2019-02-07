@@ -17,7 +17,7 @@ const CleanWebpackPlugin = require( 'clean-webpack-plugin' )
 
 module.exports = ( ) => {
 	// Application environment
-	const dev = process.env.mode === 'development' ? true : false
+	const dev = process.env.MODE === 'development' ? true : false
 	return [
 		// Browser configuration
 		{
@@ -54,6 +54,7 @@ module.exports = ( ) => {
 			].concat( dev ? [
 				new CopyWebpackPlugin( [
 					'static/admin.css',
+					'static/widget.html',
 					{ from: 'static/img', to: 'img' }
 				] ),
 			// Plugins for production
@@ -131,8 +132,10 @@ module.exports = ( ) => {
 					{ test: /\.js$/, exclude: /node_modules/, use: 'babel-loader' }
 				]
 			},
+			plugins: [
+				new CleanWebpackPlugin( 'node' )
 			// Plugins for production
-			plugins: [ ].concat( dev ? [ ] : [
+			].concat( dev ? [ ] : [
 				new BabelMinifyPlugin( {
 					mangle: {
 						topLevel: true
@@ -192,6 +195,5 @@ module.exports = ( ) => {
 		}
 	]
 }
-
 
 

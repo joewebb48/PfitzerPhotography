@@ -15,7 +15,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
 		<meta name="theme-color" content="#000000"/>
 		
-		<!-- <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}"/> -->
+		<link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}"/>
 		
 		<!-- External css bundle may override some jsx components' stylings -->
 		<link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}"/>
@@ -24,18 +24,16 @@
 	<body>
 		<!-- Safe pipe label is necessary for operational server-side rendering -->
 		<main id="root">{{ html | safe }}</main>
-		<h1 style="color: white; text-align: center;">{{ render }}</h1>
 		
 		<noscript> To have the best viewing experience, please enable JavaScript. </noscript>
 		
 		<!-- Transfer server-side Redux state to the browser via parsed json -->
-		<!-- <script>window.initialState = JSON.parse( '{{ redux | escapejs }}' )</script> -->
+		<script>window.initialState = JSON.parse( '{{ redux | escapejs }}' )</script>
 		<script type="text/javascript" src="{% static 'polyfill.js' %}"></script>
 		<script type="text/javascript" src="{% static 'vendor.js' %}"></script>
 		<script type="text/javascript" src="{% static 'main.js' %}"></script>
 	</body>
 	
 </html>
-
 
 

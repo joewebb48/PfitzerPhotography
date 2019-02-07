@@ -25,8 +25,8 @@ class Setting( models.Model ):
 		return self.first_name.title( ) + ' ' + self.last_name.title( )
 	
 	def save( self, *args, **kwargs ):
-		## Prevent additional Setting objects from further creation
-		if self.pk != 1:
+		## Prevent additional Setting objects from being created
+		if self.pk != 1 and Setting.objects.exists( ):
 			return
 		super( Setting, self ).save( *args, **kwargs )
 	
