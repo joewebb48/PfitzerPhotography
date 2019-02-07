@@ -26,9 +26,11 @@ class SettingAdmin( admin.ModelAdmin ):
 		return field.first_name.title( ) + ' ' + field.last_name.title( )
 	
 	def portrait( self, field ):
-		html = '<a href="{}"><img src="{}" alt="{}"/></a>'
-		path = STATIC_URL + field.image.image.name
-		return format_html( html, path, path, field.image.description )
+		if field.image:
+			html = '<a href="{}"><img src="{}" alt="{}"/></a>'
+			path = STATIC_URL + field.image.image.name
+			return format_html( html, path, path, field.image.description )
+		return 'No portrait image uploaded'
 	
 	def develop( self, field ):
 		html = '<a href="{}">{}</a>'
@@ -50,6 +52,9 @@ class SettingAdmin( admin.ModelAdmin ):
 		super( ).save_model( request, config, form, change )
 	
 	def has_add_permission( self, request ):
+		## Only create when settings don't exist
+		if not self.get_queryset( request ).exists( ):
+			return True
 		## Keep object creation from happening
 		return False
 	
@@ -177,5 +182,6 @@ class MediaAdmin( admin.ModelAdmin ):
 	
 	class Media:
 		css = { 'all': [ 'admin.css' ] }
+
 
 

@@ -15,8 +15,9 @@ class SettingForm( forms.ModelForm ):
 	def __init__( self, *args, **kwargs ):
 		if 'instance' in kwargs and kwargs[ 'instance' ]:
 			## Form needs the current portrait set to view
-			portrait = kwargs[ 'instance' ].image.image
-			kwargs[ 'initial' ] = { 'portrait': portrait }
+			portrait = kwargs[ 'instance' ].image
+			graphic = getattr( portrait, 'image', None )
+			kwargs[ 'initial' ] = { 'portrait': graphic }
 		super( ).__init__( *args, **kwargs )
 	
 	
@@ -44,7 +45,8 @@ class MediaForm( forms.ModelForm ):
 	def __init__( self, *args, **kwargs ):
 		if 'instance' in kwargs and kwargs[ 'instance' ]:
 			## View current icon on form using initial value
-			icon = kwargs[ 'instance' ].image.image
+			logo = kwargs[ 'instance' ].image
+			icon = getattr( logo, 'image', None )
 			kwargs[ 'initial' ] = { 'icon': icon }
 		super( ).__init__( *args, **kwargs )
 	
