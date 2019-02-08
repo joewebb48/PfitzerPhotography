@@ -23,9 +23,10 @@ def index( request, url = None ):
 	## React's StaticRouter needs the url used by Django instead
 	domain = request.scheme + '://' + request.get_host( )
 	info = { 'url': domain, 'path': request.path, 'data': page }
+	export = int( os.getenv( 'PORT' ) ) + 1 if os.getenv( 'PORT' ) else 3000
 	## Get jsx views from the Node server that processes them
 	feedback = requests.post(
-		'http://localhost:3000/render',
+		'http://127.0.0.1:' + str( export ) + '/render',
 		headers = { 'Content-Type': 'application/json' },
 		data = json.dumps( info )
 	)
@@ -135,5 +136,6 @@ def email( request ):
 		clean = post.cleaned_data.get( key, False )
 		new[ key ] = { 'original': field, 'clean': clean }
 	return JsonResponse( new )
+
 
 

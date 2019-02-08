@@ -14,6 +14,7 @@ import nodeStore from './app/stores/nodestore'
 
 
 const app = express( )
+const port = process.env.PORT || 3000
 
 
 app.use( parsify.json( ) )
@@ -43,9 +44,8 @@ app.post( '/render', ( request, response ) => {
 } )
 
 
-app.listen( 3000, ( ) => {
-	console.log( 'Node running on port 3000!', '\n\n' )
+app.listen( port, ( ) => {
+	console.log( 'Node running on port ' + port + '!', '\n\n' )
 } )
-
 
 

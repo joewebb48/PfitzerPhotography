@@ -34,6 +34,7 @@ module.exports = ( ) => {
 			plugins: [
 				new CopyWebpackPlugin( [
 					'static/admin.css',
+					'static/widget.html',
 					{ from: 'static/img', to: 'img' }
 				] ),
 				new HtmlWebpackPlugin( {
@@ -189,5 +190,6 @@ module.exports = ( ) => {
 		}
 	]
 }
+
 
 
