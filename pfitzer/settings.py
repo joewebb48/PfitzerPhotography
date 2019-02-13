@@ -104,7 +104,10 @@ DATABASES = {
 		'HOST': os.environ.get( 'HOST' ),
 		'PORT': os.environ.get( 'MYSQL' ),
 		'USER': os.environ.get( 'USERNAME' ),
-		'PASSWORD': os.environ.get( 'PASSWORD' )
+		'PASSWORD': os.environ.get( 'PASSWORD' ),
+		'OPTIONS': {
+			'init_command': 'SET sql_mode=\'STRICT_TRANS_TABLES\''
+		}
 	},
 	'legacy': {
 		'ENGINE': 'django.db.backends.sqlite3',
@@ -168,6 +171,17 @@ MEDIA_ROOT = os.path.join( BASE_DIR, 'static/' )
 STATIC_URL = '/root/'
 
 MEDIA_URL = '/static/'
+
+
+## File storage
+## https://boto3.amazonaws.com/v1/documentation/api/latest/guide/s3.html
+
+AWS_S3_URL = os.environ.get( 'CLOUDCUBE_URL' )
+
+AWS_S3_ACCESS = {
+	'aws_access_key_id': os.environ.get( 'CLOUDCUBE_ACCESS_KEY_ID' ),
+	'aws_secret_access_key': os.environ.get( 'CLOUDCUBE_SECRET_ACCESS_KEY' )
+}
 
 
 

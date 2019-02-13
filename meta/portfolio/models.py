@@ -3,10 +3,11 @@
 
 
 import os
-import shutil
+import boto3 as aws
 from django.db import models
 
-from pfitzer.settings import MEDIA_URL, STATIC_URL
+from pfitzer.settings import AWS_S3_URL, AWS_S3_ACCESS
+from meta.portfolio.storage import AmazonStorage
 
 
 
@@ -60,8 +61,8 @@ class Page( models.Model ):
 
 class Image( models.Model ):
 	name = models.CharField( max_length = 100, unique = True )
-	image = models.ImageField( height_field = 'height', width_field = 'width' )
-	url = models.FilePathField( path = MEDIA_URL + 'img', editable = False, unique = True )
+	image = models.ImageField( storage = AmazonStorage( ), height_field = 'height', width_field = 'width' )
+	url = models.FilePathField( path = AWS_S3_URL + '/public', editable = False, unique = True )
 	height = models.IntegerField( editable = False )
 	width = models.IntegerField( editable = False )
 	description = models.TextField( blank = True )
@@ -78,47 +79,49 @@ class Image( models.Model ):
 		return self.name
 	
 	def save( self, *args, **kwargs ):
+		## Amazon's S3 file storage service for image uploading
+		cube = aws.resource( 's3' ).Bucket( 'cloud-cube' )
+		cube.meta.client = aws.client( 's3', **AWS_S3_ACCESS )
+		## Find previous version of the current object if it exists
 		previous = Image.objects.get( pk = self.pk ) if self.pk else None
 		## Use the name field input as the new image file name
 		filename, extension = os.path.splitext( self.image.name )
-		imagename = 'img/' + self.name + extension
+		imagename = 'public/' + self.name + extension
 		## Get the previous, next, and uploaded urls respectively
-		preurl = previous.image.url if previous else ''
-		loadurl = self.image.url
-		self.url = MEDIA_URL + imagename
-		## Edit the existing image file to reflect the name change
-		if os.path.isfile( self.image.url[ 1: ] ) and self.image.name != imagename:
-			with self.image.open( ):
-				self.image.save( imagename, self.image, save = False )
-			os.remove( loadurl[ 1: ] )
-		## Replace the old image with the updated image version
-		elif not os.path.isfile( self.image.url[ 1: ] ) and os.path.isfile( self.url[ 1: ] ):
-			os.remove( self.url[ 1: ] )
-			self.image.save( imagename, self.image, save = False )
+		self.url = AWS_S3_URL + '/' + imagename
+		self.image.name = 'pfitzer/' + imagename
+		## Keep the image field's save method from being used
+		self.image.save = lambda name, content, save: None
+		## Missing image upload should ignore height and width
+		within = lambda key: key not in [ 'id', 'height', 'width' ]
+		exact = lambda key: not key.startswith( '_' ) and within( key )
+		attrs = filter( lambda key: exact( key ), vars( self ).keys( ) )
 		## Invoke the superclass save method with a new path
-		self.image.name = imagename
-		super( Image, self ).save( *args, **kwargs )
-		## Trash the old file for one with a new name and image
-		if os.path.isfile( preurl[ 1: ] ) and preurl != self.url:
-			os.remove( preurl[ 1: ] )
-		## Copy the newly saved image into the public img folder
-		self.copy( previous )
+		update = list( attrs ) if previous and self.image.closed else None
+		super( Image, self ).save( update_fields = update, *args, **kwargs )
+		## Collect any metadata to store with the uploaded info
+		stats = filter( lambda val: val[ 0 ][ 0 ].isalpha( ), vars( self ).items( ) )
+		meta = map( lambda val: ( val[ 0 ], str( val[ 1 ] ) ), dict( stats ).items( ) )
+		## Generate an image object resource for uploading to S3
+		image = cube.Object( self.image.name )
+		## Edit the existing image file to reflect the name change
+		if self.image.closed and previous.name != self.name:
+			source = { 'Bucket': 'cloud-cube', 'Key': previous.image.name }
+			image.copy( source, ExtraArgs = { 'Metadata': dict( meta ) } )
+			cube.Object( previous.image.name ).delete( )
+		## Replace the last image or upload a new image object
+		elif not self.image.closed:
+			if previous:
+				cube.Object( previous.image.name ).delete( )
+			image.put( Body = self.image, Metadata = dict( meta ) )
 	
 	def delete( self, *args, **kwargs ):
+		## Build the bucket resource to delete the image upload
+		cube = aws.resource( 's3' ).Bucket( 'cloud-cube' )
+		cube.meta.client = aws.client( 's3', **AWS_S3_ACCESS )
+		## Trash the image object and its associated S3 file data
 		super( Image, self ).delete( *args, **kwargs )
-		dumpurl = STATIC_URL + self.image.name
-		## Look for the remaining images if any and delete them
-		os.remove( self.image.url[ 1: ] ) if os.path.isfile( self.image.url[ 1: ] ) else None
-		os.remove( dumpurl[ 1: ] ) if os.path.isfile( dumpurl[ 1: ] ) else None
-	
-	def copy( self, previous ):
-		if os.path.isfile( self.image.url[ 1: ] ):
-			## Overwrite the previous public image should it exist
-			if previous:
-				os.remove( STATIC_URL[ 1: ] + previous.image.name )
-			## Make viewable with a new or updated image copy
-			viewurl = STATIC_URL + self.image.name
-			shutil.copy2( self.url[ 1: ], viewurl[ 1: ] )
+		cube.Object( self.image.name ).delete( )
 	
 	
 	class Meta:
@@ -148,6 +151,5 @@ class Media( models.Model ):
 		db_table = 'media'
 		## Stop default pluralization from appending 's' to the end
 		verbose_name_plural = 'media'
-
 
 

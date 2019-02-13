@@ -3,10 +3,12 @@
 
 
 import os
+import math
+import boto3 as aws
 from django.contrib import admin
 from django.utils.html import format_html
 
-from pfitzer.settings import STATIC_URL
+from pfitzer.settings import AWS_S3_ACCESS
 from meta.portfolio.forms import SettingForm, ImageForm, MediaForm
 from meta.portfolio.models import Setting, Page, Image, Media
 from meta.portfolio.ops import invert
@@ -28,8 +30,8 @@ class SettingAdmin( admin.ModelAdmin ):
 	def portrait( self, field ):
 		if field.image:
 			html = '<a href="{}"><img src="{}" alt="{}"/></a>'
-			path = STATIC_URL + field.image.image.name
-			return format_html( html, path, path, field.image.description )
+			path, desc = field.image.url, field.image.description
+			return format_html( html, path, path, desc )
 		return 'No portrait image uploaded'
 	
 	def develop( self, field ):
@@ -40,7 +42,7 @@ class SettingAdmin( admin.ModelAdmin ):
 		image = request.FILES.get( 'portrait', None )
 		if image:
 			## Create portrait image if none exists
-			if 'portrait' not in form.initial:
+			if not form.initial[ 'portrait' ]:
 				text = 'A portrait photo of ' + config.__str__( ) + '.'
 				portrait = Image( name = 'portrait', description = text, image = image )
 				portrait.save( )
@@ -89,8 +91,7 @@ class ImageAdmin( admin.ModelAdmin ):
 	
 	def thumbnail( self, field ):
 		html = '<a href="{}"><img src="{}" alt="{}"/></a>'
-		path = STATIC_URL + field.image.name
-		return format_html( html, path, path, field.description )
+		return format_html( html, field.url, field.url, field.description )
 	
 	def get_queryset( self, request ):
 		queryset = super( ).get_queryset( request )
@@ -104,12 +105,18 @@ class ImageAdmin( admin.ModelAdmin ):
 	
 	def delete_selected( modeladmin, request, queryset ):
 		if request.POST.get( 'post' ):
-			## Delete the selected images in bulk
-			for image in queryset:
-				imageurl = image.image.url
-				trashurl = STATIC_URL + image.image.name
-				os.remove( imageurl[ 1: ] ) if os.path.isfile( imageurl[ 1: ] ) else None
-				os.remove( trashurl[ 1: ] ) if os.path.isfile( trashurl[ 1: ] ) else None
+			## Execute bulk deletion within bucket
+			cube = aws.resource( 's3' ).Bucket( 'cloud-cube' )
+			cube.meta.client = aws.client( 's3', **AWS_S3_ACCESS )
+			## Produce the list of keys for removal
+			dump = [ { 'Key': image.image.name } for image in queryset ]
+			## Quantity max of 1000 per bulk delete
+			iters = math.floor( len( dump ) / 1000 )
+			for kilo in range( iters + 1 ):
+				breadth = 1000 if kilo < iters else len( dump )
+				subset, dump = dump[ :breadth ], dump[ breadth: ]
+				## Delete all selected images in bulk
+				cube.delete_objects( Delete = { 'Objects': subset } )
 		return admin.actions.delete_selected( modeladmin, request, queryset )
 	
 	
@@ -131,8 +138,8 @@ class MediaAdmin( admin.ModelAdmin ):
 	
 	def iconview( self, field ):
 		html = '<a href="{}"><img src="{}" alt="{}"/></a>'
-		path = STATIC_URL + field.image.image.name
-		return format_html( html, path, path, field.image.description )
+		path, desc = field.image.url, field.image.description
+		return format_html( html, path, path, desc )
 	
 	def location( self, field ):
 		html = '<a href="{}">{}</a>'
@@ -182,6 +189,5 @@ class MediaAdmin( admin.ModelAdmin ):
 	
 	class Media:
 		css = { 'all': [ 'admin.css' ] }
-
 
 

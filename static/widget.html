@@ -5,15 +5,15 @@
 <p class="file-upload">
 	{% if widget.is_initial %}
 		{{ widget.initial_text }}:
-		<!-- <a href="{{ widget.value.url }}"> {{ widget.value }} </a> -->
-		<a href="/root/{{ widget.value.name }}"> static/{{ widget.value }} </a>
+		<a href="{{ widget.value.url }}"> {{ widget.value.url }} </a>
+		<!-- <a href="/root/{{ widget.value.name }}"> static/{{ widget.value }} </a> -->
 		<br/>
 		{{ widget.input_text }}:
 	{% endif %}
 	<input type="{{ widget.type }}" name="{{ widget.name }}"/>
 	{% if widget.is_initial %}
-		<!-- <img src="{{ widget.value.url }}" {% include "django/forms/widgets/attrs.html" %}/> -->
-		<img src="/root/{{ widget.value.name }}" {% include "django/forms/widgets/attrs.html" %}/>
+		<img src="{{ widget.value.url }}" {% include "django/forms/widgets/attrs.html" %}/>
+		<!-- <img src="/root/{{ widget.value.name }}" {% include "django/forms/widgets/attrs.html" %}/> -->
 	{% endif %}
 </p>
 
