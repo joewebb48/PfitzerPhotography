@@ -31,8 +31,8 @@ class About extends Component {
 	}
 	
 	affixImage( view ) {
-		const url = view ? view.fields.image : ''
-		const image = this.props.biography.fields ? '/root/' + url : null
+		const url = view ? view.fields.url : ''
+		const image = this.props.biography.fields ? url : null
 		const props = { src: image, alt: view ? view.fields.description : '' }
 		return !view ? null : <img { ...props }/>
 	}

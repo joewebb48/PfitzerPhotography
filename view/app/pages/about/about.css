@@ -109,7 +109,7 @@
 
 .about-text p {
 	display: inline-block;
-	background: #00000099;
+	background: #000000bf;
 	/* Maintaining this border styling technique for now */
 	/* background-image:
 		linear-gradient( to right, #bbd2e0, #cbe7be ),
@@ -120,7 +120,7 @@
 	background-size: 100% 50px, 50px 100%, 100% 50px, 50px 100%;
 	background-position: top left, top right, bottom right, bottom left;
 	background-repeat: no-repeat; */
-	box-shadow: 0 0 100px 75px #00000099;
+	box-shadow: 0 0 100px 75px #000000bf;
 	text-shadow: 2px 2px 2px #1f1f1f;
 	line-height: 1.5;
 	text-align: left;

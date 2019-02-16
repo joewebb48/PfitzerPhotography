@@ -43,13 +43,13 @@ class Slide extends Component {
 	
 	viewNext( ) {
 		const data = this.yieldPhoto( 0 )
-		const url = data ? '/root/' + data.image : null
+		const url = data ? data.url : null
 		const text = data ? data.description : null
 		this.setState( { current: { url, text }, previous: this.state.current } )
 		// Delete all previous image data once it is fully faded out
 		const fadeout = ( kill, exe ) => setTimeout( exe.bind( this, kill ), 2500 )
 		this.deconstruction = fadeout( { previous: null }, this.setState )
-		const transform = ( ) => setInterval( this.viewNext, 7500 )
+		const transform = ( ) => setInterval( this.viewNext, 30000 )
 		return !this.metamorphosis ? transform( ) : undefined
 	}
 	

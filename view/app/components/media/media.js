@@ -13,7 +13,7 @@ class Media extends Component {
 	injectLinks( ) {
 		return this.props.links.map( link => {
 			const icon = link.fields.image
-			const url = '/root/' + icon.fields.image
+			const url = icon.fields.url
 			return (
 				<a key={ link.pk } href={ link.fields.url }>
 					<img className="social-icon" src={ url }/>

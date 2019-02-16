@@ -32,6 +32,10 @@ module.exports = ( ) => {
 				]
 			},
 			plugins: [
+				new CleanWebpackPlugin(
+					'root',
+					{ exclude: [ 'admin', 'widget.html' ] }
+				),
 				new HtmlWebpackPlugin( {
 					inject: false,
 					template: 'static/index.html',
@@ -49,16 +53,12 @@ module.exports = ( ) => {
 					filename: 'styles.css',
 					chunkFilename: '[id].css'
 				} ),
-				new CleanWebpackPlugin( 'root', { exclude: [ 'admin', 'widget.html' ] } )
-			// Plugins for development
-			].concat( dev ? [
 				new CopyWebpackPlugin( [
 					'static/admin.css',
-					'static/widget.html',
-					{ from: 'static/img', to: 'img' }
-				] ),
+					'static/widget.html'
+				] )
 			// Plugins for production
-			] : [
+			].concat( dev ? [ ] : [
 				new BabelMinifyPlugin( {
 					mangle: {
 						topLevel: true

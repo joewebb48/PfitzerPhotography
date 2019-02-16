@@ -50,8 +50,8 @@ class Frame extends Component {
 	}
 	
 	render( ) {
+		const image = this.props.image.url
 		const url = this.props.url + '/' + this.props.image.name
-		const image = '/root/' + this.props.image.image
 		const props = { src: image, alt: this.props.image.description }
 		const events = { onMouseEnter: this.elevateUp, onMouseLeave: this.fallBack }
 		return (

@@ -15,19 +15,17 @@
 .slide-view img {
 	position: absolute;
 	z-index: 1;
-	/* background: #616161; */
 	background: black;
 	color: #bfbfbf;
-	filter: grayscale( 100% ); /* Temporary */
 	top: 0;
 	right: -50%;
 	left: -50%;
 	bottom: 0;
-	/* max-height: 120%; */
+	max-height: 175%;
 	min-height: 100%;
-	/* max-width: 100%; */
-	/* min-width: 100%; */
-	width: 100%;
+	max-width: 125%;
+	min-width: 100%;
+	/* width: 100%; */
 	margin: auto;
 }
 

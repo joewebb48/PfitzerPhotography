@@ -8,8 +8,9 @@
 	align-items: center;
 	flex-wrap: wrap;
 	justify-content: center;
-	left: -5%;
-	width: 110%;
+	left: -10%;
+	width: 120%;
+	margin: 0 0 200px;
 }
 
 .gallery-redirect {
@@ -47,5 +48,6 @@
 	from { opacity: 1; }
 	to { opacity: 0; }
 }
+
 
 
